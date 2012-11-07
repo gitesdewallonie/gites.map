@@ -3,3 +3,4 @@ http://www.hotelkanai.com/hotel-lille/informations-pratiques-lille-metropole.htm
 bounding pour plusieurs gîtes
 couche gites 
 couche chambre
+permettre d'afficher la region wallone en floutant le reste du MONDE
