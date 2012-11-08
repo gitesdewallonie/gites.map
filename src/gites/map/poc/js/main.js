@@ -9,6 +9,7 @@
 		initHandlers : function()
 		{
 			$('input[name="type_box"]').bind({'change':this.checkboxHandler});
+			$('input#bound_button').bind({'click':this.boundHandler});
 			google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler)
 		},
 		checkboxHandler: function(event)
@@ -27,7 +28,11 @@
 		zoomHandler : function(event)
 		{
 			(this.zoom<9)?googleMapAPI.manageMarkersVisibility(false):googleMapAPI.manageMarkersVisibility(true);
-		}
+		},
+        boundHandler : function(event)
+        {
+            googleMapAPI.boundToAllMarkers();
+        }
 		
 	}
 	var googleMapAPI ={
@@ -68,7 +73,18 @@
 				};
 			}
 			
-		 }
+		 },
+        boundToAllMarkers : function()
+        {
+            var bound = new google.maps.LatLngBounds();
+			for (var key in this.markers) {
+				var l = this.markers[key].length;
+				for (var i=0; i < l; i++) {
+                    bound.extend(this.markers[key][i].getPosition());
+				};
+			}
+            this.map.fitBounds(bound);
+        }
 		 
 	};
 	var services = {
