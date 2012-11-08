@@ -62,22 +62,31 @@
             this.map =  new google.maps.Map($('#map_div')[0], {
                             mapTypeId: google.maps.MapTypeId.ROADMAP,
                             center:new google.maps.LatLng(50.417,4.450) ,
-                            zoom: 10
+                            zoom: 7
                        });
             services.getPoints(['restaurant']);
             services.getHebergements();
 
             // Place polygon overlay
             this.overlay = new google.maps.Polygon({
-                paths: [[new google.maps.LatLng(50.417,4.450),
-                        new google.maps.LatLng(49.417,3.450),
-                        new google.maps.LatLng(50.6,4.0),
-                        new google.maps.LatLng(50.417,4.450)],
-                        [new google.maps.LatLng(50.3,4.3),
-                        new google.maps.LatLng(50.8,4.3),
-                        new google.maps.LatLng(50.8,4.0),
-                        new google.maps.LatLng(50.3,4.0),
-                        new google.maps.LatLng(50.3,4.3)]],
+                paths: [
+                        [new google.maps.LatLng(51.6, 2.2),
+                         new google.maps.LatLng(51.6, 6.9),
+                         new google.maps.LatLng(49  , 6.9),
+                         new google.maps.LatLng(49  , 2.2),
+                         new google.maps.LatLng(51.6, 2.2)],
+                        [new google.maps.LatLng(50.32, 6.40),
+                         new google.maps.LatLng(50.75, 6.0),
+                         new google.maps.LatLng(50.70, 3.24),
+                         new google.maps.LatLng(50.31, 4.10),
+                         new google.maps.LatLng(49.98, 4.13),
+                         new google.maps.LatLng(49.94, 4.50),
+                         new google.maps.LatLng(50.15, 4.88),
+                         new google.maps.LatLng(49.80, 4.87),
+                         new google.maps.LatLng(49.52, 5.83),
+                         new google.maps.LatLng(49.94, 5.77),
+                         new google.maps.LatLng(50.32, 6.40),]
+                ],
                 strokeColor: "#00FF00",
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -87,6 +96,7 @@
             this.overlay.setMap(this.map);
 
         },
+
 
         createMarker : function(place, category)
         {

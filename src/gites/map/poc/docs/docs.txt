@@ -1,4 +1,5 @@
 http://www.hotelkanai.com/hotel-lille/informations-pratiques-lille-metropole.htm#carte-informations
+http://itouchmap.com/latlong.html
 
 + Cache markers par dézoom
     + Bug, les markers se reaffichent avec le zoom meme si déjà caché.
@@ -11,4 +12,4 @@ http://www.hotelkanai.com/hotel-lille/informations-pratiques-lille-metropole.htm
 + couche gites indépendante du handler zoom par exemple
 + couche chambre idem
 
-- permettre d'afficher la region wallone en floutant le reste du MONDE
++ permettre d'afficher la region wallone en floutant le reste du MONDE
