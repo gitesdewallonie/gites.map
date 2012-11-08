@@ -2,7 +2,10 @@ http://www.hotelkanai.com/hotel-lille/informations-pratiques-lille-metropole.htm
 
 + Cache markers par dézoom
     - Bug, les markers se reaffichent avec le zoom meme si déjà caché.
+
 + Bounding manuel sur tous les markers
-- couche gites
-- couche chambre
+
++ couche gites indépendante du handler zoom par exemple
+- couche chambre idem (regarder ligne 147)
+
 - permettre d'afficher la region wallone en floutant le reste du MONDE
