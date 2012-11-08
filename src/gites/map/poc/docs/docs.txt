@@ -2,6 +2,7 @@ http://www.hotelkanai.com/hotel-lille/informations-pratiques-lille-metropole.htm
 
 + Cache markers par dézoom
     + Bug, les markers se reaffichent avec le zoom meme si déjà caché.
+    + si je check un element lors d'un dezoom, il s'affiche tout de meme.
 
 + Bounding manuel sur tous les markers
     + bound uniquement sur les checked

@@ -25,7 +25,9 @@
             } else{
                 services.getPoints([event.target.value]);
             }
-            googleMapAPI.manageMarkersVisibility(true);
+            // XXX eviter ces 2 appel? Rassembler ces deux fonctions en une seule? (avec des 'if' sur markers[category] ?
+            googleMapAPI.manageMarkersVisibility();
+            googleMapAPI.managePointsMarkersVisibility();
         },
 
         hebergementCheckboxHandler: function(event)
@@ -40,7 +42,7 @@
 
         zoomHandler : function(event)
         {
-            (this.zoom<9)?googleMapAPI.managePointsMarkersVisibility(false):googleMapAPI.managePointsMarkersVisibility(true);
+            googleMapAPI.managePointsMarkersVisibility();
         },
 
         boundHandler : function(event)
@@ -99,16 +101,20 @@
             }
         },
 
-        managePointsMarkersVisibility : function(isVisible)
+        managePointsMarkersVisibility : function()
         {
             for (var category in this.markers){
                 for (var type in this.markers.points) {
                     var l = this.markers.points[type].length;
                     for (var i=0; i < l; i++) {
                         marker = this.markers.points[type][i];
-                        if (marker.checked)
+                        if (marker.checked && this.map.zoom > 9)
                         {
-                            marker.setVisible(isVisible);
+                            marker.setVisible(true);
+                        }
+                        else if (marker.checked && this.map.zoom <= 9)
+                        {
+                            marker.setVisible(false);
                         }
                     };
                 }
@@ -158,7 +164,7 @@
 
         callBack_getPoints : function(result,status)
         {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
                 var l = result.length;
                 for (var i=0; i < l; i++) {
                     googleMapAPI.createMarker(result[i], 'points');
@@ -180,7 +186,7 @@
 
         callBack_getHebergements : function(result,status)
         {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
                 var l = result.length;
                 for (var i=0; i < l; i++) {
 
