@@ -132,7 +132,10 @@
                 }
             }
 
-            this.map.fitBounds(bound);
+            if (!bound.isEmpty())
+            {
+                this.map.fitBounds(bound);
+            }
         }
     };
 
