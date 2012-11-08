@@ -25,9 +25,7 @@
             } else{
                 services.getPoints([event.target.value]);
             }
-            // XXX eviter ces 2 appel? Rassembler ces deux fonctions en une seule? (avec des 'if' sur markers[category] ?
             googleMapAPI.manageMarkersVisibility();
-            googleMapAPI.managePointsMarkersVisibility();
         },
 
         hebergementCheckboxHandler: function(event)
@@ -42,7 +40,7 @@
 
         zoomHandler : function(event)
         {
-            googleMapAPI.managePointsMarkersVisibility();
+            googleMapAPI.manageMarkersVisibility();
         },
 
         boundHandler : function(event)
@@ -117,26 +115,27 @@
                     var l = this.markers[category][type].length;
                     for (var i=0; i < l; i++) {
                         marker = this.markers[category][type][i];
-                        (marker.checked)?marker.setVisible(true):marker.setVisible(false);
-                    };
-                }
-            }
-        },
 
-        managePointsMarkersVisibility : function()
-        {
-            for (var category in this.markers){
-                for (var type in this.markers.points) {
-                    var l = this.markers.points[type].length;
-                    for (var i=0; i < l; i++) {
-                        marker = this.markers.points[type][i];
-                        if (marker.checked && this.map.zoom > 9)
+                        switch (category)
                         {
-                            marker.setVisible(true);
-                        }
-                        else if (marker.checked && this.map.zoom <= 9)
-                        {
-                            marker.setVisible(false);
+                        case 'hebergements':
+                            (marker.checked)?marker.setVisible(true):marker.setVisible(false);
+                            break;
+
+                        case 'points':
+                            if (marker.checked && this.map.zoom > 9)
+                            {
+                                marker.setVisible(true);
+                            }
+                            else if (marker.checked && this.map.zoom <= 9)
+                            {
+                                marker.setVisible(false);
+                            }
+                            else
+                            {
+                                marker.setVisible(false);
+                            }
+                            break;
                         }
                     };
                 }
