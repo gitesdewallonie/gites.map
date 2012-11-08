@@ -20,11 +20,12 @@
                 var markersToManage = googleMapAPI.markers.points[event.target.value];
                 var l = markersToManage.length;
                 for (var i=0; i < l; i++) {
-                    markersToManage[i].setVisible($(this).prop('checked'));
+                    markersToManage[i].checked = $(this).prop('checked');
                 };
             } else{
                 services.getPoints([event.target.value]);
             }
+            googleMapAPI.manageMarkersVisibility(true);
         },
 
         hebergementCheckboxHandler: function(event)
@@ -32,13 +33,14 @@
             var markersToManage = googleMapAPI.markers.hebergements[event.target.value];
             var l = markersToManage.length;
             for (var i=0; i < l; i++) {
-                markersToManage[i].setVisible($(this).prop('checked'));
+                markersToManage[i].checked = $(this).prop('checked');
             };
+            googleMapAPI.manageMarkersVisibility();
         },
 
         zoomHandler : function(event)
         {
-            (this.zoom<9)?googleMapAPI.manageMarkersVisibility(false):googleMapAPI.manageMarkersVisibility(true);
+            (this.zoom<9)?googleMapAPI.managePointsMarkersVisibility(false):googleMapAPI.managePointsMarkersVisibility(true);
         },
 
         boundHandler : function(event)
@@ -75,6 +77,7 @@
                     icon:icon
                 }
             );
+            marker.checked = true;
             googleMapAPI.markers[category][type].push(marker);
         },
 
@@ -83,13 +86,32 @@
            return (this.markers.points[nameMarker] != undefined)?true:false;
         },
 
-        manageMarkersVisibility : function(isVisible)
+        manageMarkersVisibility : function()
         {
-           for (var type in this.markers.points) {
-               var l = this.markers.points[type].length;
-               for (var i=0; i < l; i++) {
-                   this.markers.points[type][i].setVisible(isVisible);
-               };
+            for (var category in this.markers){
+                for (var type in this.markers[category]) {
+                    var l = this.markers[category][type].length;
+                    for (var i=0; i < l; i++) {
+                        marker = this.markers[category][type][i];
+                        (marker.checked)?marker.setVisible(true):marker.setVisible(false);
+                    };
+                }
+            }
+        },
+
+        managePointsMarkersVisibility : function(isVisible)
+        {
+            for (var category in this.markers){
+                for (var type in this.markers.points) {
+                    var l = this.markers.points[type].length;
+                    for (var i=0; i < l; i++) {
+                        marker = this.markers.points[type][i];
+                        if (marker.checked)
+                        {
+                            marker.setVisible(isVisible);
+                        }
+                    };
+                }
             }
         },
 
@@ -97,11 +119,15 @@
         {
             var bound = new google.maps.LatLngBounds();
 
-            for (var key in this.markers) {
-                for (var type in this.markers[key]) {
-                    var l = this.markers[key][type].length;
+            for (var category in this.markers) {
+                for (var type in this.markers[category]) {
+                    var l = this.markers[category][type].length;
                     for (var i=0; i < l; i++) {
-                        bound.extend(this.markers[key][type][i].getPosition());
+                        marker = this.markers[category][type][i];
+                        if (marker.checked)
+                        {
+                            bound.extend(marker.getPosition());
+                        }
                     };
                 }
             }
