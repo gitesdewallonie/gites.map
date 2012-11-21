@@ -5,6 +5,9 @@ var handlers = {
         $('input[name="hebergement_box"]').bind({'change':this.hebergementCheckboxHandler});
         $('input#bound_button').bind({'click':this.boundHandler});
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
+        // google.maps.event.addListener(googleMapAPI.map,'bounds_changed',this.boundsHandler);
+        google.maps.event.addListener(googleMapAPI.map,'idle',this.boundsHandler);
+		
         googleMapAPI.manageMarkersVisibility();
         googleMapAPI.manageCheckboxDisabling();
     },
@@ -43,5 +46,9 @@ var handlers = {
     boundHandler : function(event)
     {
         googleMapAPI.boundToAllMarkers();
-    }
+    },
+	boundsHandler : function(event)
+	{
+		googleMapAPI.boundsChange();
+	}
 };
