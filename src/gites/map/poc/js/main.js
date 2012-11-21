@@ -11,6 +11,8 @@
             $('input[name="hebergement_box"]').bind({'change':this.hebergementCheckboxHandler});
             $('input#bound_button').bind({'click':this.boundHandler});
             google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
+            googleMapAPI.manageMarkersVisibility();
+            googleMapAPI.manageCheckboxDisabling();
         },
 
         pointCheckboxHandler: function(event)
@@ -41,6 +43,7 @@
         zoomHandler : function(event)
         {
             googleMapAPI.manageMarkersVisibility();
+            googleMapAPI.manageCheckboxDisabling();
         },
 
         boundHandler : function(event)
@@ -56,6 +59,7 @@
                    points : {}},
 
         overlay : null,
+        zoomLimit: 9,
 
         initialize : function()
         {
@@ -128,16 +132,19 @@
 
                         switch (category)
                         {
+                        // Hide or show hebergement marker if checkbox checked/unchecked
                         case 'hebergements':
                             (marker.checked)?marker.setVisible(true):marker.setVisible(false);
                             break;
 
+                        // Hide or show point marker if checkbox checked/unchecked
+                        //   or if dezoom to the limit
                         case 'points':
-                            if (marker.checked && this.map.zoom > 9)
+                            if (marker.checked && this.map.zoom > this.zoomLimit)
                             {
                                 marker.setVisible(true);
                             }
-                            else if (marker.checked && this.map.zoom <= 9)
+                            else if (marker.checked && this.map.zoom <= this.zoomLimit)
                             {
                                 marker.setVisible(false);
                             }
@@ -149,6 +156,27 @@
                         }
                     };
                 }
+            }
+        },
+
+        manageCheckboxDisabling : function()
+        {
+            if (this.map.zoom > this.zoomLimit)
+            // dégriser les checkbox point_box
+            {
+                $('input[name="point_box"]').each(function(index, checkBox)
+                    {
+                        checkBox.disabled = false;
+                    });
+            }
+
+            // griser les checkbox point_box cochées si dezoom > limit
+            else
+            {
+                $('input[name="point_box"]').each(function(index, checkBox)
+                    {
+                        checkBox.disabled = true;
+                    });
             }
         },
 

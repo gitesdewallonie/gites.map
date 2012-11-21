@@ -4,6 +4,8 @@ http://itouchmap.com/latlong.html
 + Cache markers par dézoom
     + Bug, les markers se reaffichent avec le zoom meme si déjà caché.
     + si je check un element lors d'un dezoom, il s'affiche tout de meme.
+    + Décocher automatiquement lors du dézoom (peut etre griser au lieu de décocher)
+    + Recocher lors du zoom
 
 + Bounding manuel sur tous les markers
     + bound uniquement sur les checked
@@ -13,3 +15,8 @@ http://itouchmap.com/latlong.html
 + couche chambre idem
 
 + permettre d'afficher la region wallone en floutant le reste du MONDE
+
+- splitter le main.js et le renommer (par exemple sortir googlemapapi)
+- faire masque de la Wallonie
+    - Prendre points de coordonnées (google ou faire à la main voir reference debut fichier)
+    - Trouver points coordonnées pour remplir la terre entiere avec l autre polygon
