@@ -6,7 +6,7 @@ var handlers = {
         $('input#bound_button').bind({'click':this.boundHandler});
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
         // google.maps.event.addListener(googleMapAPI.map,'bounds_changed',this.boundsHandler);
-        google.maps.event.addListener(googleMapAPI.map,'idle',this.boundsHandler);
+        // google.maps.event.addListener(googleMapAPI.map,'idle',this.boundsHandler);
 		
         googleMapAPI.manageMarkersVisibility();
         googleMapAPI.manageCheckboxDisabling();
@@ -49,6 +49,6 @@ var handlers = {
     },
 	boundsHandler : function(event)
 	{
-		googleMapAPI.boundsChange();
+		//googleMapAPI.boundsChange();
 	}
 };

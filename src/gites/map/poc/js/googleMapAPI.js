@@ -22,11 +22,10 @@ var googleMapAPI ={
         this.overlay = new google.maps.Polygon({
             paths: [
                     // Monde
-                    [new google.maps.LatLng(51.6, 2.2),
-                     new google.maps.LatLng(51.6, 6.9),
-                     new google.maps.LatLng(49  , 6.9),
-                     new google.maps.LatLng(49  , 2.2),
-                     new google.maps.LatLng(51.6, 2.2)],
+                    [  new google.maps.LatLng(41.26303895249619, 22.028125000000045),
+                     new google.maps.LatLng(41.26303895249619, -13.128124999999955),
+                     new google.maps.LatLng(58.09072156182872, -13.128124999999955),
+                     new google.maps.LatLng(58.09072156182872, 22.028125000000045)],
                     // Wallonie
                     [
                      new google.maps.LatLng(50.753598,3.179941),
@@ -923,37 +922,5 @@ var googleMapAPI ={
         {
             this.map.fitBounds(bound);
         }
-    },
-	
-	boundsChange :  function()
-	{	
-		this.overlay.setOptions(
-			{
-            paths: [
-                    [
-					 new google.maps.LatLng(this.map.getBounds().getSouthWest().lat(),this.map.getBounds().getNorthEast().lng()),
-					 this.map.getBounds().getSouthWest(),
-					 new google.maps.LatLng(this.map.getBounds().getNorthEast().lat(),this.map.getBounds().getSouthWest().lng()),					 
-					 this.map.getBounds().getNorthEast()
-					],
-                    [new google.maps.LatLng(50.32, 6.40),
-                     new google.maps.LatLng(50.75, 6.0),
-                     new google.maps.LatLng(50.70, 3.24),
-                     new google.maps.LatLng(50.31, 4.10),
-                     new google.maps.LatLng(49.98, 4.13),
-                     new google.maps.LatLng(49.94, 4.50),
-                     new google.maps.LatLng(50.15, 4.88),
-                     new google.maps.LatLng(49.80, 4.87),
-                     new google.maps.LatLng(49.52, 5.83),
-                     new google.maps.LatLng(49.94, 5.77),
-                     new google.maps.LatLng(50.32, 6.40),]
-            ],
-            strokeColor: "#00FF00",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#00FF00",
-            fillOpacity: 0.35
-        });
-        this.overlay.setMap(this.map);
-	}
+    }
 };
