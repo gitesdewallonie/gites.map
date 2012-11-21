@@ -17,6 +17,9 @@ http://itouchmap.com/latlong.html
 + permettre d'afficher la region wallone en floutant le reste du MONDE
 
 + splitter le main.js et le renommer (par exemple sortir googlemapapi)
-- faire masque de la Wallonie
-    - Prendre points de coordonnées (google ou faire à la main voir reference debut fichier)
-    - Trouver points coordonnées pour remplir la terre entiere avec l autre polygon
+
++ faire masque de la Wallonie
+    + Trouver points coordonnées pour remplir la terre entiere avec l autre polygon
+        + Ne pas oublier comine en flandre
+
+- bloquer le niveau max de dézoom
