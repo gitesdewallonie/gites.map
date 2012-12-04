@@ -34,6 +34,8 @@ setup(name='gites.map',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'anyjson',
+          'z3c.json',
       ],
       entry_points="""
       # -*- Entry points: -*-

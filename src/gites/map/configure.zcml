@@ -8,8 +8,12 @@
 
 <!--  <i18n:registerTranslations directory="locales" />-->
 
+  <include package="z3c.json" />
+
   <five:registerPackage package="." initialize=".initialize" />
+
   <include package=".browser" />
+
   <include file="profiles.zcml"/>
 
 </configure>
