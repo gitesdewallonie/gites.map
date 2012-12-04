@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts">
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression=""
+        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=fr"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression=""
+        id="++resource++gites.map.js/coords.js"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression=""
+        id="++resource++gites.map.js/googleMapAPI.js"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression=""
+        id="++resource++gites.map.js/handlers.js"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression=""
+        id="++resource++gites.map.js/main.js"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression=""
+        id="++resource++gites.map.js/services.js"
+        inline="False"/>
+
+</object>

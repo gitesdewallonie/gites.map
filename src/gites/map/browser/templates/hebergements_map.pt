@@ -1,0 +1,21 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="gites">
+
+<body>
+<div metal:define-macro="portlet">
+    <div id="map_div" >
+
+    </div>
+    <div id="menu">
+        <input type="checkbox" name="point_box" value="restaurant" checked> Resto<br />
+        <input type="checkbox" name="point_box" value="florist"> Florist<br />
+        <input type="checkbox" name="hebergement_box" value="gites" checked> Gites (cafe)<br />
+        <input type="checkbox" name="hebergement_box" value="chambres" checked> Chambres (hopital)<br />
+        <input type="button" id="bound_button" value="bound!" />
+
+    </div>
+
+</div>
+</body>
+</html>

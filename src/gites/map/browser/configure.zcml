@@ -3,12 +3,32 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="gites">
 
+    <include package="Products.Five" />
+
     <browser:viewlet
         name="gites.map.hebergements"
         manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
         class=".viewlets.GitesMapViewlet"
         layer=".interfaces.IGitesMap"
         permission="zope.Public"
+        />
+
+    <browser:resourceDirectory
+        directory="resources/js/"
+        layer=".interfaces.IGitesMap"
+        name="gites.map.js"
+        />
+
+    <browser:resourceDirectory
+        directory="resources/css/"
+        layer=".interfaces.IGitesMap"
+        name="gites.map.css"
+        />
+
+    <browser:resourceDirectory
+        directory="resources/images/"
+        layer=".interfaces.IGitesMap"
+        name="gites.map.images"
         />
 
 </configure>
