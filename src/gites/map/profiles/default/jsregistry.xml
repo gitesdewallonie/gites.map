@@ -6,7 +6,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression=""
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'fr') == 'fr'"
         id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=fr"
         inline="False"/>
 
@@ -15,7 +15,43 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression=""
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'en'"
+        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=en"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'de') == 'de'"
+        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=de"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'it') == 'it'"
+        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=it"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'nl') == 'nl'"
+        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=nl"
+        inline="False"/>
+
+    <javascript
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="True"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="++resource++gites.map.js/coords.js"
         inline="False"/>
 
@@ -24,7 +60,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression=""
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="++resource++gites.map.js/googleMapAPI.js"
         inline="False"/>
 
@@ -33,7 +69,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression=""
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="++resource++gites.map.js/handlers.js"
         inline="False"/>
 
@@ -42,7 +78,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression=""
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="++resource++gites.map.js/main.js"
         inline="False"/>
 
@@ -51,7 +87,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression=""
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="++resource++gites.map.js/services.js"
         inline="False"/>
 

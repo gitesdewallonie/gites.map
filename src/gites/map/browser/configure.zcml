@@ -7,10 +7,20 @@
 
     <browser:viewlet
         name="gites.map.hebergements"
+        for=".interfaces.IMappableContent"
         manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
         class=".viewlets.GitesMapViewlet"
         layer=".interfaces.IGitesMap"
         permission="zope.Public"
+        />
+
+    <browser:page
+        name="shouldShowMapViewlet"
+        for="*"
+        class=".utils.UtilsView"
+        attribute="shouldShowMapViewlet"
+        layer=".interfaces.IGitesMap"
+        permission="zope2.View"
         />
 
     <browser:resourceDirectory
