@@ -1,5 +1,6 @@
 var googleMapAPI ={
     map : null,
+    infowindow: null,
     markers : {hebergements : {gites: [],
                                chambres: []},
                points : {}},
@@ -15,6 +16,13 @@ var googleMapAPI ={
                         zoom: 7,
                         minZoom: 5,
                    });
+
+        //initialize infowindow
+        this.infowindow = new google.maps.InfoWindow(
+        {
+            size: new google.maps.Size(150,50)
+        });
+
         this.overlay = new google.maps.Polygon();
         services.getPoints(['restaurant']);
         services.getHebergements();
@@ -40,17 +48,20 @@ var googleMapAPI ={
     {
         var type = place.types[0];
         var icon = new google.maps.MarkerImage('++resource++gites.map.images/'+type+'.png');
+        var html;
 
         var location;
 
         // Coming from python
         if (place.latitude !== undefined)
         {
+            html = place.name + place.vicinity;
             location = new google.maps.LatLng(place.latitude, place.longitude);
         }
         // It's a direct google map object
         else
         {
+            html = "<b>" + place.name + "</b><br />" + place.vicinity;
             location = place.geometry.location;
         }
 
@@ -63,6 +74,13 @@ var googleMapAPI ={
         );
 
         marker.checked = true;
+
+        // Add listener for infowindow
+        google.maps.event.addListener(marker, 'click', function() {
+            googleMapAPI.infowindow.setContent(html);
+            googleMapAPI.infowindow.open(googleMapAPI.map,marker);
+        });
+
         googleMapAPI.markers[category][type].push(marker);
     },
 
