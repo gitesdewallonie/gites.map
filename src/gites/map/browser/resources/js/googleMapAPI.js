@@ -40,13 +40,28 @@ var googleMapAPI ={
     {
         var type = place.types[0];
         var icon = new google.maps.MarkerImage('++resource++gites.map.images/'+type+'.png');
+
+        var location;
+
+        // Coming from python
+        if (place.latitude !== undefined)
+        {
+            location = new google.maps.LatLng(place.latitude, place.longitude);
+        }
+        // It's a direct google map object
+        else
+        {
+            location = place.geometry.location;
+        }
+
         var marker = new google.maps.Marker(
             {
                 map : this.map,
-                position : place.geometry.location,
+                position : location,
                 icon:icon
             }
         );
+
         marker.checked = true;
         googleMapAPI.markers[category][type].push(marker);
     },
