@@ -1,5 +1,9 @@
 var belgiumCoords = {
-    world: [],
+    world: [new google.maps.LatLng(41.26303895249619, 22.028125000000045),
+            new google.maps.LatLng(41.26303895249619, -13.128124999999955),
+            new google.maps.LatLng(58.09072156182872, -13.128124999999955),
+            new google.maps.LatLng(58.09072156182872, 22.028125000000045)],
+
     wallonie: [new google.maps.LatLng(50.753598,3.179941),
                new google.maps.LatLng(50.749668,3.185863),
                new google.maps.LatLng(50.74719,3.186293),
@@ -745,6 +749,7 @@ var belgiumCoords = {
                new google.maps.LatLng(50.756144,3.191185),
                new google.maps.LatLng(50.758751,3.186035),
                new google.maps.LatLng(50.75571,3.179855)],
+
     comines: [new google.maps.LatLng(50.709, 2.863),
               new google.maps.LatLng(50.703, 2.870),
               new google.maps.LatLng(50.703, 2.880),
@@ -777,5 +782,5 @@ var belgiumCoords = {
               new google.maps.LatLng(50.751, 2.842),
               new google.maps.LatLng(50.741, 2.853),
               new google.maps.LatLng(50.735, 2.843),
-              new google.maps.LatLng(50.713, 2.869),],
-}
+              new google.maps.LatLng(50.713, 2.869)]
+};
