@@ -55,7 +55,7 @@ var googleMapAPI ={
         // Coming from python
         if (place.latitude !== undefined)
         {
-            html = place.name + place.vicinity;
+            html = place.name + "<br />" + place.vicinity;
             location = new google.maps.LatLng(place.latitude, place.longitude);
         }
         // It's a direct google map object
