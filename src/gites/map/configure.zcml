@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="gites">
+
+<!--  <i18n:registerTranslations directory="locales" />-->
+
+  <five:registerPackage package="." initialize=".initialize" />
+  <include package=".browser" />
+  <include file="profiles.zcml"/>
+
+</configure>

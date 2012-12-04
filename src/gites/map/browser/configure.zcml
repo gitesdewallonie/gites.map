@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="gites">
+
+    <browser:viewlet
+        name="gites.map.hebergements"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
+        class=".viewlets.GitesMapViewlet"
+        layer=".interfaces.IGitesMap"
+        permission="zope.Public"
+        />
+
+</configure>

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<layers>
+    <layer name="gites.map" interface="gites.map.browser.interfaces.IGitesMap" />
+</layers>
