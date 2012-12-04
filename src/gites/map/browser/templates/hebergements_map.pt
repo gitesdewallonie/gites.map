@@ -3,7 +3,7 @@
       i18n:domain="gites">
 
 <body>
-<div metal:define-macro="portlet" tal:define="hebergements view/getHebergements">
+<div metal:define-macro="portlet" tal:define="hebergements view/getAllHebergements">
 
     <script type="text/javascript" tal:content="structure string:
         <!--

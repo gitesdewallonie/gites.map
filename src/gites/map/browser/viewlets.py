@@ -19,20 +19,31 @@ from plone.app.layout.viewlets.common import ViewletBase
 class GitesMapViewlet(ViewletBase):
     render = ViewPageTemplateFile('templates/hebergements_map.pt')
 
-    def getHebergements(self):
+    def getAllHebergements(self):
         """
-        Returns hebs that must be shown on map
+        Returns all hebs that can be shown on map
         """
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
         Hebergement = wrapper.getMapper('hebergement')
+        TypeHebergement = wrapper.getMapper('type_heb')
+        Proprio = wrapper.getMapper('proprio')
         query = session.query(Hebergement)
-        query = query.limit(10)
+        query = query.filter(TypeHebergement.type_heb_pk == Hebergement.heb_typeheb_fk)
+        query = query.filter(Hebergement.heb_site_public == '1')
+        query = query.filter(Proprio.pro_pk == Hebergement.heb_pro_fk)
+        query = query.filter(Proprio.pro_etat == True)
         hebergements = query.all()
         results = []
         for hebergement in hebergements:
-            results.append({'types': ['gites'],
-                            'latitude': hebergement.heb_gps_lat,
-                            'longitude': hebergement.heb_gps_long})
+            hebType = hebergement.type.type_heb_code
+            # chambres : 'CH', 'MH', 'CHECR'
+            # gites    : 'GR', 'GF', 'MT', 'GC', 'MV', 'GRECR', 'GG'
+            typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambres' or 'gites'
+            # XXX we need to invert lat and long for now !!!
+            results.append({'types': [typeStr],
+                            'latitude': hebergement.heb_gps_long,
+                            'longitude': hebergement.heb_gps_lat})
+
         writer = getUtility(IJSONWriter)
         return writer.write(results)
