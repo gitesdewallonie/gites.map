@@ -23,6 +23,14 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        name="utilsView"
+        for="*"
+        class=".utils.UtilsView"
+        layer=".interfaces.IGitesMap"
+        permission="zope2.View"
+        />
+
     <browser:resourceDirectory
         directory="resources/js/"
         layer=".interfaces.IGitesMap"

@@ -3,11 +3,13 @@
       i18n:domain="gites">
 
 <body>
-<div metal:define-macro="portlet" tal:define="hebergements view/getAllHebergements">
+<div metal:define-macro="portlet" tal:define="hebergements view/getAllHebergements;
+                                              autresinfos view/getAllMapData">
 
     <script type="text/javascript" tal:content="structure string:
         <!--
           var hebergementsJSON = ${hebergements};
+          var infosJSON = ${autresinfos};
         -->">
     </script>
 
@@ -15,10 +17,28 @@
     </div>
 
     <div id="menu">
-        <input type="checkbox" name="point_box" value="restaurant" checked> Resto<br />
-        <input type="checkbox" name="point_box" value="florist"> Florist<br />
-        <input type="checkbox" name="hebergement_box" value="gites" checked> Gites (cafe)<br />
-        <input type="checkbox" name="hebergement_box" value="chambres" checked> Chambres (hopital)<br />
+
+        <input type="checkbox" name="hebergement_box" id="gites" value="gites" checked>
+        <label for="gites">Gites</label><br />
+
+        <input type="checkbox" name="hebergement_box" id="chambres" value="chambres" checked>
+        <label for="chambres">Chambres</label><br />
+
+        <input type="checkbox" name="hebergement_box" id="infotouristique" value="infotouristique" checked>
+        <label for="infotouristique">Infos touristiques</label><br />
+
+        <input type="checkbox" name="hebergement_box" id="infopratique" value="infopratique" checked>
+        <label for="infopratique">Infos pratiques</label><br />
+
+        <input type="checkbox" name="hebergement_box" id="maisontourisme" value="maisontourisme" checked>
+        <label for="maisontourisme">Maison du tourisme</label><br />
+
+        <input type="checkbox" name="point_box" id="restaurant" value="restaurant" checked>
+        <label for="restaurant">Resto</label><br />
+
+        <input type="checkbox" name="point_box" id="florist" value="florist">
+        <label for="florist">Florist</label><br />
+
         <input type="button" id="bound_button" value="bound!" />
     </div>
 
