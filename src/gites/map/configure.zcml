@@ -16,4 +16,10 @@
 
   <include file="profiles.zcml"/>
 
+  <adapter
+      for="*"
+      factory=".adapters.HebergementsFetcher"
+      provides=".adapters.IHebergementsFetcher"
+      />
+
 </configure>

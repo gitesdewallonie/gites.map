@@ -12,11 +12,11 @@ Introduction
 Todo
 ====
 
+OK Récupérer les autres infos touristiques
+OK Appelable sur une vue
 - Autobound
-- Appelable sur une vue
+- Terminer le masque wallon
 - Faire la page recherche cartographique (question à Mike : "que faut-il
   sur cette page ?")
-- Terminer le masque wallon
-- Récupérer les autres infos touristiques
+- i18n (dans skin)
 - Corriger les coordonnées
-- i18n dans skin
