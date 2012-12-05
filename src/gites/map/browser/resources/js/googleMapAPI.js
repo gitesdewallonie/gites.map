@@ -1,9 +1,12 @@
 var googleMapAPI ={
     map : null,
     infowindow: null,
-    markers : {hebergements : {gites: [],
-                               chambres: []},
-               points : {}},
+    markers : {primary : {gites: [],
+                               chambres: [],
+                               infotouristique: [],
+                               infopratique: [],
+                               maisontourisme: []},
+               secondary : {}},
 
     overlay : null,
     zoomLimit: 9,
@@ -24,8 +27,9 @@ var googleMapAPI ={
         });
 
         this.overlay = new google.maps.Polygon();
-        services.getPoints(['restaurant']);
-        services.getHebergements();
+
+        // XXX aller chercher ces types directement dans l html de la page (les value des secondary_box) qui sont checked
+//        services.getSecondaryMarkers(['restaurant']);
 
         // Place polygon overlay
         this.overlay = new google.maps.Polygon({
@@ -40,8 +44,9 @@ var googleMapAPI ={
         });
         this.overlay.setMap(this.map);
 
-        services.getHebergements();
+        services.getPrimaryMarkers();
         this.boundToAllMarkers();
+        handlers.initHandlers();
     },
 
 
@@ -85,9 +90,9 @@ var googleMapAPI ={
         googleMapAPI.markers[category][type].push(marker);
     },
 
-    checkPointsMarkersExists: function(nameMarker)
+    checkSecondaryMarkersExists: function(nameMarker)
     {
-       return (this.markers.points[nameMarker] != undefined)?true:false;
+       return (this.markers.secondary[nameMarker] != undefined)?true:false;
     },
 
     manageMarkersVisibility : function()
@@ -100,14 +105,14 @@ var googleMapAPI ={
 
                     switch (category)
                     {
-                    // Hide or show hebergement marker if checkbox checked/unchecked
-                    case 'hebergements':
+                    // Hide or show primary marker if checkbox checked/unchecked
+                    case 'primary':
                         (marker.checked)?marker.setVisible(true):marker.setVisible(false);
                         break;
 
-                    // Hide or show point marker if checkbox checked/unchecked
+                    // Hide or show secondary marker if checkbox checked/unchecked
                     //   or if dezoom to the limit
-                    case 'points':
+                    case 'secondary':
                         if (marker.checked && this.map.zoom > this.zoomLimit)
                         {
                             marker.setVisible(true);
@@ -129,20 +134,19 @@ var googleMapAPI ={
 
     manageCheckboxDisabling : function()
     {
-	
         if (this.map.zoom > this.zoomLimit)
-        // dégriser les checkbox point_box
+        // dégriser les checkbox secondary_box
         {
-            jQuery('input[name="point_box"]').each(function(index, checkBox)
+            jQuery('input[name="secondary_box"]').each(function(index, checkBox)
                 {
                     checkBox.disabled = false;
                 });
         }
 
-        // griser les checkbox point_box cochées si dezoom > limit
+        // griser les checkbox secondary_box cochées si dezoom > limit
         else
         {
-            jQuery('input[name="point_box"]').each(function(index, checkBox)
+            jQuery('input[name="secondary_box"]').each(function(index, checkBox)
                 {
                     checkBox.disabled = true;
                 });

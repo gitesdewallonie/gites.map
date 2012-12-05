@@ -1,42 +1,58 @@
 var services = {
-    getPoints : function(types)
+    getSecondaryMarkers : function(types)
     {
+        // infosJSON coming from the template (python)
         var l = types.length;
         for (var i=0; i < l; i++) {
-            googleMapAPI.markers.points[types[i]]=[];
-            var request = {
-                location:new google.maps.LatLng(50.417,4.450),
-                radius:5000,
-                types:[types[i]]
+            googleMapAPI.markers.secondary[types[i]]=[];
+
+
+            var l = infosJSON.length;
+            for (var j=0; j < l; j++) {
+                if (infosJSON[j].types[0] === types[i])
+                {
+                    googleMapAPI.createMarker(infosJSON[j],
+                                              'secondary');
+                }
             };
-            var service = new google.maps.places.PlacesService(googleMapAPI.map);
-            service.nearbySearch(request, services.callBack_getPoints);
+
+//            var request = {
+//                location:new google.maps.LatLng(50.417,4.450),
+//                radius:5000,
+//                types:[types[i]]
+//            };
+//            var service = new google.maps.places.PlacesService(googleMapAPI.map);
+//            service.nearbySearch(request, services.callBack_getSecondaryMarkers);
         };
 
     },
 
-    callBack_getPoints : function(result,status)
+    callBack_getSecondaryMarkers : function(result,status)
     {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             var l = result.length;
             for (var i=0; i < l; i++) {
-                googleMapAPI.createMarker(result[i], 'points');
+                googleMapAPI.createMarker(result[i], 'secondary');
             };
-            handlers.initHandlers();
         }
     },
 
-    getHebergements : function() //Temporary creating fake gites
+    getPrimaryMarkers : function() //Temporary creating fake gites
     {
         // hebergementsJSON coming from the template (python)
         var l = hebergementsJSON.length;
         for (var i=0; i < l; i++) {
             googleMapAPI.createMarker(hebergementsJSON[i],
-                                      'hebergements');
+                                      'primary');
+        };
+        var l = infosJSON.length;
+        for (var i=0; i < l; i++) {
+            googleMapAPI.createMarker(infosJSON[i],
+                                      'primary');
         };
     },
 
-    callBack_getHebergements : function(result,status)
+    callBack_getPrimaryMarkers : function(result,status)
     {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             var l = result.length;
@@ -52,9 +68,8 @@ var services = {
                     result[i].types = ['chambres'];
                 }
 
-                googleMapAPI.createMarker(result[i], 'hebergements');
+                googleMapAPI.createMarker(result[i], 'primary');
             };
-            handlers.initHandlers();
         }
     }
 };

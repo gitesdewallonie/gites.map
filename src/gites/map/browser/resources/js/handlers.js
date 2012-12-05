@@ -1,8 +1,8 @@
 var handlers = {
     initHandlers : function()
     {
-        jQuery('input[name="point_box"]').bind({'change':this.pointCheckboxHandler});
-        jQuery('input[name="hebergement_box"]').bind({'change':this.hebergementCheckboxHandler});
+        jQuery('input[name="secondary_box"]').bind({'change':this.secondaryCheckboxHandler});
+        jQuery('input[name="primary_box"]').bind({'change':this.primaryCheckboxHandler});
         jQuery('input#bound_button').bind({'click':this.boundHandler});
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
         // google.maps.event.addListener(googleMapAPI.map,'bounds_changed',this.boundsHandler);
@@ -12,24 +12,24 @@ var handlers = {
         googleMapAPI.manageCheckboxDisabling();
     },
 
-    pointCheckboxHandler: function(event)
+    secondaryCheckboxHandler: function(event)
     {
-        if(googleMapAPI.checkPointsMarkersExists(event.target.value))
+        if(googleMapAPI.secondaryMarkersExists(event.target.value))
         {
-            var markersToManage = googleMapAPI.markers.points[event.target.value];
+            var markersToManage = googleMapAPI.markers.secondary[event.target.value];
             var l = markersToManage.length;
             for (var i=0; i < l; i++) {
                 markersToManage[i].checked = jQuery(this).prop('checked');
             };
         } else{
-            services.getPoints([event.target.value]);
+            services.getSecondaryMarkers([event.target.value]);
         }
         googleMapAPI.manageMarkersVisibility();
     },
 
-    hebergementCheckboxHandler: function(event)
+    primaryCheckboxHandler: function(event)
     {
-        var markersToManage = googleMapAPI.markers.hebergements[event.target.value];
+        var markersToManage = googleMapAPI.markers.primary[event.target.value];
         var l = markersToManage.length;
         for (var i=0; i < l; i++) {
             markersToManage[i].checked = jQuery(this).prop('checked');
