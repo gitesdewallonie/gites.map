@@ -17,7 +17,7 @@ var googleMapAPI ={
                         mapTypeId: google.maps.MapTypeId.ROADMAP,
                         center:new google.maps.LatLng(50.417,4.450) ,
                         zoom: 7,
-                        minZoom: 5,
+//                        minZoom: 5,
                    });
 
         //initialize infowindow
@@ -36,11 +36,11 @@ var googleMapAPI ={
             paths: [belgiumCoords.world,
                     belgiumCoords.wallonie,
                     belgiumCoords.comines],
-            strokeColor: "#00FF00",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#00FF00",
-            fillOpacity: 0.35
+            strokeColor: "#50C773",
+            strokeOpacity: 1,
+            strokeWeight: 1,
+            fillColor: "#CEEBD7",
+            fillOpacity: 0.80
         });
         this.overlay.setMap(this.map);
 

@@ -22,3 +22,4 @@ Todo
 + Creer des icones
 - Terminer le masque wallon
 - Corriger les coordonnées
+- i18n (dans gites.skin)

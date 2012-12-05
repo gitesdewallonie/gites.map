@@ -1,8 +1,14 @@
 var belgiumCoords = {
-    world: [new google.maps.LatLng(-40.0, 80.0),
-            new google.maps.LatLng(-40.0, -100.0),
-            new google.maps.LatLng(80.0, -100.0),
-            new google.maps.LatLng(80.0, 80.0)],
+    world: [new google.maps.LatLng(-85.052, 80.0),
+            new google.maps.LatLng(-85.052, -100.0),
+            new google.maps.LatLng(-85.052, -180.0),
+            new google.maps.LatLng(-85.052, 120.0),
+            new google.maps.LatLng(-85.052, 80.001),
+            new google.maps.LatLng(85.052, 80.001),
+            new google.maps.LatLng(85.052, 120.0),
+            new google.maps.LatLng(85.052, -180.0),
+            new google.maps.LatLng(85.052, -100.0),
+            new google.maps.LatLng(85.052, 80.0)],
 
     wallonie: [new google.maps.LatLng(50.753598,3.179941),
                new google.maps.LatLng(50.749668,3.185863),
