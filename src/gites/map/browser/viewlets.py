@@ -14,6 +14,8 @@ from plone.memoize import forever
 from plone.app.layout.viewlets.common import ViewletBase
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from gites.map.adapters import IHebergementsFetcher
+
 
 class GitesMapViewlet(ViewletBase):
     render = ViewPageTemplateFile('templates/hebergements_map.pt')
@@ -21,6 +23,14 @@ class GitesMapViewlet(ViewletBase):
     def _makeJSON(self, obj):
         writer = getUtility(IJSONWriter)
         return writer.write(obj)
+
+    def getHebergements(self):
+        localHebergements = IHebergementsFetcher(self.context)()
+        if localHebergements:
+            return localHebergements
+        else:
+            # XXX temporary
+            return self.getAllHebergements()
 
     @forever.memoize
     def getAllHebergements(self):
@@ -34,6 +44,9 @@ class GitesMapViewlet(ViewletBase):
 
     @forever.memoize
     def getAllMapData(self):
+        """
+        Returns all "other" map data for the map
+        """
         requestView = queryMultiAdapter((self.context, self.request),
                                         name="utilsView")
         maisons = requestView.getMaisonsDuTourisme()
