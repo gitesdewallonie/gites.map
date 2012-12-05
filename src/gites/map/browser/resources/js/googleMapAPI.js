@@ -41,6 +41,7 @@ var googleMapAPI ={
         this.overlay.setMap(this.map);
 
         services.getHebergements();
+        this.boundToAllMarkers();
     },
 
 
