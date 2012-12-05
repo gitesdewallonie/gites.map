@@ -16,10 +16,11 @@ Todo
 + Récupérer les autres infos touristiques
     + mettre au propre les couches (infos sont dans hebergement actuellement alors que ce n'est pas ca)
 + Appelable sur une vue
++ i18n (dans gites.skin)
++ Creer des icones
++ Terminer le masque wallon
+
 - Faire la page recherche cartographique (question à Mike : "que faut-il
   sur cette page ?")
 - Recupérer les autres infos externes
-+ Creer des icones
-- Terminer le masque wallon
 - Corriger les coordonnées
-- i18n (dans gites.skin)

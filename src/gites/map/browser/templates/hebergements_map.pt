@@ -19,19 +19,19 @@
     <div id="menu">
 
         <input type="checkbox" name="primary_box" id="gites" value="gites" checked>
-        <label for="gites">Gites</label><br />
+        <label i18n:translate="Gites" for="gites">Gites</label><br />
 
         <input type="checkbox" name="primary_box" id="chambres" value="chambres" checked>
-        <label for="chambres">Chambres</label><br />
+        <label i18n:translate="Chambres" for="chambres">Chambres</label><br />
 
         <input type="checkbox" name="primary_box" id="infotouristique" value="infotouristique" checked>
-        <label for="infotouristique">Infos touristiques</label><br />
+        <label i18n:translate="Infos_touristiques" for="infotouristique">Infos touristiques</label><br />
 
         <input type="checkbox" name="primary_box" id="infopratique" value="infopratique" checked>
-        <label for="infopratique">Infos pratiques</label><br />
+        <label i18n:translate="Infos_pratiques" for="infopratique">Infos pratiques</label><br />
 
         <input type="checkbox" name="primary_box" id="maisontourisme" value="maisontourisme" checked>
-        <label for="maisontourisme">Maison du tourisme</label><br />
+        <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
 
 <!--        <input type="checkbox" name="secondary_box" id="restaurant" value="restaurant" checked>-->
 <!--        <label for="restaurant">Resto</label><br />-->
