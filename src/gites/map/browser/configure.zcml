@@ -7,7 +7,7 @@
 
     <browser:viewlet
         name="gites.map.hebergements"
-        for=".interfaces.IMappableContent"
+        for="*"
         manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
         class=".viewlets.GitesMapViewlet"
         layer=".interfaces.IGitesMap"

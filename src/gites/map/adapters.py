@@ -8,12 +8,27 @@ class IHebergementsFetcher(Interface):
     """
 
 
-class HebergementsFetcher:
+class HebergementsContentFetcher:
     implements(IHebergementsFetcher)
 
-    def __init__(self, context):
+    def __init__(self, context, view, request):
         self.context = context
+        self.view = view
+        self.request = request
 
     def __call__(self):
-        # self.context
+        # XXX code that fetches hebergements from content
+        return []
+
+
+class HebergementsViewFetcher:
+    implements(IHebergementsFetcher)
+
+    def __init__(self, context, view, request):
+        self.context = context
+        self.view = view
+        self.request = request
+
+    def __call__(self):
+        # XXX code that fetches hebergements from view
         return []

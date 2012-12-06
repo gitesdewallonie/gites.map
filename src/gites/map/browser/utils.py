@@ -6,7 +6,6 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
-from Acquisition import aq_inner
 from sqlalchemy import select
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter
@@ -14,7 +13,7 @@ from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
-from gites.map.browser.interfaces import IMappableContent
+from gites.map.adapters import IHebergementsFetcher
 
 # chambres : 'CH', 'MH', 'CHECR'
 # gites    : 'GR', 'GF', 'MT', 'GC', 'MV', 'GRECR', 'GG'
@@ -27,8 +26,12 @@ class UtilsView(BrowserView):
 
     @instance.memoize
     def shouldShowMapViewlet(self):
-        obj = aq_inner(self.context)
-        return IMappableContent.providedBy(obj)
+        fetcher = queryMultiAdapter((self.context, self, self.request),
+                                    IHebergementsFetcher)
+        if fetcher is None:
+            return False
+        else:
+            return True
 
     def getMaisonsDuTourisme(self):
         wrapper = getSAWrapper('gites_wallons')
@@ -119,7 +122,7 @@ class UtilsView(BrowserView):
             photo = hebergement.getVignette()
             portalUrl = getToolByName(self.context, 'portal_url')()
             photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
-            # XXX temporary photo
+            # XXX temporary photo (no photos on localhost)
             photoUrl = 'http://gitesdewallonie.be/photos_heb/CHECR56011156500.jpg'
             hebUrl = queryMultiAdapter((hebergement, self.request),
                                        name="url")()

@@ -9,8 +9,15 @@ class IGitesMap(IDefaultPloneLayer):
     """
 
 
+class IMappableView(Interface):
+    """
+    Marker interface for views that contain hebergements to show them
+    on the map
+    """
+
+
 class IMappableContent(Interface):
     """
-    Marker interface for content types that contain hebergements to show them
+    Marker interface for contents that contain hebergements to show them
     on the map
     """

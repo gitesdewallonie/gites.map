@@ -20,12 +20,21 @@ from gites.map.adapters import IHebergementsFetcher
 class GitesMapViewlet(ViewletBase):
     render = ViewPageTemplateFile('templates/hebergements_map.pt')
 
+    def available(self):
+        requestView = queryMultiAdapter((self.context, self.request),
+                                        name="utilsView")
+        return requestView.shouldShowMapViewlet()
+
     def _makeJSON(self, obj):
         writer = getUtility(IJSONWriter)
         return writer.write(obj)
 
     def getHebergements(self):
-        localHebergements = IHebergementsFetcher(self.context)()
+        fetcher = queryMultiAdapter((self.context, self.view, self.request),
+                                    IHebergementsFetcher)
+        if fetcher is None:
+            return self._makeJSON([])
+        localHebergements = fetcher()
         if localHebergements:
             return localHebergements
         else:

@@ -1,44 +1,41 @@
-<html xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      i18n:domain="gites">
+<tal:viewlet omit-tag="" condition="view/available">
 
-<body>
-<div tal:define="hebergements view/getHebergements;
-                 autresinfos view/getAllMapData">
+    <div tal:define="hebergements view/getHebergements;
+                     autresinfos view/getAllMapData">
 
-    <script type="text/javascript" tal:content="structure string:
-        <!--
-          var hebergementsJSON = ${hebergements};
-          var infosJSON = ${autresinfos};
-        -->">
-    </script>
+        <script type="text/javascript" tal:content="structure string:
+            <!--
+              var hebergementsJSON = ${hebergements};
+              var infosJSON = ${autresinfos};
+            -->">
+        </script>
 
-    <div id="map_div" >
+        <div id="map_div" >
+        </div>
+
+        <div id="menu">
+
+            <input type="checkbox" name="primary_box" id="gites" value="gites" checked>
+            <label i18n:translate="Gites" for="gites">Gites</label><br />
+
+            <input type="checkbox" name="primary_box" id="chambres" value="chambres" checked>
+            <label i18n:translate="Chambres" for="chambres">Chambres</label><br />
+
+            <input type="checkbox" name="primary_box" id="infotouristique" value="infotouristique" checked>
+            <label i18n:translate="Infos_touristiques" for="infotouristique">Infos touristiques</label><br />
+
+            <input type="checkbox" name="primary_box" id="infopratique" value="infopratique" checked>
+            <label i18n:translate="Infos_pratiques" for="infopratique">Infos pratiques</label><br />
+
+            <input type="checkbox" name="primary_box" id="maisontourisme" value="maisontourisme" checked>
+            <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
+
+    <!--        <input type="checkbox" name="secondary_box" id="restaurant" value="restaurant" checked>-->
+    <!--        <label for="restaurant">Resto</label><br />-->
+
+            <input type="button" id="bound_button" value="bound!" />
+        </div>
+
     </div>
 
-    <div id="menu">
-
-        <input type="checkbox" name="primary_box" id="gites" value="gites" checked>
-        <label i18n:translate="Gites" for="gites">Gites</label><br />
-
-        <input type="checkbox" name="primary_box" id="chambres" value="chambres" checked>
-        <label i18n:translate="Chambres" for="chambres">Chambres</label><br />
-
-        <input type="checkbox" name="primary_box" id="infotouristique" value="infotouristique" checked>
-        <label i18n:translate="Infos_touristiques" for="infotouristique">Infos touristiques</label><br />
-
-        <input type="checkbox" name="primary_box" id="infopratique" value="infopratique" checked>
-        <label i18n:translate="Infos_pratiques" for="infopratique">Infos pratiques</label><br />
-
-        <input type="checkbox" name="primary_box" id="maisontourisme" value="maisontourisme" checked>
-        <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
-
-<!--        <input type="checkbox" name="secondary_box" id="restaurant" value="restaurant" checked>-->
-<!--        <label for="restaurant">Resto</label><br />-->
-
-        <input type="button" id="bound_button" value="bound!" />
-    </div>
-
-</div>
-</body>
-</html>
+</tal:viewlet>
