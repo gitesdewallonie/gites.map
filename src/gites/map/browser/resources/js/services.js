@@ -16,13 +16,13 @@ var services = {
                 }
             };
 
-//            var request = {
-//                location:new google.maps.LatLng(50.417,4.450),
-//                radius:5000,
-//                types:[types[i]]
-//            };
-//            var service = new google.maps.places.PlacesService(googleMapAPI.map);
-//            service.nearbySearch(request, services.callBack_getSecondaryMarkers);
+            var request = {
+                location:new google.maps.LatLng(50.417,4.450),
+                radius:5000,
+                types:[types[i]]
+            };
+            var service = new google.maps.places.PlacesService(googleMapAPI.map);
+            service.nearbySearch(request, services.callBack_getSecondaryMarkers);
         };
 
     },

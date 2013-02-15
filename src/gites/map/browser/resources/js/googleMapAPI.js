@@ -29,7 +29,7 @@ var googleMapAPI ={
         this.overlay = new google.maps.Polygon();
 
         // XXX aller chercher ces types directement dans l html de la page (les value des secondary_box) qui sont checked
-//        services.getSecondaryMarkers(['restaurant']);
+        services.getSecondaryMarkers(['restaurant']);
 
         // Place polygon overlay
         this.overlay = new google.maps.Polygon({
