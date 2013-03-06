@@ -23,7 +23,7 @@
       />
 
   <adapter
-      for="Products.CMFCore.interfaces.IContentish
+      for="gites.core.interfaces.IHebergementFolder
            gites.map.browser.interfaces.IMappableView
            zope.publisher.interfaces.browser.IBrowserRequest"
       factory=".adapters.HebergementsViewFetcher"
