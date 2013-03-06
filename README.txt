@@ -21,7 +21,5 @@ Todo
 + Creer des icones
 + Terminer le masque wallon
 
-- Faire la page recherche cartographique (question à Mike : "que faut-il
-  sur cette page ?")
 - Recupérer les autres infos externes
 - Corriger les coordonnées

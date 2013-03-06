@@ -25,8 +25,10 @@ class UtilsView(BrowserView):
     """
 
     @instance.memoize
-    def shouldShowMapViewlet(self):
-        fetcher = queryMultiAdapter((self.context, self, self.request),
+    def shouldShowMapViewlet(self, view=None):
+        if view is None:
+            view = self
+        fetcher = queryMultiAdapter((self.context, view, self.request),
                                     IHebergementsFetcher)
         if fetcher is None:
             return False

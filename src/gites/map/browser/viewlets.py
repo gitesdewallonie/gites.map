@@ -21,11 +21,9 @@ class GitesMapViewlet(ViewletBase):
     render = ViewPageTemplateFile('templates/hebergements_map.pt')
 
     def available(self):
-        #XXX test poc
-        return True
         requestView = queryMultiAdapter((self.context, self.request),
                                         name="utilsView")
-        return requestView.shouldShowMapViewlet()
+        return requestView.shouldShowMapViewlet(view=self.view)
 
     def _makeJSON(self, obj):
         writer = getUtility(IJSONWriter)
