@@ -13,7 +13,7 @@ from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
-from gites.map.adapters import IHebergementsFetcher
+from gites.core.interfaces import IHebergementsFetcher
 
 # chambres : 'CH', 'MH', 'CHECR'
 # gites    : 'GR', 'GF', 'MT', 'GC', 'MV', 'GRECR', 'GG'

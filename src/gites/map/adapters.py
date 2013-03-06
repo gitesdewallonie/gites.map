@@ -1,33 +1,22 @@
 # -*- coding: utf-8 -*-
-from zope.interface import Interface, implements
+import grokcore.component as grok
+from zope.interface import Interface
+from zope.publisher.interfaces.browser import IBrowserRequest
+from Products.CMFCore.interfaces import IContentish
+from gites.map.browser.interfaces import IMappableView, IMappableContent
+from gites.core.adapters.hebergementsfetcher import BaseHebergementsFetcher
 
 
-class IHebergementsFetcher(Interface):
-    """
-    Interface to fetch context/view related hebergements
-    """
-
-
-class HebergementsContentFetcher:
-    implements(IHebergementsFetcher)
-
-    def __init__(self, context, view, request):
-        self.context = context
-        self.view = view
-        self.request = request
+class HebergementsContentFetcher(BaseHebergementsFetcher):
+    grok.adapts(IMappableContent, Interface, IBrowserRequest)
 
     def __call__(self):
         # XXX code that fetches hebergements from content
         return []
 
 
-class HebergementsViewFetcher:
-    implements(IHebergementsFetcher)
-
-    def __init__(self, context, view, request):
-        self.context = context
-        self.view = view
-        self.request = request
+class HebergementsViewFetcher(BaseHebergementsFetcher):
+    grok.adapts(IContentish, IMappableView, IBrowserRequest)
 
     def __call__(self):
         # XXX code that fetches hebergements from view

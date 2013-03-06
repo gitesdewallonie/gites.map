@@ -14,7 +14,7 @@ from plone.memoize import forever
 from plone.app.layout.viewlets.common import ViewletBase
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from gites.map.adapters import IHebergementsFetcher
+from gites.core.interfaces import IHebergementsFetcher
 
 
 class GitesMapViewlet(ViewletBase):
