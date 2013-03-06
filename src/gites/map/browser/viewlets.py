@@ -23,8 +23,7 @@ class GitesMapViewlet(ViewletBase):
     def available(self):
         requestView = queryMultiAdapter((self.context, self.request),
                                         name="utilsView")
-
-        return requestView.shouldShowMapViewlet()
+        return requestView.shouldShowMapViewlet(view=self.view)
 
     def _makeJSON(self, obj):
         writer = getUtility(IJSONWriter)

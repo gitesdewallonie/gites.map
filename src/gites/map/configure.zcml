@@ -23,7 +23,7 @@
       />
 
   <adapter
-      for="gites.core.interfaces.IHebergementFolder
+      for="zope.interface.Interface
            gites.map.browser.interfaces.IMappableView
            zope.publisher.interfaces.browser.IBrowserRequest"
       factory=".adapters.HebergementsViewFetcher"
