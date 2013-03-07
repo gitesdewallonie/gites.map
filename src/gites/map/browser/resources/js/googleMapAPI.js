@@ -1,6 +1,7 @@
 var googleMapAPI ={
     map : null,
     infowindow: null,
+    wallonieCenter: new google.maps.LatLng(50.401078, 5.133648),
     markers : {primary : {gites: [],
                                chambres: [],
                                infotouristique: [],
@@ -15,7 +16,7 @@ var googleMapAPI ={
     {
         this.map =  new google.maps.Map(jQuery('#map_div')[0], {
                         mapTypeId: google.maps.MapTypeId.ROADMAP,
-                        center:new google.maps.LatLng(50.417,4.450) ,
+                        center: googleMapAPI.wallonieCenter,
                         zoom: 7,
 //                        minZoom: 5,
                    });
