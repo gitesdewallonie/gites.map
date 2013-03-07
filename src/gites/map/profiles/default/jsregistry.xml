@@ -6,7 +6,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'fr') == 'fr'"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'fr'"
         id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=fr"
         inline="False"/>
 
@@ -24,7 +24,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'de') == 'de'"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'de'"
         id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=de"
         inline="False"/>
 
@@ -33,7 +33,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'it') == 'it'"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'it'"
         id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=it"
         inline="False"/>
 
@@ -42,7 +42,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'nl') == 'nl'"
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'nl'"
         id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=nl"
         inline="False"/>
 
