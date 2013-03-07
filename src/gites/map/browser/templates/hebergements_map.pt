@@ -1,6 +1,5 @@
 <tal:viewlet omit-tag="" condition="view/available">
 
-    XXXTEST BLABLABLA
     <div tal:define="hebergements view/getHebergements;
                      autresinfos view/getAllMapData">
 

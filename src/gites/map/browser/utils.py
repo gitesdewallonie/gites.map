@@ -30,6 +30,7 @@ class UtilsView(BrowserView):
             view = self
         fetcher = queryMultiAdapter((self.context, view, self.request),
                                     IHebergementsFetcher)
+        #XXX ne marche pas avec les jsregistry expressions actuelles
         if fetcher is None:
             return False
         else:
