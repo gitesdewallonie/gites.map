@@ -14,7 +14,7 @@ var handlers = {
 
     secondaryCheckboxHandler: function(event)
     {
-        if(googleMapAPI.secondaryMarkersExists(event.target.value))
+        if(googleMapAPI.checkSecondaryMarkersExists(event.target.value))
         {
             var markersToManage = googleMapAPI.markers.secondary[event.target.value];
             var l = markersToManage.length;

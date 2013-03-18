@@ -17,8 +17,8 @@ var services = {
             };
 
             var request = {
-                location: googleMapAPI.defaultCenter,
-                radius: 5000,
+                location: googleMapAPI.map.center,
+                radius: 10000,
                 types: [types[i]]
             };
             var service = new google.maps.places.PlacesService(googleMapAPI.map);

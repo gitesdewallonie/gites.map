@@ -12,7 +12,9 @@ ALLCHECKBOXES = ['gites',
                  'infotouristique',
                  'infopratique',
                  'maisontourisme',
-                 'restaurant']
+                 'restaurant',
+                 'evenementquefaire',
+                 'bakery']
 
 
 class HebergementsContentFetcher(BaseHebergementsFetcher):

@@ -126,6 +126,32 @@ class UtilsView(BrowserView):
                                                   request=self.request))
         return results
 
+    def getQuefaireEvents(self):
+        """
+        get events from quefaire.be service
+
+        XXX recuperer les infos de quefaire.be
+        apparement on partira sur recuperer et mettre a jour une table en locale qu'on ira requeter ensuite
+        """
+        return [{'types': ['evenementquefaire'],
+                'name': 'evenemtn que faire',
+                'vicinity': 'barrrr',
+                'latitude': 0,
+                'longitude': 0}]
+
+    def getRestos(self):
+        """
+        get restos from resto.be service
+
+        XXX recuperer les infos de resto.be
+        apparement on partira sur recuperer les infos via leur webservice directement
+        """
+        return [{'types': ['restaurant'],
+                'name': 'fooooo',
+                'vicinity': 'barrrr',
+                'latitude': 1,
+                'longitude': 0}]
+
 
 def hebergementToMapObject(hebergement, context, request):
     """

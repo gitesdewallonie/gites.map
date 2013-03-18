@@ -76,4 +76,6 @@ class GitesMapViewlet(ViewletBase):
         maisons = requestView.getMaisonsDuTourisme()
         infosPrat = requestView.getInfosPratiques()
         infosTour = requestView.getInfosTouristiques()
-        return self._makeJSON(maisons + infosPrat + infosTour)
+        quefaireEvents = requestView.getQuefaireEvents()
+        restos = requestView.getRestos()
+        return self._makeJSON(maisons + infosPrat + infosTour + quefaireEvents + restos)

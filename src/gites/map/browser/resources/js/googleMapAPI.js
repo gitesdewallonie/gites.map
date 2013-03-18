@@ -5,11 +5,14 @@ var googleMapAPI ={
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
     defaultZoom: 7,
     markers : {primary : {gites: [],
-                               chambres: [],
-                               infotouristique: [],
-                               infopratique: [],
-                               maisontourisme: []},
-               secondary : {}},
+                          chambres: [],
+                          infotouristique: [],
+                          infopratique: [],
+                          maisontourisme: [],
+                          restaurant: [],
+                          evenementquefaire: []},
+               //XXX secondary doivent etre les infos google
+               secondary : {bakery: []}},
 
     overlay : null,
     zoomLimit: 9,
@@ -17,14 +20,7 @@ var googleMapAPI ={
     initialize : function()
     {
         var mapInfos = services.getMapInfos();
-        if (mapInfos.zoom !== null)
-        {
-            var zoom = mapInfos.zoom;
-        }
-        else
-        {
-            var zoom = googleMapAPI.defaultZoom;
-        }
+        var zoom = (mapInfos.zoom !== null)?mapInfos.zoom:googleMapAPI.defaultZoom;
 
         if (mapInfos.center !== null)
         {
@@ -51,7 +47,7 @@ var googleMapAPI ={
         this.overlay = new google.maps.Polygon();
 
         // XXX aller chercher ces types directement dans l html de la page (les value des secondary_box) qui sont checked
-        services.getSecondaryMarkers(['restaurant']);
+        services.getSecondaryMarkers(['bakery']);
 
         // Place polygon overlay
         this.overlay = new google.maps.Polygon({
@@ -70,7 +66,6 @@ var googleMapAPI ={
 //        this.boundToAllMarkers();
         handlers.initHandlers();
     },
-
 
     createMarker : function(place, category)
     {
@@ -195,5 +190,10 @@ var googleMapAPI ={
         {
             this.map.fitBounds(bound);
         }
-    }
+    },
+
+    checkSecondaryMarkersExists: function(nameMarker)
+    {
+        return (this.markers.secondary[nameMarker] != undefined)?true:false;
+    },
 };

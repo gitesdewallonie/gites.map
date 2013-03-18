@@ -5,6 +5,8 @@ Introduction
 
 Must implements IMappableView or IMappableContent to see the map
 
+See adapters.py for specific code and types
+
 Todo
 ====
 

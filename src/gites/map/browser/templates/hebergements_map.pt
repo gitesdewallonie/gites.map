@@ -44,8 +44,18 @@
             </tal:if>
 
             <tal:if condition="python: 'restaurant' in checkboxes">
-                <input type="checkbox" name="secondary_box" id="restaurant" value="restaurant" checked>
+                <input type="checkbox" name="primary_box" id="restaurant" value="restaurant" checked>
                 <label i18n:translate="Restaurants" for="restaurant">Restaurants</label><br />
+            </tal:if>
+
+            <tal:if condition="python: 'evenementquefaire' in checkboxes">
+                <input type="checkbox" name="primary_box" id="evenementquefaire" value="evenementquefaire" checked>
+                <label i18n:translate="Evenements" for="evenementquefaire">&Eacute;v&eacute;nements</label><br />
+            </tal:if>
+
+            <tal:if condition="python: 'bakery' in checkboxes">
+                <input type="checkbox" name="secondary_box" id="bakery" value="bakery" checked>
+                <label i18n:translate="bakery" for="bakery">bakery</label><br />
             </tal:if>
 
             <input type="button" id="bound_button" value="bound!" />
