@@ -10,7 +10,6 @@ $Id: viewlets.py 4587 2012-12-04 schminitz
 
 from z3c.json.interfaces import IJSONWriter
 from zope.component import getUtility, queryMultiAdapter
-from plone.memoize import forever
 from plone.app.layout.viewlets.common import ViewletBase
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -34,14 +33,31 @@ class GitesMapViewlet(ViewletBase):
                                     IHebergementsFetcher)
         if fetcher is None:
             return self._makeJSON([])
-        localHebergements = fetcher()
+        localHebergements = fetcher.fetch()
         if localHebergements:
-            return localHebergements
+            return self._makeJSON(localHebergements)
         else:
             # XXX temporary
             return self.getAllHebergements()
 
-    @forever.memoize
+    def getCheckboxes(self):
+        """
+        get list of checkbox id that have to be showned here
+        """
+        fetcher = queryMultiAdapter((self.context, self.view, self.request),
+                                    IHebergementsFetcher)
+        checkBoxes = fetcher.checkBoxes()
+        return checkBoxes
+
+    def getMapInfos(self):
+        """
+        get info of default zoom and map center depending on context
+        """
+        fetcher = queryMultiAdapter((self.context, self.view, self.request),
+                                    IHebergementsFetcher)
+        mapInfos = fetcher.mapInfos()
+        return self._makeJSON(mapInfos)
+
     def getAllHebergements(self):
         """
         Returns all hebs that can be shown on map
@@ -51,7 +67,6 @@ class GitesMapViewlet(ViewletBase):
         results = requestView.getAllHebergements()
         return self._makeJSON(results)
 
-    @forever.memoize
     def getAllMapData(self):
         """
         Returns all "other" map data for the map

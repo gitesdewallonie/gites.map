@@ -113,6 +113,7 @@ class UtilsView(BrowserView):
         query = session.query(Hebergement)
         query = query.filter(TypeHebergement.type_heb_pk == Hebergement.heb_typeheb_fk)
         query = query.filter(Hebergement.heb_site_public == '1')
+        query = query.filter(Hebergement.heb_etat == '1')
         query = query.filter(Proprio.pro_pk == Hebergement.heb_pro_fk)
         query = query.filter(Proprio.pro_etat == True)
         hebergements = query.all()
@@ -120,32 +121,40 @@ class UtilsView(BrowserView):
 
         results = []
         for hebergement in hebergements:
-            hebType = hebergement.type.type_heb_code
-            typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambres' or 'gites'
-            photo = hebergement.getVignette()
-            portalUrl = getToolByName(self.context, 'portal_url')()
-            photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
-            # XXX temporary photo (no photos on localhost)
-            photoUrl = 'http://gitesdewallonie.be/photos_heb/CHECR56011156500.jpg'
-            hebUrl = queryMultiAdapter((hebergement, self.request),
-                                       name="url")()
-            hebName = hebergement.heb_nom
-            title = '<a href="%s" title="%s">%s</a>' % (hebUrl, hebName, hebName)
-            bodyText = """%s
-                          <br />
-                          <img src="%s" />
-                          <br />
-                          <img src="%s" />
-                          %s/%s""" \
-                          % (hebergement.heb_localite,
-                             photoUrl,
-                             '%s/++resource++gites.map.images/capacity.png' % portalUrl,
-                             hebergement.heb_cgt_cap_min,
-                             hebergement.heb_cgt_cap_max)
-            # XXX we need to invert lat and long for now !!!
-            results.append({'types': [typeStr],
-                            'name': title,
-                            'vicinity': bodyText,
-                            'latitude': hebergement.heb_gps_long,
-                            'longitude': hebergement.heb_gps_lat})
+            results.append(hebergementToMapObject(hebergement=hebergement,
+                                                  context=self.context,
+                                                  request=self.request))
         return results
+
+
+def hebergementToMapObject(hebergement, context, request):
+    """
+    Transform an hebergement into an object used on the map
+    """
+    hebType = hebergement.type.type_heb_code
+    typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambres' or 'gites'
+    photo = hebergement.getVignette()
+    portalUrl = getToolByName(context, 'portal_url')()
+    photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
+    # XXX temporary photo (no photos on localhost)
+    photoUrl = 'http://www.gitesdewallonie.be/vignettes_heb/GR9100523900.jpg'
+    hebUrl = queryMultiAdapter((hebergement, request), name="url")()
+    hebName = hebergement.heb_nom
+    title = '<a href="%s" title="%s">%s</a>' % (hebUrl, hebName, hebName)
+    bodyText = """%s
+                    <br />
+                    <img src="%s" />
+                    <br />
+                    <img src="%s" />
+                    %s/%s""" \
+                    % (hebergement.heb_localite,
+                       photoUrl,
+                       '%s/++resource++gites.map.images/capacity.png' % portalUrl,
+                       hebergement.heb_cgt_cap_min,
+                       hebergement.heb_cgt_cap_max)
+    # XXX we need to invert lat and long for now !!!
+    return {'types': [typeStr],
+            'name': title,
+            'vicinity': bodyText,
+            'latitude': hebergement.heb_gps_long,
+            'longitude': hebergement.heb_gps_lat}

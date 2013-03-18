@@ -1,12 +1,15 @@
 <tal:viewlet omit-tag="" condition="view/available">
 
     <div tal:define="hebergements view/getHebergements;
-                     autresinfos view/getAllMapData">
+                     autresinfos view/getAllMapData;
+                     mapInfos view/getMapInfos;
+                     checkboxes view/getCheckboxes">
 
         <script type="text/javascript" tal:content="structure string:
             <!--
               var hebergementsJSON = ${hebergements};
               var infosJSON = ${autresinfos};
+              var mapInfosJSON = ${mapInfos};
             -->">
         </script>
 
@@ -15,23 +18,35 @@
 
         <div id="menu">
 
-            <input type="checkbox" name="primary_box" id="gites" value="gites" checked>
-            <label i18n:translate="Gites" for="gites">Gites</label><br />
+            <tal:if condition="python: 'gites' in checkboxes">
+                <input type="checkbox" name="primary_box" id="gites" value="gites" checked>
+                <label i18n:translate="Gites" for="gites">Gites</label><br />
+            </tal:if>
 
-            <input type="checkbox" name="primary_box" id="chambres" value="chambres" checked>
-            <label i18n:translate="Chambres" for="chambres">Chambres</label><br />
+            <tal:if condition="python: 'chambres' in checkboxes">
+                <input type="checkbox" name="primary_box" id="chambres" value="chambres" checked>
+                <label i18n:translate="Chambres" for="chambres">Chambres</label><br />
+            </tal:if>
 
-            <input type="checkbox" name="primary_box" id="infotouristique" value="infotouristique" checked>
-            <label i18n:translate="Infos_touristiques" for="infotouristique">Infos touristiques</label><br />
+            <tal:if condition="python: 'infotouristique' in checkboxes">
+                <input type="checkbox" name="primary_box" id="infotouristique" value="infotouristique" checked>
+                <label i18n:translate="Infos_touristiques" for="infotouristique">Infos touristiques</label><br />
+            </tal:if>
 
-            <input type="checkbox" name="primary_box" id="infopratique" value="infopratique" checked>
-            <label i18n:translate="Infos_pratiques" for="infopratique">Infos pratiques</label><br />
+            <tal:if condition="python: 'infopratique' in checkboxes">
+                <input type="checkbox" name="primary_box" id="infopratique" value="infopratique" checked>
+                <label i18n:translate="Infos_pratiques" for="infopratique">Infos pratiques</label><br />
+            </tal:if>
 
-            <input type="checkbox" name="primary_box" id="maisontourisme" value="maisontourisme" checked>
-            <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
+            <tal:if condition="python: 'maisontourisme' in checkboxes">
+                <input type="checkbox" name="primary_box" id="maisontourisme" value="maisontourisme" checked>
+                <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
+            </tal:if>
 
-            <input type="checkbox" name="secondary_box" id="restaurant" value="restaurant" checked>
-            <label for="restaurant">Resto</label><br />
+            <tal:if condition="python: 'restaurant' in checkboxes">
+                <input type="checkbox" name="secondary_box" id="restaurant" value="restaurant" checked>
+                <label i18n:translate="Restaurants" for="restaurant">Restaurants</label><br />
+            </tal:if>
 
             <input type="button" id="bound_button" value="bound!" />
         </div>

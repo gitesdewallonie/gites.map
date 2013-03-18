@@ -1,7 +1,9 @@
 var googleMapAPI ={
     map : null,
     infowindow: null,
-    wallonieCenter: new google.maps.LatLng(50.401078, 5.133648),
+    //Wallonie center
+    defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
+    defaultZoom: 7,
     markers : {primary : {gites: [],
                                chambres: [],
                                infotouristique: [],
@@ -14,11 +16,30 @@ var googleMapAPI ={
 
     initialize : function()
     {
+        var mapInfos = services.getMapInfos();
+        if (mapInfos.zoom !== null)
+        {
+            var zoom = mapInfos.zoom;
+        }
+        else
+        {
+            var zoom = googleMapAPI.defaultZoom;
+        }
+
+        if (mapInfos.center !== null)
+        {
+            var center = new google.maps.LatLng(mapInfos.center.latitude, mapInfos.center.longitude);
+        }
+        else
+        {
+            var center = googleMapAPI.defaultCenter;
+        }
+
         this.map =  new google.maps.Map(jQuery('#map_div')[0], {
                         mapTypeId: google.maps.MapTypeId.ROADMAP,
-                        center: googleMapAPI.wallonieCenter,
-                        zoom: 7,
-//                        minZoom: 5,
+                        center: center,
+                        zoom: zoom,
+//                        minZoom: googleMapAPI.zoomLimit,
                    });
 
         //initialize infowindow
@@ -46,7 +67,7 @@ var googleMapAPI ={
         this.overlay.setMap(this.map);
 
         services.getPrimaryMarkers();
-        this.boundToAllMarkers();
+//        this.boundToAllMarkers();
         handlers.initHandlers();
     },
 

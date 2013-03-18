@@ -7,8 +7,8 @@ var services = {
             googleMapAPI.markers.secondary[types[i]]=[];
 
 
-            var l = infosJSON.length;
-            for (var j=0; j < l; j++) {
+            var infosJSONLength = infosJSON.length;
+            for (var j=0; j < infosJSONLength; j++) {
                 if (infosJSON[j].types[0] === types[i])
                 {
                     googleMapAPI.createMarker(infosJSON[j],
@@ -17,7 +17,7 @@ var services = {
             };
 
             var request = {
-                location: googleMapAPI.wallonieCenter,
+                location: googleMapAPI.defaultCenter,
                 radius: 5000,
                 types: [types[i]]
             };
@@ -71,5 +71,12 @@ var services = {
                 googleMapAPI.createMarker(result[i], 'primary');
             };
         }
+    },
+
+    getMapInfos : function() //Get default zoom level depending on context
+    {
+        // mapInfosJSON coming from the template (python)
+        return mapInfosJSON;
     }
+
 };
