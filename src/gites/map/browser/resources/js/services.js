@@ -1,24 +1,16 @@
 var services = {
     getSecondaryMarkers : function(types)
     {
+        // XXX gerer le batch google
+
         // infosJSON coming from the template (python)
         var l = types.length;
         for (var i=0; i < l; i++) {
 
-            // No secondary coming from python anymore
-//            var infosJSONLength = infosJSON.length;
-//            for (var j=0; j < infosJSONLength; j++) {
-//                if (infosJSON[j].types[0] === types[i])
-//                {
-//                    googleMapAPI.createMarker(infosJSON[j],
-//                                              'secondary');
-//                }
-//            };
-
             var request = {
                 location: googleMapAPI.map.center,
                 radius: 10000,
-                types: [types[i]]
+                types: [types[i]],
             };
             var service = new google.maps.places.PlacesService(googleMapAPI.map);
             service.nearbySearch(request, services.callBack_getSecondaryMarkers);

@@ -5,16 +5,34 @@ var googleMapAPI ={
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
     defaultZoom: 7,
     markers : {primary : {gites: [],
-                          chambres: [],
-                          infotouristique: [],
-                          infopratique: [],
-                          maisontourisme: [],
-                          restaurant: [],
-                          evenementquefaire: []},
-               //XXX secondary doivent etre les infos google
-               secondary : {bakery: [],
-                            art_gallery: [],
-                            casino: []}},
+        chambres: [],
+        infotouristique: [],
+        infopratique: [],
+        maisontourisme: [],
+        restaurant: [],
+        evenementquefaire: []},
+    secondary : {transport: [],
+        culte: [],
+        commerce: [],
+        night: [],
+        entertainment: [],
+        city_hall: [],
+        art_gallery: [],
+        casino: [],
+        library: [],
+        park: [],
+        spa: []}},
+    subCategories: {transport: ['airport', 'bus_station'],
+        culte: ['church', 'mosque', 'synagogue'],
+        commerce: ['book_store', 'shopping_mall', 'store', 'bakery', 'grocery_or_supermarket'],
+        night: ['bar', 'cafe', 'night_club'],
+        entertainment: ['amusement_park', 'aquarium', 'museum', 'zoo'],
+        city_hall: ['city_hall'],
+        art_gallery: ['art_gallery'],
+        casino: ['casino'],
+        library: ['library'],
+        park: ['park'],
+        spa: ['spa']},
 
     overlay : null,
     zoomLimit: 9,
@@ -34,32 +52,25 @@ var googleMapAPI ={
         }
 
         this.map =  new google.maps.Map(jQuery('#map_div')[0], {
-                        mapTypeId: google.maps.MapTypeId.ROADMAP,
-                        center: center,
-                        zoom: zoom,
-//                        minZoom: googleMapAPI.zoomLimit,
-                   });
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: center,
+            zoom: zoom,
+            //                        minZoom: googleMapAPI.zoomLimit,
+        });
 
         //initialize infowindow
         this.infowindow = new google.maps.InfoWindow(
-        {
-            size: new google.maps.Size(150,50)
-        });
+                {
+                    size: new google.maps.Size(150,50)
+                });
 
         this.overlay = new google.maps.Polygon();
-
-        // XXX aller chercher ces types directement dans l html de la page (les value des secondary_box) qui sont checked
-//        var secondaryTypes = [];
-//        for (var type in this.markers['secondary']) {
-//            secondaryTypes.push(services.getSecondaryMarkers([type]));
-//        }
-//        services.getSecondaryMarkers(secondaryTypes);
 
         // Place polygon overlay
         this.overlay = new google.maps.Polygon({
             paths: [belgiumCoords.world,
-                    belgiumCoords.wallonie,
-                    belgiumCoords.comines],
+            belgiumCoords.wallonie,
+            belgiumCoords.comines],
             strokeColor: "#50C773",
             strokeOpacity: 1,
             strokeWeight: 1,
@@ -69,13 +80,47 @@ var googleMapAPI ={
         this.overlay.setMap(this.map);
 
         services.getPrimaryMarkers();
-//        this.boundToAllMarkers();
+        //        this.boundToAllMarkers();
         handlers.initHandlers();
     },
 
     createMarker : function(place, category)
     {
-        var type = place.types[0];
+        // XXX ne pas creer un marker s il existe déjà dans googleMapAPI.markers !
+
+        // Get the right type we want the marker to be added in
+        if (category === 'secondary')
+        {
+            var type = undefined;
+            var l = place.types.length;
+            breakhere:
+                for (var i=0; i < l; i++)
+                {
+                    for (var subCategory in googleMapAPI.subCategories)
+                    {
+                        var l2 = googleMapAPI.subCategories[subCategory].length;
+                        for (var j=0; j < l2; j++)
+                        {
+                            if (place.types[i] === googleMapAPI.subCategories[subCategory][j])
+                            {
+                                type = subCategory;
+                                break breakhere;
+                            }
+                        }
+
+                    }
+                }
+        }
+        else
+        {
+            type = place.types[0];
+        }
+        if (type === undefined)
+        {
+            // If no type found (must never append)
+            return;
+        }
+
         var icon = new google.maps.MarkerImage('++resource++gites.map.images/'+type+'.png');
         var html;
 
@@ -95,12 +140,12 @@ var googleMapAPI ={
         }
 
         var marker = new google.maps.Marker(
-            {
-                map : this.map,
-                position : location,
-                icon:icon
-            }
-        );
+                {
+                    map : this.map,
+            position : location,
+            icon:icon
+                }
+                );
 
         marker.checked = true;
 
@@ -124,60 +169,62 @@ var googleMapAPI ={
 
                     switch (category)
                     {
-                    // Hide or show primary marker if checkbox checked/unchecked
-                    case 'primary':
-                        (marker.checked)?marker.setVisible(true):marker.setVisible(false);
-                        break;
+                        // Hide or show primary marker if checkbox checked/unchecked
+                        case 'primary':
+                            (marker.checked)?marker.setVisible(true):marker.setVisible(false);
+                            break;
 
-                    // Hide or show secondary marker if checkbox checked/unchecked
-                    //   or if dezoom to the limit
-                    case 'secondary':
-                        if (marker.checked && this.map.zoom > this.zoomLimit)
-                        {
-                            marker.setVisible(true);
-                        }
-                        else if (marker.checked && this.map.zoom <= this.zoomLimit)
-                        {
-                            marker.setVisible(false);
-                        }
-                        else
-                        {
-                            marker.setVisible(false);
-                        }
-                        break;
+                            // Hide or show secondary marker if checkbox checked/unchecked
+                            //   or if dezoom to the limit
+                        case 'secondary':
+                            if (marker.checked && this.map.zoom > this.zoomLimit)
+                            {
+                                marker.setVisible(true);
+                            }
+                            else if (marker.checked && this.map.zoom <= this.zoomLimit)
+                            {
+                                marker.setVisible(false);
+                            }
+                            else
+                            {
+                                marker.setVisible(false);
+                            }
+                            break;
                     }
                 };
             }
         }
     },
 
-    setMarkersVisibility : function(category, type, visibility)
+    deleteSecondaryMarkersByType : function(type)
     {
         // Hide given markers
-        var l = googleMapAPI.markers[category][type].length;
+        var l = googleMapAPI.markers['secondary'][type].length;
         for (var i=0; i < l; i++) {
-            googleMapAPI.markers[category][type][i].setVisible(visibility);
+            googleMapAPI.markers['secondary'][type][i].setVisible(false);
         }
+        // Remove marker
+        googleMapAPI.markers['secondary'][type] = [];
     },
 
     manageCheckboxDisabling : function()
     {
         if (this.map.zoom > this.zoomLimit)
-        // dégriser les checkbox secondary_box
+            // dégriser les checkbox secondary_box
         {
             jQuery('input[name="secondary_box"]').each(function(index, checkBox)
-                {
-                    checkBox.disabled = false;
-                });
+                    {
+                        checkBox.disabled = false;
+                    });
         }
 
         // griser les checkbox secondary_box cochées si dezoom > limit
         else
         {
             jQuery('input[name="secondary_box"]').each(function(index, checkBox)
-                {
-                    checkBox.disabled = true;
-                });
+                    {
+                        checkBox.disabled = true;
+                    });
         }
     },
     boundToAllMarkers : function()
@@ -202,5 +249,34 @@ var googleMapAPI ={
             this.map.fitBounds(bound);
         }
     },
+
+    updateSecondaryMarkers : function()
+    {
+        // Empty secondarymarkers
+        for (var type in googleMapAPI.markers['secondary'])
+        {
+            googleMapAPI.deleteSecondaryMarkersByType(type);
+        }
+
+        // Prepare secondary types that are checked on template
+        var types = [];
+        jQuery('input[name="secondary_box"]').each(function(index, checkBox)
+        {
+            if ( jQuery(checkBox).prop('checked') )
+            {
+                types.push(checkBox.value);
+            }
+        });
+
+        // get secondarymarkers
+        if (types !== [])
+        {
+            var l = types.length;
+            for (var i=0; i < l; i++)
+            {
+                services.getSecondaryMarkers(googleMapAPI.subCategories[types[i]]);
+            }
+        }
+    }
 
 };

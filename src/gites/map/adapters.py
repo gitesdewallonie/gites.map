@@ -14,28 +14,19 @@ ALLCHECKBOXES = ['gites',
                  'maisontourisme',
                  'restaurant',
                  'evenementquefaire',
-                 'bakery',
+
+                 'transport',
+                 'culte',
+                 'commerce',
+                 'night',
+                 'entertainment',
+                 'city_hall',
                  'art_gallery',
                  'casino',
+                 'library',
+                 'park',
+                 'spa',
                  ]
-
-"""
-    - moyen de transport : airport, bus_station
-    - lieu de culte : church, mosque, synagogue
-    - commerce : book_store, shopping_mall, store
-    - night live : bar, cafe, night_club
-    - entertainment : amusement_park, aquarium, museum, zoo
-    - bâtiment public : city_hall
-
-     à catégoriser? :
-         - art_gallery
-         - bakery
-         - casino
-         - library
-         - grocery_or_supermarket
-         - park
-         - spa
-"""
 
 
 class HebergementsContentFetcher(BaseHebergementsFetcher):
@@ -64,6 +55,6 @@ class HebergementsViewFetcher(BaseHebergementsFetcher):
 
     def mapInfos(self):
         # XXX we need to invert lat and long for now !!!
-        return {'zoom': 10,
+        return {'zoom': 11,
                 'center': {'latitude': self.context.heb_gps_long,
                            'longitude': self.context.heb_gps_lat}}

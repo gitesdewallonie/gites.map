@@ -5,8 +5,8 @@ var handlers = {
         jQuery('input[name="primary_box"]').bind({'change':this.primaryCheckboxHandler});
         jQuery('input#bound_button').bind({'click':this.boundHandler});
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
-        // google.maps.event.addListener(googleMapAPI.map,'bounds_changed',this.boundsHandler);
-        // google.maps.event.addListener(googleMapAPI.map,'idle',this.boundsHandler);
+//        google.maps.event.addListener(googleMapAPI.map,'bounds_changed',this.boundsHandler);
+        google.maps.event.addListener(googleMapAPI.map,'dragend',this.boundsHandler);
 
         googleMapAPI.manageMarkersVisibility();
         googleMapAPI.manageCheckboxDisabling();
@@ -20,7 +20,7 @@ var handlers = {
         if ( jQuery(this).prop('checked') )
         {
             // Look at informations from google
-            services.getSecondaryMarkers([type]);
+            services.getSecondaryMarkers(googleMapAPI.subCategories[type]);
         }
 
         // Uncheck the checkbox
@@ -31,21 +31,8 @@ var handlers = {
             for (var i=0; i < l; i++) {
                 markersToManage[i].checked = false;
             };
-            googleMapAPI.setMarkersVisibility('secondary', type, false);
+            googleMapAPI.deleteSecondaryMarkersByType(type);
         }
-//        if(googleMapAPI.checkSecondaryMarkersExists(event.target.value))
-//        {
-//            var markersToManage = googleMapAPI.markers.secondary[event.target.value];
-//            var l = markersToManage.length;
-//            for (var i=0; i < l; i++) {
-//                markersToManage[i].checked = jQuery(this).prop('checked');
-
-//            };
-//        } else{
-//            services.getSecondaryMarkers([event.target.value]);
-//        }
-
-//        googleMapAPI.manageMarkersVisibility();
     },
 
     primaryCheckboxHandler: function(event)
@@ -70,6 +57,6 @@ var handlers = {
     },
     boundsHandler : function(event)
     {
-        //googleMapAPI.boundsChange();
+        googleMapAPI.updateSecondaryMarkers();
     }
 };
