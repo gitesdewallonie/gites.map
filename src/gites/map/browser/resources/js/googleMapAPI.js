@@ -12,7 +12,9 @@ var googleMapAPI ={
                           restaurant: [],
                           evenementquefaire: []},
                //XXX secondary doivent etre les infos google
-               secondary : {bakery: []}},
+               secondary : {bakery: [],
+                            art_gallery: [],
+                            casino: []}},
 
     overlay : null,
     zoomLimit: 9,
@@ -47,7 +49,11 @@ var googleMapAPI ={
         this.overlay = new google.maps.Polygon();
 
         // XXX aller chercher ces types directement dans l html de la page (les value des secondary_box) qui sont checked
-        services.getSecondaryMarkers(['bakery']);
+//        var secondaryTypes = [];
+//        for (var type in this.markers['secondary']) {
+//            secondaryTypes.push(services.getSecondaryMarkers([type]));
+//        }
+//        services.getSecondaryMarkers(secondaryTypes);
 
         // Place polygon overlay
         this.overlay = new google.maps.Polygon({
@@ -107,13 +113,9 @@ var googleMapAPI ={
         googleMapAPI.markers[category][type].push(marker);
     },
 
-    checkSecondaryMarkersExists: function(nameMarker)
-    {
-       return (this.markers.secondary[nameMarker] != undefined)?true:false;
-    },
-
     manageMarkersVisibility : function()
     {
+        // Update visibility of all markers
         for (var category in this.markers){
             for (var type in this.markers[category]) {
                 var l = this.markers[category][type].length;
@@ -146,6 +148,15 @@ var googleMapAPI ={
                     }
                 };
             }
+        }
+    },
+
+    setMarkersVisibility : function(category, type, visibility)
+    {
+        // Hide given markers
+        var l = googleMapAPI.markers[category][type].length;
+        for (var i=0; i < l; i++) {
+            googleMapAPI.markers[category][type][i].setVisible(visibility);
         }
     },
 
@@ -192,8 +203,4 @@ var googleMapAPI ={
         }
     },
 
-    checkSecondaryMarkersExists: function(nameMarker)
-    {
-        return (this.markers.secondary[nameMarker] != undefined)?true:false;
-    },
 };

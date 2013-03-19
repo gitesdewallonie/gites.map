@@ -14,7 +14,28 @@ ALLCHECKBOXES = ['gites',
                  'maisontourisme',
                  'restaurant',
                  'evenementquefaire',
-                 'bakery']
+                 'bakery',
+                 'art_gallery',
+                 'casino',
+                 ]
+
+"""
+    - moyen de transport : airport, bus_station
+    - lieu de culte : church, mosque, synagogue
+    - commerce : book_store, shopping_mall, store
+    - night live : bar, cafe, night_club
+    - entertainment : amusement_park, aquarium, museum, zoo
+    - bâtiment public : city_hall
+
+     à catégoriser? :
+         - art_gallery
+         - bakery
+         - casino
+         - library
+         - grocery_or_supermarket
+         - park
+         - spa
+"""
 
 
 class HebergementsContentFetcher(BaseHebergementsFetcher):

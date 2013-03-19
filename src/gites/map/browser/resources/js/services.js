@@ -4,17 +4,16 @@ var services = {
         // infosJSON coming from the template (python)
         var l = types.length;
         for (var i=0; i < l; i++) {
-            googleMapAPI.markers.secondary[types[i]]=[];
 
-
-            var infosJSONLength = infosJSON.length;
-            for (var j=0; j < infosJSONLength; j++) {
-                if (infosJSON[j].types[0] === types[i])
-                {
-                    googleMapAPI.createMarker(infosJSON[j],
-                                              'secondary');
-                }
-            };
+            // No secondary coming from python anymore
+//            var infosJSONLength = infosJSON.length;
+//            for (var j=0; j < infosJSONLength; j++) {
+//                if (infosJSON[j].types[0] === types[i])
+//                {
+//                    googleMapAPI.createMarker(infosJSON[j],
+//                                              'secondary');
+//                }
+//            };
 
             var request = {
                 location: googleMapAPI.map.center,

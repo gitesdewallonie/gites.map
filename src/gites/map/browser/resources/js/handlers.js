@@ -14,17 +14,38 @@ var handlers = {
 
     secondaryCheckboxHandler: function(event)
     {
-        if(googleMapAPI.checkSecondaryMarkersExists(event.target.value))
+        var type = event.target.value;
+
+        // Check the checkbox
+        if ( jQuery(this).prop('checked') )
         {
-            var markersToManage = googleMapAPI.markers.secondary[event.target.value];
+            // Look at informations from google
+            services.getSecondaryMarkers([type]);
+        }
+
+        // Uncheck the checkbox
+        else
+        {
+            var markersToManage = googleMapAPI.markers.secondary[type];
             var l = markersToManage.length;
             for (var i=0; i < l; i++) {
-                markersToManage[i].checked = jQuery(this).prop('checked');
+                markersToManage[i].checked = false;
             };
-        } else{
-            services.getSecondaryMarkers([event.target.value]);
+            googleMapAPI.setMarkersVisibility('secondary', type, false);
         }
-        googleMapAPI.manageMarkersVisibility();
+//        if(googleMapAPI.checkSecondaryMarkersExists(event.target.value))
+//        {
+//            var markersToManage = googleMapAPI.markers.secondary[event.target.value];
+//            var l = markersToManage.length;
+//            for (var i=0; i < l; i++) {
+//                markersToManage[i].checked = jQuery(this).prop('checked');
+
+//            };
+//        } else{
+//            services.getSecondaryMarkers([event.target.value]);
+//        }
+
+//        googleMapAPI.manageMarkersVisibility();
     },
 
     primaryCheckboxHandler: function(event)
