@@ -250,6 +250,14 @@ var googleMapAPI ={
         }
     },
 
+    boundsHandler : function()
+    {
+        if (marker.checked && this.map.zoom > this.zoomLimit)
+        {
+            googleMapAPI.updateSecondaryMarkers();
+        }
+    },
+
     updateSecondaryMarkers : function()
     {
         // Empty secondarymarkers

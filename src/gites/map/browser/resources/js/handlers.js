@@ -5,7 +5,6 @@ var handlers = {
         jQuery('input[name="primary_box"]').bind({'change':this.primaryCheckboxHandler});
         jQuery('input#bound_button').bind({'click':this.boundHandler});
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
-//        google.maps.event.addListener(googleMapAPI.map,'bounds_changed',this.boundsHandler);
         google.maps.event.addListener(googleMapAPI.map,'dragend',this.boundsHandler);
 
         googleMapAPI.manageMarkersVisibility();
@@ -57,6 +56,6 @@ var handlers = {
     },
     boundsHandler : function(event)
     {
-        googleMapAPI.updateSecondaryMarkers();
+        googleMapAPI.boundsHandler();
     }
 };
