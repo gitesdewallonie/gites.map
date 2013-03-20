@@ -55,6 +55,6 @@ class HebergementsViewFetcher(BaseHebergementsFetcher):
 
     def mapInfos(self):
         # XXX we need to invert lat and long for now !!!
-        return {'zoom': 11,
+        return {'zoom': 14,
                 'center': {'latitude': self.context.heb_gps_long,
                            'longitude': self.context.heb_gps_lat}}

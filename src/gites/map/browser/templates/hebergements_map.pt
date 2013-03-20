@@ -79,7 +79,7 @@
             <tal:if condition="python: 'night' in checkboxes">
                 <img src="++resource++gites.map.images/night.png" />
                 <input type="checkbox" name="secondary_box" id="night" value="night">
-                <label i18n:translate="Night_live" for="night">Night live</label><br />
+                <label i18n:translate="Night_life" for="night">Night life</label><br />
             </tal:if>
 
             <tal:if condition="python: 'divertissement' in checkboxes">

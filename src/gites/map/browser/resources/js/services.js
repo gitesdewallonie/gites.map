@@ -8,11 +8,11 @@ var services = {
         for (var i=0; i < l; i++) {
 
             var request = {
-                location: googleMapAPI.map.center,
-//                radius: 50000,
+//                location: googleMapAPI.map.center,
+//                radius: 10000,
+//                rankBy: google.maps.places.RankBy.DISTANCE,
+                bounds: googleMapAPI.map.getBounds(),
                 types: [types[i]],
-
-                rankBy: google.maps.places.RankBy.DISTANCE,
             };
             var service = new google.maps.places.PlacesService(googleMapAPI.map);
             service.nearbySearch(request, services.callBack_getSecondaryMarkers);

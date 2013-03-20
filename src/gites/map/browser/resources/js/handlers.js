@@ -5,7 +5,7 @@ var handlers = {
         jQuery('input[name="primary_box"]').bind({'change':this.primaryCheckboxHandler});
         jQuery('input#bound_button').bind({'click':this.boundHandler});
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
-        google.maps.event.addListener(googleMapAPI.map,'dragend',this.boundsHandler);
+        google.maps.event.addListener(googleMapAPI.map,'dragend',this.dragHandler);
 
         googleMapAPI.manageMarkersVisibility();
         googleMapAPI.manageCheckboxDisabling();
@@ -48,14 +48,16 @@ var handlers = {
     {
         googleMapAPI.manageMarkersVisibility();
         googleMapAPI.manageCheckboxDisabling();
+        googleMapAPI.updateSecondaryMarkers();
     },
 
     boundHandler : function(event)
     {
         googleMapAPI.boundToAllMarkers();
     },
-    boundsHandler : function(event)
+
+    dragHandler : function(event)
     {
-        googleMapAPI.boundsHandler();
+        googleMapAPI.updateSecondaryMarkers();
     }
 };

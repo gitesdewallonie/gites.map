@@ -3,7 +3,8 @@ var googleMapAPI ={
     infowindow: null,
     //Wallonie center
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
-    defaultZoom: 7,
+    defaultZoom: 10,
+    zoomLimit: 13,
     markers : {primary : {gites: [],
         chambres: [],
         infotouristique: [],
@@ -35,7 +36,6 @@ var googleMapAPI ={
         spa: ['spa']},
 
     overlay : null,
-    zoomLimit: 9,
 
     initialize : function()
     {
@@ -55,7 +55,12 @@ var googleMapAPI ={
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             center: center,
             zoom: zoom,
-            //                        minZoom: googleMapAPI.zoomLimit,
+            minZoom: 8,
+            panControl: false,
+            keyboardShortcuts: false,
+            streetViewControl: false,
+            scaleControl: true,
+            scaleControlOptions: {position: google.maps.ControlPosition.BOTTOM_LEFT},
         });
 
         //initialize infowindow
@@ -140,12 +145,11 @@ var googleMapAPI ={
         }
 
         var marker = new google.maps.Marker(
-                {
-                    map : this.map,
+        {
+            map : this.map,
             position : location,
             icon:icon
-                }
-                );
+        });
 
         marker.checked = true;
 
@@ -250,39 +254,34 @@ var googleMapAPI ={
         }
     },
 
-    boundsHandler : function()
-    {
-        if (marker.checked && this.map.zoom > this.zoomLimit)
-        {
-            googleMapAPI.updateSecondaryMarkers();
-        }
-    },
-
     updateSecondaryMarkers : function()
     {
-        // Empty secondarymarkers
-        for (var type in googleMapAPI.markers['secondary'])
+        if (googleMapAPI.map.zoom > googleMapAPI.zoomLimit)
         {
-            googleMapAPI.deleteSecondaryMarkersByType(type);
-        }
-
-        // Prepare secondary types that are checked on template
-        var types = [];
-        jQuery('input[name="secondary_box"]').each(function(index, checkBox)
-        {
-            if ( jQuery(checkBox).prop('checked') )
+            // Empty secondarymarkers
+            for (var type in googleMapAPI.markers['secondary'])
             {
-                types.push(checkBox.value);
+                googleMapAPI.deleteSecondaryMarkersByType(type);
             }
-        });
 
-        // get secondarymarkers
-        if (types !== [])
-        {
-            var l = types.length;
-            for (var i=0; i < l; i++)
+            // Prepare secondary types that are checked on template
+            var types = [];
+            jQuery('input[name="secondary_box"]').each(function(index, checkBox)
             {
-                services.getSecondaryMarkers(googleMapAPI.subCategories[types[i]]);
+                if ( jQuery(checkBox).prop('checked') )
+                {
+                    types.push(checkBox.value);
+                }
+            });
+
+            // get secondarymarkers
+            if (types !== [])
+            {
+                var l = types.length;
+                for (var i=0; i < l; i++)
+                {
+                    services.getSecondaryMarkers(googleMapAPI.subCategories[types[i]]);
+                }
             }
         }
     }
