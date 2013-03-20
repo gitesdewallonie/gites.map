@@ -52,8 +52,8 @@ class UtilsView(BrowserView):
             results.append({'types': ['maisontourisme'],
                             'name': title,
                             'vicinity': '',
-                            'latitude': maison.mais_gps_long,
-                            'longitude': maison.mais_gps_lat})
+                            'latitude': maison.mais_gps_lat,
+                            'longitude': maison.mais_gps_long})
         return results
 
     def getInfosTouristiques(self):
@@ -76,8 +76,8 @@ class UtilsView(BrowserView):
             results.append({'types': ['infotouristique'],
                             'name': title,
                             'vicinity': info.infotour_localite,
-                            'latitude': info.infotour_gps_long,
-                            'longitude': info.infotour_gps_lat})
+                            'latitude': info.infotour_gps_lat,
+                            'longitude': info.infotour_gps_long})
         return results
 
     def getInfosPratiques(self):
@@ -100,8 +100,8 @@ class UtilsView(BrowserView):
             results.append({'types': ['infopratique'],
                             'name': title,
                             'vicinity': info.infoprat_localite,
-                            'latitude': info.infoprat_gps_long,
-                            'longitude': info.infoprat_gps_lat})
+                            'latitude': info.infoprat_gps_lat,
+                            'longitude': info.infoprat_gps_long})
         return results
 
     def getAllHebergements(self):
@@ -182,5 +182,5 @@ def hebergementToMapObject(hebergement, context, request):
     return {'types': [typeStr],
             'name': title,
             'vicinity': bodyText,
-            'latitude': hebergement.heb_gps_long,
-            'longitude': hebergement.heb_gps_lat}
+            'latitude': hebergement.heb_gps_lat,
+            'longitude': hebergement.heb_gps_long}

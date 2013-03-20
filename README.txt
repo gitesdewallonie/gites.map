@@ -16,7 +16,7 @@ Todo
         + virer datepicker de gites.calendar car bug sur patch
     - view
 
-- Inverser les lat/long dans la db qui sont actuellement inversés justement pour tous les types d objets geolocalisés
++ Inverser les lat/long dans la db qui sont actuellement inversés justement pour tous les types d objets geolocalisés
 
 + Autobound
 + Récupérer les autres infos touristiques
