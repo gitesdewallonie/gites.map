@@ -10,3 +10,6 @@ class GMapViewlet(BaseGMapViewlet):
         Hide viewlet !
         """
         return False
+
+    def canDisable(self):
+        return False
