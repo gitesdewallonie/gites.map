@@ -71,11 +71,7 @@ class GitesMapViewlet(ViewletBase):
         """
         Returns all "other" map data for the map
         """
-        requestView = queryMultiAdapter((self.context, self.request),
-                                        name="utilsView")
-        maisons = requestView.getMaisonsDuTourisme()
-        infosPrat = requestView.getInfosPratiques()
-        infosTour = requestView.getInfosTouristiques()
-        quefaireEvents = requestView.getQuefaireEvents()
-        restos = requestView.getRestos()
-        return self._makeJSON(maisons + infosPrat + infosTour + quefaireEvents + restos)
+        fetcher = queryMultiAdapter((self.context, self.view, self.request),
+                                    IHebergementsFetcher)
+        allMapDatas = fetcher.allMapDatas()
+        return self._makeJSON(allMapDatas)

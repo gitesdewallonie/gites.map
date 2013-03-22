@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import grokcore.component as grok
+from zope.component import queryMultiAdapter
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IBrowserRequest
 from gites.map.browser.interfaces import IMappableView, IMappableContent
@@ -38,10 +39,14 @@ class HebergementsContentFetcher(BaseHebergementsFetcher):
 
     def mapInfos(self):
         return {'zoom': None,
-                'center': None}
+                'center': None,
+                'boundToAll': False}
 
     def checkBoxes(self):
         return ALLCHECKBOXES
+
+    def allMapDatas(self):
+        return []
 
 
 class HebergementsViewFetcher(BaseHebergementsFetcher):
@@ -62,4 +67,15 @@ class HebergementsViewFetcher(BaseHebergementsFetcher):
     def mapInfos(self):
         return {'zoom': 14,
                 'center': {'latitude': self.context.heb_gps_lat,
-                           'longitude': self.context.heb_gps_long}}
+                           'longitude': self.context.heb_gps_long},
+                'boundToAll': False}
+
+    def allMapDatas(self):
+        requestView = queryMultiAdapter((self.context, self.request),
+                                        name="utilsView")
+        maisons = requestView.getMaisonsDuTourisme()
+        infosPrat = requestView.getInfosPratiques()
+        infosTour = requestView.getInfosTouristiques()
+        quefaireEvents = requestView.getQuefaireEvents()
+        restos = requestView.getRestos()
+        return maisons + infosPrat + infosTour + quefaireEvents + restos
