@@ -50,6 +50,9 @@ class PackageHebergementFetcherWithMap(PackageHebergementFetcher):
     def checkBoxes(self):
         return []
 
+    def allMapDatas(self):
+        return []
+
 
 class HebergementsContentFetcher(BaseHebergementsFetcher):
     grok.adapts(IMappableContent, Interface, IBrowserRequest)
