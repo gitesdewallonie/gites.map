@@ -85,7 +85,10 @@ var googleMapAPI ={
         this.overlay.setMap(this.map);
 
         services.getPrimaryMarkers();
-        //        this.boundToAllMarkers();
+        if ( mapInfos.boundToAll == true)
+        {
+            googleMapAPI.boundToAllMarkers();
+        }
         handlers.initHandlers();
     },
 
@@ -266,6 +269,8 @@ var googleMapAPI ={
             googleMapAPI.createMarker(hebergements[i],
                                       'primary');
         };
+
+        googleMapAPI.boundToAllMarkers();
     },
 
     updateSecondaryMarkers : function()
