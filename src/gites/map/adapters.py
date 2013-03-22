@@ -32,9 +32,16 @@ ALLCHECKBOXES = ['gites',
 class HebergementsContentFetcher(BaseHebergementsFetcher):
     grok.adapts(IMappableContent, Interface, IBrowserRequest)
 
-    def __call__(self):
+    def fetch(self):
         # XXX code that fetches hebergements from content
         return []
+
+    def mapInfos(self):
+        return {'zoom': None,
+                'center': None}
+
+    def checkBoxes(self):
+        return ALLCHECKBOXES
 
 
 class HebergementsViewFetcher(BaseHebergementsFetcher):
