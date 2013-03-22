@@ -33,7 +33,7 @@ class GitesMapViewlet(ViewletBase):
                                     IHebergementsFetcher)
         if fetcher is None:
             return self._makeJSON([])
-        localHebergements = fetcher.fetch()
+        localHebergements = list(fetcher.fetch())
         if localHebergements:
             return self._makeJSON(localHebergements)
         else:
