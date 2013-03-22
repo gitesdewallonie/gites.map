@@ -8,15 +8,12 @@ Copyright by Affinitic sprl
 
 from sqlalchemy import select
 from z3c.sqlalchemy import getSAWrapper
-from zope.component import queryMultiAdapter
+from zope.component import queryMultiAdapter, getMultiAdapter
 from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
 from gites.core.interfaces import IHebergementsFetcher
-
-# chambres : 'CH', 'MH', 'CHECR'
-# gites    : 'GR', 'GF', 'MT', 'GC', 'MV', 'GRECR', 'GG'
 
 
 class UtilsView(BrowserView):
@@ -24,10 +21,18 @@ class UtilsView(BrowserView):
     Contains methods used by and for map viewlet
     """
 
+    def _isEditView(self):
+        context = self.context
+        context_state = getMultiAdapter((context, self.request), name=u'plone_context_state')
+        isViewTemplate = context_state.is_view_template()
+        return isViewTemplate is False
+
     @instance.memoize
     def shouldShowMapViewlet(self, view=None):
         if view is None:
             view = self
+        if self._isEditView():
+            return False
         fetcher = queryMultiAdapter((self.context, view, self.request),
                                     IHebergementsFetcher)
         #XXX ne marche pas avec les jsregistry expressions actuelles
