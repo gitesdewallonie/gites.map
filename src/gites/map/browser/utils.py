@@ -24,8 +24,7 @@ class UtilsView(BrowserView):
     def _isEditView(self):
         context = self.context
         context_state = getMultiAdapter((context, self.request), name=u'plone_context_state')
-        isViewTemplate = context_state.is_view_template()
-        return isViewTemplate is False
+        return context_state.current_page_url().endswith('edit')
 
     @instance.memoize
     def shouldShowMapViewlet(self, view=None):
