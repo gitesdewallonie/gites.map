@@ -49,4 +49,25 @@
         name="gites.map.images"
         />
 
+    <!-- Monet overrides -->
+    <browser:page
+        for="Products.Archetypes.interfaces.IBaseContent"
+        name="monet.gmap"
+        class=".maps_view.MapsView"
+	allowed_attributes="canEnable canDisable enable disable canShowMap"
+        permission="zope.Public"
+        layer=".interfaces.IGitesMap"
+        />
+
+    <browser:viewlet
+        name="plone.monetmap"
+        for="monet.mapsviewlet.interfaces.IMonetMapsEnabledContent"
+        view="plone.app.layout.globals.interfaces.IViewView"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
+        permission="zope2.View"
+        class=".maps_viewlet.GMapViewlet"
+        layer=".interfaces.IGitesMap"
+        />
+
+
 </configure>
