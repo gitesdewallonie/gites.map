@@ -72,5 +72,12 @@
         layer=".interfaces.IGitesMap"
         />
 
+    <browser:page
+	 for="monet.mapsviewlet.interfaces.IMonetMapsEnabledContent"
+         name="maps_googlemaps_enabled_view"
+         class=".maps_view.MonetMapView"
+         permission="zope.Public"
+         layer=".interfaces.IGitesMap"
+         allowed_interface="Products.Maps.interfaces.map.IMapEnabledView"/>
 
 </configure>
