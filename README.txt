@@ -25,3 +25,8 @@ Todo
 + Corriger les coordonnées
 
 - Recupérer les autres infos externes
+    - creer table pour stocker les infos necessaire pour les providers externes
+    - creer scripts quefaire.be (goto gites.webservice)
+        - replication
+        - update
+    - resto.be

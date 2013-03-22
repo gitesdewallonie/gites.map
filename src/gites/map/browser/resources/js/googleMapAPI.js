@@ -200,15 +200,15 @@ var googleMapAPI ={
         }
     },
 
-    deleteSecondaryMarkersByType : function(type)
+    deleteMarkersByType : function(type, category)
     {
         // Hide given markers
-        var l = googleMapAPI.markers['secondary'][type].length;
+        var l = googleMapAPI.markers[category][type].length;
         for (var i=0; i < l; i++) {
-            googleMapAPI.markers['secondary'][type][i].setVisible(false);
+            googleMapAPI.markers[category][type][i].setVisible(false);
         }
         // Remove marker
-        googleMapAPI.markers['secondary'][type] = [];
+        googleMapAPI.markers[category][type] = [];
     },
 
     manageCheckboxDisabling : function()
@@ -254,6 +254,20 @@ var googleMapAPI ={
         }
     },
 
+    updateHebergementsMarkers : function(hebergements)
+    {
+        // Remove actual hebergements markers
+        googleMapAPI.deleteMarkersByType('gites', 'primary');
+        googleMapAPI.deleteMarkersByType('chambres', 'primary');
+
+        // Add markers
+        var l = hebergements.length;
+        for (var i=0; i < l; i++) {
+            googleMapAPI.createMarker(hebergements[i],
+                                      'primary');
+        };
+    },
+
     updateSecondaryMarkers : function()
     {
         if (googleMapAPI.map.zoom > googleMapAPI.zoomLimit)
@@ -261,7 +275,7 @@ var googleMapAPI ={
             // Empty secondarymarkers
             for (var type in googleMapAPI.markers['secondary'])
             {
-                googleMapAPI.deleteSecondaryMarkersByType(type);
+                googleMapAPI.deleteMarkersByType(type, 'secondary');
             }
 
             // Prepare secondary types that are checked on template

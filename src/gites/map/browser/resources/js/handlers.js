@@ -30,7 +30,7 @@ var handlers = {
             for (var i=0; i < l; i++) {
                 markersToManage[i].checked = false;
             };
-            googleMapAPI.deleteSecondaryMarkersByType(type);
+            googleMapAPI.deleteMarkersByType(type, 'secondary');
         }
     },
 
