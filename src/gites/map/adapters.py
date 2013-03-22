@@ -32,7 +32,24 @@ ALLCHECKBOXES = ['gites',
                  ]
 
 
-class PackageHebergementFetcherWithMap(PackageHebergementFetcher):
+class BaseMapFetcher:
+
+    def fetch(self):
+        return []
+
+    def checkBoxes(self):
+        return ALLCHECKBOXES
+
+    def mapInfos(self):
+        return {'zoom': None,
+                'center': None,
+                'boundToAll': False}
+
+    def allMapDatas(self):
+        return []
+
+
+class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher):
     grok.adapts(IPackage, IPackageView, IBrowserRequest)
 
     fetch = PackageHebergementFetcher.__call__
@@ -54,26 +71,11 @@ class PackageHebergementFetcherWithMap(PackageHebergementFetcher):
         return []
 
 
-class HebergementsContentFetcher(BaseHebergementsFetcher):
+class HebergementsContentFetcher(BaseMapFetcher, BaseHebergementsFetcher):
     grok.adapts(IMappableContent, Interface, IBrowserRequest)
 
-    def fetch(self):
-        # XXX code that fetches hebergements from content
-        return []
 
-    def mapInfos(self):
-        return {'zoom': None,
-                'center': None,
-                'boundToAll': False}
-
-    def checkBoxes(self):
-        return ALLCHECKBOXES
-
-    def allMapDatas(self):
-        return []
-
-
-class HebergementsViewFetcher(BaseHebergementsFetcher):
+class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
     grok.adapts(Interface, IMappableView, IBrowserRequest)
 
     def fetch(self):
