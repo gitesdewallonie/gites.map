@@ -1,9 +1,12 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:grok="http://namespaces.zope.org/grok"
     i18n_domain="gites">
 
     <include package="Products.Five" />
+
+    <grok:grok package="."/>
 
     <browser:viewlet
         name="gites.map.hebergements"
