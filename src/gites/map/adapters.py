@@ -41,7 +41,6 @@ class HebergementsViewFetcher(BaseHebergementsFetcher):
     grok.adapts(Interface, IMappableView, IBrowserRequest)
 
     def fetch(self):
-        # XXX code that fetches hebergements from view
         heb = hebergementToMapObject(hebergement=self.context,
                                      context=self.context,
                                      request=self.request)
@@ -54,7 +53,6 @@ class HebergementsViewFetcher(BaseHebergementsFetcher):
         return checkboxes
 
     def mapInfos(self):
-        # XXX we need to invert lat and long for now !!!
         return {'zoom': 14,
                 'center': {'latitude': self.context.heb_gps_lat,
                            'longitude': self.context.heb_gps_long}}
