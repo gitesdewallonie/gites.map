@@ -135,32 +135,31 @@ class UtilsView(BrowserView):
         get events from quefaire.be service
         map_external_data is filled by quefaire.be service
         """
-        return getExtDatas('quefaire.be', 'evenementquefaire')
+        return self.getExtDatas('quefaire.be', 'evenementquefaire')
 
     def getRestos(self):
         """
         get restos from resto.be service
         map_external_data is filled by resto.be service
         """
-        return getExtDatas('resto.be', 'restaurant')
+        return self.getExtDatas('resto.be', 'restaurant')
 
+    def getExtDatas(self, extDataProvider, extDataType):
+        """
+        Get map external datas by type
+        """
+        wrapper = getSAWrapper('gites_wallons')
+        session = wrapper.session
+        ExtData = wrapper.getMapper('map_external_data')
+        query = session.query(ExtData).outerjoin('blacklist')
+        query = query.filter(ExtData.ext_data_provider_pk == extDataProvider)
+        query = query.filter(ExtData.blacklist == None)
 
-def getExtDatas(extDataProvider, extDataType):
-    """
-    Get map external datas by type
-    """
-    wrapper = getSAWrapper('gites_wallons')
-    session = wrapper.session
-    ExtData = wrapper.getMapper('map_external_data')
-    query = session.query(ExtData).outerjoin('blacklist')
-    query = query.filter(ExtData.ext_data_provider_pk == extDataProvider)
-    query = query.filter(ExtData.blacklist == None)
-
-    results = []
-    for extData in query.all():
-        results.append(extDataToMapObject(extData=extData,
-                                          extDataType=extDataType))
-    return results
+        results = []
+        for extData in query.all():
+            results.append(extDataToMapObject(extData=extData,
+                                              extDataType=extDataType))
+        return results
 
 
 def hebergementToMapObject(hebergement, context, request):

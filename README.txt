@@ -31,8 +31,8 @@ Todo
         - update
     - resto.be
 
-- Blocker les informations blacklistées sur la map
-    - Google
++ Blocker les informations blacklistées sur la map
+    + Google
     + Resto (getRestos utils.py)
     + Quefaire (getQuefaireEvents utils.py)
 
