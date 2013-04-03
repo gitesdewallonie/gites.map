@@ -152,8 +152,9 @@ def getExtDatas(extDataProvider, extDataType):
     wrapper = getSAWrapper('gites_wallons')
     session = wrapper.session
     ExtData = wrapper.getMapper('map_external_data')
-    query = session.query(ExtData)
+    query = session.query(ExtData).outerjoin('blacklist')
     query = query.filter(ExtData.ext_data_provider_pk == extDataProvider)
+    query = query.filter(ExtData.blacklist == None)
 
     results = []
     for extData in query.all():

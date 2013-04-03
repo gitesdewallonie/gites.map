@@ -33,9 +33,9 @@ Todo
 
 - Blocker les informations blacklistées sur la map
     - Google
-    - Resto (getRestos utils.py)
-    - Quefaire (getQuefaireEvents utils.py)
+    + Resto (getRestos utils.py)
+    + Quefaire (getQuefaireEvents utils.py)
 
-- Afficher les informations venant de la table map_external_data (utils.py)
++ Afficher les informations venant de la table map_external_data (utils.py)
     + Resto
     + Quefaire
