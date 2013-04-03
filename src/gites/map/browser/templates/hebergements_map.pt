@@ -124,7 +124,7 @@
                 <label i18n:translate="Spas" for="spa">Spas</label><br />
             </tal:if>
 
-            <input type="button" id="bound_button" value="bound!" />
+            <!-- input type="button" id="bound_button" value="bound!" /-->
         </div>
 
     </div>

@@ -27,6 +27,15 @@ Todo
 - Recupérer les autres infos externes
     - creer table pour stocker les infos necessaire pour les providers externes
     - creer scripts quefaire.be (goto gites.webservice)
-        - replication
+        + replication
         - update
     - resto.be
+
+- Blocker les informations blacklistées sur la map
+    - Google
+    - Resto (getRestos utils.py)
+    - Quefaire (getQuefaireEvents utils.py)
+
+- Afficher les informations venant de la table map_external_data (utils.py)
+    + Resto
+    + Quefaire

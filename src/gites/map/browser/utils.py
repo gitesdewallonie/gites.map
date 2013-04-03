@@ -133,28 +133,33 @@ class UtilsView(BrowserView):
     def getQuefaireEvents(self):
         """
         get events from quefaire.be service
-
-        XXX recuperer les infos de quefaire.be
-        apparement on partira sur recuperer et mettre a jour une table en locale qu'on ira requeter ensuite
+        map_external_data is filled by quefaire.be service
         """
-        return [{'types': ['evenementquefaire'],
-                'name': 'evenemtn que faire',
-                'vicinity': 'barrrr',
-                'latitude': 0,
-                'longitude': 0}]
+        return getExtDatas('quefaire.be', 'evenementquefaire')
 
     def getRestos(self):
         """
         get restos from resto.be service
-
-        XXX recuperer les infos de resto.be
-        apparement on partira sur recuperer les infos via leur webservice directement
+        map_external_data is filled by resto.be service
         """
-        return [{'types': ['restaurant'],
-                'name': 'fooooo',
-                'vicinity': 'barrrr',
-                'latitude': 1,
-                'longitude': 0}]
+        return getExtDatas('resto.be', 'restaurant')
+
+
+def getExtDatas(extDataProvider, extDataType):
+    """
+    Get map external datas by type
+    """
+    wrapper = getSAWrapper('gites_wallons')
+    session = wrapper.session
+    ExtData = wrapper.getMapper('map_external_data')
+    query = session.query(ExtData)
+    query = query.filter(ExtData.ext_data_provider_pk == extDataProvider)
+
+    results = []
+    for extData in query.all():
+        results.append(extDataToMapObject(extData=extData,
+                                          extDataType=extDataType))
+    return results
 
 
 def hebergementToMapObject(hebergement, context, request):
@@ -182,9 +187,31 @@ def hebergementToMapObject(hebergement, context, request):
                        '%s/++resource++gites.map.images/capacity.png' % portalUrl,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max)
-    # XXX we need to invert lat and long for now !!!
     return {'types': [typeStr],
             'name': title,
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
             'longitude': hebergement.heb_gps_long}
+
+
+def extDataToMapObject(extData, extDataType):
+    """
+    Transform an hebergement into an object used on the map
+    """
+    title = '<a href="%s" title="%s">%s</a>' % (extData.ext_data_url,
+                                                extData.ext_data_title,
+                                                extData.ext_data_title)
+
+    dateString = ''
+    if extData.ext_data_date_begin or extData.ext_data_date_end:
+        dateString = '%s / %s' % (extData.ext_data_date_begin and extData.ext_data_date_begin.strftime('%d-%m-%Y') or '',
+                                  extData.ext_data_date_end and extData.ext_data_date_end.strftime('%d-%m-%Y') or '')
+
+    bodyText = """%s<br /><img src="%s" /><br />%s""" % (extData.ext_data_type or '',
+                                                         extData.ext_data_picture_url or '',
+                                                         dateString)
+    return {'types': [extDataType],
+            'name': title,
+            'vicinity': bodyText,
+            'latitude': extData.ext_data_latitude,
+            'longitude': extData.ext_data_longitude}
