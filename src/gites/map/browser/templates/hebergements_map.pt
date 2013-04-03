@@ -3,13 +3,15 @@
     <div tal:define="hebergements view/getHebergements;
                      autresinfos view/getAllMapData;
                      mapInfos view/getMapInfos;
-                     checkboxes view/getCheckboxes">
+                     checkboxes view/getCheckboxes;
+                     googleBlacklist view/getGoogleBlacklist">
 
         <script type="text/javascript" tal:content="structure string:
             <!--
               var hebergementsJSON = ${hebergements};
               var infosJSON = ${autresinfos};
               var mapInfosJSON = ${mapInfos};
+              var googleBlacklistJSON = ${googleBlacklist};
             -->">
         </script>
 

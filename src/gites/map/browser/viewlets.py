@@ -8,7 +8,9 @@ Copyright by Affinitic sprl
 $Id: viewlets.py 4587 2012-12-04 schminitz
 """
 
+from sqlalchemy import select
 from z3c.json.interfaces import IJSONWriter
+from z3c.sqlalchemy import getSAWrapper
 from zope.component import getUtility, queryMultiAdapter
 from plone.app.layout.viewlets.common import ViewletBase
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -48,6 +50,17 @@ class GitesMapViewlet(ViewletBase):
                                     IHebergementsFetcher)
         checkBoxes = fetcher.checkBoxes()
         return checkBoxes
+
+    def getGoogleBlacklist(self):
+        """
+        get list of google blacklisted items so javascript can check on it
+        """
+        wrapper = getSAWrapper('gites_wallons')
+        MapBlacklist = wrapper.getMapper('map_blacklist')
+        query = select([MapBlacklist.blacklist_id],
+                       MapBlacklist.blacklist_provider_pk == 'google')
+        googleBlacklist = [result.blacklist_id for result in query.execute().fetchall()]
+        return self._makeJSON(googleBlacklist)
 
     def getMapInfos(self):
         """

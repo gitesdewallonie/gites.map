@@ -1,9 +1,6 @@
 var services = {
     getSecondaryMarkers : function(types)
     {
-        // XXX gerer le batch google
-
-        // infosJSON coming from the template (python)
         var l = types.length;
         for (var i=0; i < l; i++) {
 
@@ -25,7 +22,11 @@ var services = {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             var l = result.length;
             for (var i=0; i < l; i++) {
-                googleMapAPI.createMarker(result[i], 'secondary');
+                // Check if blacklisted, googleBlacklistJSON coming from python
+                if (jQuery.inArray(result[i].id, googleBlacklistJSON) == -1)
+                {
+                    googleMapAPI.createMarker(result[i], 'secondary');
+                }
             };
         }
     },
@@ -38,6 +39,7 @@ var services = {
             googleMapAPI.createMarker(hebergementsJSON[i],
                                       'primary');
         };
+        // infosJSON coming from the template (python)
         var l = infosJSON.length;
         for (var i=0; i < l; i++) {
             googleMapAPI.createMarker(infosJSON[i],
