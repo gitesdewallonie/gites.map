@@ -76,6 +76,10 @@ class HebergementsContentFetcher(BaseMapFetcher, BaseHebergementsFetcher):
     grok.adapts(IMappableContent, Interface, IBrowserRequest)
     grok.provides(IHebergementsMapFetcher)
 
+    def mapInfos(self):
+        return {'zoom': None,
+                'center': None}
+
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
     grok.adapts(Interface, IMappableView, IBrowserRequest)
