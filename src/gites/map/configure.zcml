@@ -17,4 +17,11 @@
 
   <grok:grok package=".adapters"/>
 
+  <class class="gites.db.content.hebergement.typehebergement.TypeHebergement">
+    <implements interface=".browser.interfaces.IMappableContent"/>
+  </class>
+  <class class="gites.db.content.commune.Commune">
+    <implements interface=".browser.interfaces.IMappableContent"/>
+  </class>
+
 </configure>
