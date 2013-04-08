@@ -80,4 +80,29 @@
          layer=".interfaces.IGitesMap"
          allowed_interface="Products.Maps.interfaces.map.IMapEnabledView"/>
 
+    <include package="z3c.unconfigure" file="meta.zcml" />
+
+    <unconfigure>
+      <browser:page
+        for="Products.Archetypes.interfaces.IBaseContent"
+        name="monet.gmap"
+        class="monet.mapsviewlet.browser.maps_view.MapsView"
+        allowed_attributes="canEnable canDisable enable disable canShowMap"
+        permission="zope.Public"
+        layer="monet.mapsviewlet.interfaces.IMonetMapsLayer"/>
+      <browser:page
+         for="monet.mapsviewlet.interfaces.IMonetMapsEnabledContent"
+         name="maps_googlemaps_enabled_view"
+         class="monet.mapsviewlet.browser.map.MonetMapView"
+         permission="zope.Public"
+         allowed_interface="Products.Maps.interfaces.map.IMapEnabledView"/>
+      <browser:viewlet
+         name="plone.monetmap"
+         for="monet.mapsviewlet.interfaces.IMonetMapsEnabledContent"
+         view="plone.app.layout.globals.interfaces.IViewView"
+         manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
+         permission="zope2.View"
+         class="monet.mapsviewlet.viewlets.maps_viewlet.GMapViewlet"/>  
+    </unconfigure>
+
 </configure>
