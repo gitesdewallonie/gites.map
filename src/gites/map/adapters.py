@@ -5,7 +5,6 @@ from zope.interface import Interface
 from zope.publisher.interfaces.browser import IBrowserRequest
 from gites.core.adapters.hebergementsfetcher import BaseHebergementsFetcher, PackageHebergementFetcher
 from gites.core.content.interfaces import IPackage
-from gites.core.browser.interfaces import IPackageView
 from gites.map.interfaces import IHebergementsMapFetcher
 from gites.map.browser.interfaces import IMappableView, IMappableContent
 from gites.map.browser.utils import hebergementToMapObject
@@ -51,7 +50,7 @@ class BaseMapFetcher:
 
 
 class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher):
-    grok.adapts(IPackage, IPackageView, IBrowserRequest)
+    grok.adapts(IPackage, Interface, IBrowserRequest)
     grok.provides(IHebergementsMapFetcher)
 
     fetch = PackageHebergementFetcher.__call__
