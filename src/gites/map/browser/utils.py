@@ -13,7 +13,7 @@ from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
-from gites.core.interfaces import IHebergementsFetcher
+from gites.map.interfaces import IHebergementsMapFetcher
 
 
 class UtilsView(BrowserView):
@@ -33,7 +33,7 @@ class UtilsView(BrowserView):
         if self._isEditView():
             return False
         fetcher = queryMultiAdapter((self.context, view, self.request),
-                                    IHebergementsFetcher)
+                                    IHebergementsMapFetcher)
         #XXX ne marche pas avec les jsregistry expressions actuelles
         if fetcher is None:
             return False
