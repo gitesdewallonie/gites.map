@@ -25,7 +25,7 @@ Todo
 + Corriger les coordonnées
 
 - Recupérer les autres infos externes
-    - creer table pour stocker les infos necessaire pour les providers externes
+    + creer table pour stocker les infos necessaire pour les providers externes
     - creer scripts quefaire.be (goto gites.webservice)
         + replication
         - update
@@ -39,3 +39,19 @@ Todo
 + Afficher les informations venant de la table map_external_data (utils.py)
     + Resto
     + Quefaire
+
++ Mettre à jour les colonnes _location par cron
+    + heb_location
+    + infotour_location
+    + infoprat_location
+    + mais_location
+    + ext_data_location
+
+- Afficher données par rapport distance point d'interet
+    - Resto
+        + Ajouter colonne location dans map_external_data table ext_data_location
+    - Quefaire
+        + Ajouter colonne location dans map_external_data table ext_data_location
+    - infopratique
+    - infotouristique
+    - maisontourisme
