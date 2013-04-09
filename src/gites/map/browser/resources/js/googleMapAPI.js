@@ -129,7 +129,8 @@ var googleMapAPI ={
             return;
         }
 
-        var icon = new google.maps.MarkerImage('++resource++gites.map.images/'+type+'.png');
+        // window.portal_url added by plone
+        var icon = new google.maps.MarkerImage(window.portal_url + '/' + '++resource++gites.map.images/'+type+'.png');
         var html;
 
         var location;

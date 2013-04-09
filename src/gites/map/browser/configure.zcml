@@ -57,7 +57,7 @@
         for="Products.Archetypes.interfaces.IBaseContent"
         name="monet.gmap"
         class=".maps_view.MapsView"
-	allowed_attributes="canEnable canDisable enable disable canShowMap"
+        allowed_attributes="canEnable canDisable enable disable canShowMap"
         permission="zope.Public"
         layer=".interfaces.IGitesMap"
         />
@@ -73,7 +73,7 @@
         />
 
     <browser:page
-	 for="monet.mapsviewlet.interfaces.IMonetMapsEnabledContent"
+         for="monet.mapsviewlet.interfaces.IMonetMapsEnabledContent"
          name="maps_googlemaps_enabled_view"
          class=".maps_view.MonetMapView"
          permission="zope.Public"
@@ -102,7 +102,7 @@
          view="plone.app.layout.globals.interfaces.IViewView"
          manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
          permission="zope2.View"
-         class="monet.mapsviewlet.viewlets.maps_viewlet.GMapViewlet"/>  
+         class="monet.mapsviewlet.viewlets.maps_viewlet.GMapViewlet"/>
     </unconfigure>
 
 </configure>
