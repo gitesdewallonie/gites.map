@@ -34,9 +34,6 @@ ALLCHECKBOXES = ['gite',
 
 class BaseMapFetcher:
 
-    def fetch(self):
-        return []
-
     def checkBoxes(self):
         return ALLCHECKBOXES
 
