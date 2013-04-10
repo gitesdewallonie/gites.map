@@ -43,10 +43,6 @@ class UtilsView(BrowserView):
             return True
 
     def getMaisonsDuTourisme(self, location=None):
-#        session.query(Hebergement.heb_pk).filter(Hebergement.heb_location.distance_sphere(turbine.heb_location) < 1000).all()
-        #XXX regarder pour si plusieurs location
-        #XXX regarder si le self contient les info qu il faut pour rechercher la distance sur la map
-        #Faire tous les autres
         wrapper = getSAWrapper('gites_wallons')
         MaisonTouristique = wrapper.getMapper('maison_tourisme')
         query = select([MaisonTouristique.mais_nom,

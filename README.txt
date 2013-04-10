@@ -47,11 +47,11 @@ Todo
     + mais_location
     + ext_data_location
 
-- Afficher données par rapport distance point d'interet
-    - Resto
++ Afficher données par rapport distance point d'interet
+    + Resto
         + Ajouter colonne location dans map_external_data table ext_data_location
-    - Quefaire
+    + Quefaire
         + Ajouter colonne location dans map_external_data table ext_data_location
-    - infopratique
-    - infotouristique
-    - maisontourisme
+    + infopratique
+    + infotouristique
+    + maisontourisme
