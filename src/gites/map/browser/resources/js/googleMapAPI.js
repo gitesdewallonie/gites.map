@@ -11,7 +11,7 @@ var googleMapAPI ={
             gite: [],
             chambre: [],
             infotouristique: [],
-            infopratique: [],
+            gare: [],
             maisontourisme: [],
             restaurant: [],
             evenementquefaire: [],
@@ -44,7 +44,7 @@ var googleMapAPI ={
         spa: ['spa']
     },
     categoriesToHide: [
-            'infopratique',
+            'gare',
             'maisontourisme',
             'restaurant',
             'evenementquefaire',

@@ -18,7 +18,7 @@ from gites.map.browser.utils import hebergementToMapObject, packageToMapObject
 ALLCHECKBOXES = ['gite',
                  'chambre',
                  'infotouristique',
-                 'infopratique',
+                 'gare',
                  'maisontourisme',
                  'restaurant',
                  'evenementquefaire',
@@ -116,7 +116,7 @@ class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
         requestView = queryMultiAdapter((self.context, self.request),
                                         name="utilsView")
         maisons = requestView.getMaisonsDuTourisme()
-        infosPrat = requestView.getInfosPratiques()
+        infosPrat = requestView.getGares()
         infosTour = requestView.getInfosTouristiques()
         quefaireEvents = requestView.getQuefaireEvents()
         restos = requestView.getRestos()

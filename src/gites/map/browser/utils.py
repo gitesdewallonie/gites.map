@@ -6,7 +6,6 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
-from datetime import datetime
 from sqlalchemy import select
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter, getMultiAdapter
@@ -93,7 +92,7 @@ class UtilsView(BrowserView):
                             'longitude': info.infotour_gps_long})
         return results
 
-    def getInfosPratiques(self, location=None):
+    def getGares(self, location=None):
         wrapper = getSAWrapper('gites_wallons')
         InfoPratique = wrapper.getMapper('info_pratique')
         TypeInfoPratique = wrapper.getMapper('type_info_pratique')
@@ -102,7 +101,8 @@ class UtilsView(BrowserView):
                         InfoPratique.infoprat_gps_long,
                         InfoPratique.infoprat_gps_lat,
                         TypeInfoPratique.typinfoprat_nom_fr,
-                        InfoPratique.infoprat_localite])
+                        InfoPratique.infoprat_localite],
+                       InfoPratique.infoprat_type_infoprat_fk == 4)
         if location:
             query.append_whereclause(InfoPratique.infoprat_location.distance_sphere(location) < DISTANCE_METERS)
         query.append_whereclause(InfoPratique.infoprat_type_infoprat_fk == TypeInfoPratique.typinfoprat_pk)
@@ -112,7 +112,7 @@ class UtilsView(BrowserView):
             title = '<a href="http://%s" title="%s">%s</a>' % (info.infoprat_url,
                                                                info.infoprat_nom,
                                                                info.infoprat_nom)
-            results.append({'types': ['infopratique'],
+            results.append({'types': ['gare'],
                             'name': title,
                             'vicinity': info.infoprat_localite,
                             'latitude': info.infoprat_gps_lat,

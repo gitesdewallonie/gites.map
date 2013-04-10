@@ -36,10 +36,10 @@
                 <label i18n:translate="Infos_touristiques" for="infotouristique">Infos touristiques</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'infopratique' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/infopratique.png" />
-                <input type="checkbox" name="map_category_box" id="infopratique" value="infopratique" checked>
-                <label i18n:translate="Infos_pratiques" for="infopratique">Infos pratiques</label><br />
+            <tal:if condition="python: 'gare' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/gare.png" />
+                <input type="checkbox" name="map_category_box" id="gare" value="gare" checked>
+                <label i18n:translate="Gare" for="gare">Gare</label><br />
             </tal:if>
 
             <tal:if condition="python: 'maisontourisme' in checkboxes">
