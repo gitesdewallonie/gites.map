@@ -178,8 +178,6 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     """
     Transform an hebergement into an object used on the map
     """
-    hebType = hebergement.type.type_heb_code
-    typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambre' or 'gite'
     photo = hebergement.getVignette()
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
@@ -199,7 +197,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                        '%s/++resource++gites.map.images/capacity.png' % portalUrl,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max)
-    return {'types': [typeStr],
+    return {'types': [hebergement.type.type_heb_type],
             'name': title,
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
