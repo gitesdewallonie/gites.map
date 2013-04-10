@@ -87,6 +87,7 @@ var googleMapAPI ={
             streetViewControl: false,
             scaleControl: true,
             scaleControlOptions: {position: google.maps.ControlPosition.BOTTOM_LEFT},
+            scrollwheel: false,
         });
 
         //initialize infowindow
