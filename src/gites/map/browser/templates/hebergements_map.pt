@@ -18,16 +18,16 @@
         <div id="map_div" >
         </div>
 
-        <div id="map-menu">
+        <div id="menu">
 
-            <tal:if condition="python: 'gites' in checkboxes">
-                <input type="checkbox" name="primary_box" id="gites" value="gites" checked>
-                <label i18n:translate="Gites" for="gites">Gites</label><br />
+            <tal:if condition="python: 'gite' in checkboxes">
+                <input type="checkbox" name="primary_box" id="gite" value="gite" checked>
+                <label i18n:translate="Gites" for="gite">Gites</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'chambres' in checkboxes">
-                <input type="checkbox" name="primary_box" id="chambres" value="chambres" checked>
-                <label i18n:translate="Chambres" for="chambres">Chambres</label><br />
+            <tal:if condition="python: 'chambre' in checkboxes">
+                <input type="checkbox" name="primary_box" id="chambre" value="chambre" checked>
+                <label i18n:translate="Chambres" for="chambre">Chambres</label><br />
             </tal:if>
 
             <tal:if condition="python: 'infotouristique' in checkboxes">

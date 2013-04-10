@@ -174,12 +174,12 @@ class UtilsView(BrowserView):
         return results
 
 
-def hebergementToMapObject(hebergement, context, request):
+def hebergementToMapObject(hebergement, context, request, digit=None):
     """
     Transform an hebergement into an object used on the map
     """
     hebType = hebergement.type.type_heb_code
-    typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambres' or 'gites'
+    typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambre' or 'gite'
     photo = hebergement.getVignette()
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
@@ -203,7 +203,8 @@ def hebergementToMapObject(hebergement, context, request):
             'name': title,
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
-            'longitude': hebergement.heb_gps_long}
+            'longitude': hebergement.heb_gps_long,
+            'digit': digit}
 
 
 def extDataToMapObject(extData, extDataType):

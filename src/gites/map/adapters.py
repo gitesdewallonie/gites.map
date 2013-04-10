@@ -10,8 +10,8 @@ from gites.map.browser.interfaces import IMappableView, IMappableContent
 from gites.map.browser.utils import hebergementToMapObject
 
 
-ALLCHECKBOXES = ['gites',
-                 'chambres',
+ALLCHECKBOXES = ['gite',
+                 'chambre',
                  'infotouristique',
                  'infopratique',
                  'maisontourisme',
@@ -56,10 +56,13 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
     fetch = PackageHebergementFetcher.__call__
 
     def fetch(self):
+        digit = 0
         for heb in self():
+            digit += 1
             yield hebergementToMapObject(hebergement=heb,
                                          context=self.context,
-                                         request=self.request)
+                                         request=self.request,
+                                         digit=digit)
 
     def mapInfos(self):
         return {'zoom': None,
@@ -84,8 +87,8 @@ class HebergementsContentFetcher(BaseMapFetcher, BaseHebergementsFetcher):
 
     def checkBoxes(self):
         checkboxes = ALLCHECKBOXES[:]
-        checkboxes.remove('gites')
-        checkboxes.remove('chambres')
+        checkboxes.remove('gite')
+        checkboxes.remove('chambre')
         return checkboxes
 
     def mapInfos(self):
@@ -119,8 +122,8 @@ class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
 
     def checkBoxes(self):
         checkboxes = ALLCHECKBOXES[:]
-        checkboxes.remove('gites')
-        checkboxes.remove('chambres')
+        checkboxes.remove('gite')
+        checkboxes.remove('chambre')
         return checkboxes
 
     def mapInfos(self):

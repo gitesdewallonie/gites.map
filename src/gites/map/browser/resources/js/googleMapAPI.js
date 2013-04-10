@@ -5,8 +5,8 @@ var googleMapAPI ={
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
     defaultZoom: 10,
     zoomLimit: 13,
-    markers : {primary : {gites: [],
-        chambres: [],
+    markers : {primary : {gite: [],
+        chambre: [],
         infotouristique: [],
         infopratique: [],
         maisontourisme: [],
@@ -129,8 +129,15 @@ var googleMapAPI ={
             return;
         }
 
+        // Show number on the map
+        var image = type;
+        if ((type === 'gite' || type === 'chambre') && place.digit !== undefined)
+        {
+            image = type + '_' + place.digit;
+        }
+
         // window.portal_url added by plone
-        var icon = new google.maps.MarkerImage(window.portal_url + '/' + '++resource++gites.map.images/'+type+'.png');
+        var icon = new google.maps.MarkerImage(window.portal_url + '/' + '++resource++gites.map.images/'+image+'.png');
         var html;
 
         var location;
@@ -261,8 +268,8 @@ var googleMapAPI ={
     updateHebergementsMarkers : function(hebergements)
     {
         // Remove actual hebergements markers
-        googleMapAPI.deleteMarkersByType('gites', 'primary');
-        googleMapAPI.deleteMarkersByType('chambres', 'primary');
+        googleMapAPI.deleteMarkersByType('gite', 'primary');
+        googleMapAPI.deleteMarkersByType('chambre', 'primary');
 
         // Add markers
         var l = hebergements.length;
