@@ -6,6 +6,7 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
+from datetime import datetime
 from sqlalchemy import select
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter, getMultiAdapter
@@ -192,6 +193,35 @@ def hebergementToMapObject(hebergement, context, request):
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
             'longitude': hebergement.heb_gps_long}
+
+
+def packageToMapObject(context):
+    """
+    Transform a package into an object user on the map
+    """
+    if context.geolocation is None:
+        return
+    portalUrl = getToolByName(context, 'portal_url')()
+    imageUrl = "%s/%s/%s" % (portalUrl, context.id, 'largePhoto_preview')
+    rangeOfDate = ""
+    if context.endDate is not None:
+        rangeOfDate = "du %s au %s" % (context.startDate.strftime('%d/%m/%Y'),
+                                       context.endDate.strftime('%d/%m/%Y'))
+    bodyText = """%s
+                    <br />
+                    %s
+                    <br />
+                    <img src="%s" />
+                    <br />""" \
+                    % (context.description(),
+                       rangeOfDate,
+                       imageUrl)
+    #XXX Modifier le type quand il y aura une pin appropriée
+    return {'types': ['culte'],
+            'name': context.Title(),
+            'vicinity': bodyText,
+            'latitude': float(context.geolocation[0]),
+            'longitude': float(context.geolocation[1])}
 
 
 def extDataToMapObject(extData, extDataType):

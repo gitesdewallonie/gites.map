@@ -7,7 +7,7 @@ from gites.core.adapters.hebergementsfetcher import BaseHebergementsFetcher, Pac
 from gites.core.content.interfaces import IPackage
 from gites.map.interfaces import IHebergementsMapFetcher
 from gites.map.browser.interfaces import IMappableView, IMappableContent
-from gites.map.browser.utils import hebergementToMapObject
+from gites.map.browser.utils import hebergementToMapObject, packageToMapObject
 
 
 ALLCHECKBOXES = ['gites',
@@ -60,6 +60,7 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
             yield hebergementToMapObject(hebergement=heb,
                                          context=self.context,
                                          request=self.request)
+        yield packageToMapObject(self.context)
 
     def mapInfos(self):
         return {'zoom': None,
