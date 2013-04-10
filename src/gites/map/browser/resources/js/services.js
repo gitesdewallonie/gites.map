@@ -47,17 +47,6 @@ var services = {
         };
     },
 
-    callBack_getPrimaryMarkers : function(result,status)
-    {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            var l = result.length;
-            for (var i=0; i < l; i++) {
-
-                googleMapAPI.createMarker(result[i], 'primary');
-            };
-        }
-    },
-
     getMapInfos : function() //Get default zoom level depending on context
     {
         // mapInfosJSON coming from the template (python)

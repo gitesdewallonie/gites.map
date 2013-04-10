@@ -228,8 +228,7 @@ def packageToMapObject(context):
                     % (context.description(),
                        rangeOfDate,
                        imageUrl)
-    #XXX Modifier le type quand il y aura une pin appropriée
-    return {'types': ['culte'],
+    return {'types': ['map_package'],
             'name': context.Title(),
             'vicinity': bodyText,
             'latitude': float(context.geolocation[0]),
