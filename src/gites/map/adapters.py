@@ -3,7 +3,10 @@ import grokcore.component as grok
 from zope.component import queryMultiAdapter
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IBrowserRequest
-from gites.core.adapters.hebergementsfetcher import BaseHebergementsFetcher, PackageHebergementFetcher
+from Products.CMFPlone.Portal import PloneSite
+from gites.core.adapters.hebergementsfetcher import (BaseHebergementsFetcher,
+                                                     PackageHebergementFetcher,
+                                                     SearchHebFetcher)
 from gites.core.content.interfaces import IPackage
 from gites.map.interfaces import IHebergementsMapFetcher
 from gites.map.browser.interfaces import IMappableView, IMappableContent
@@ -104,6 +107,19 @@ class HebergementsContentFetcher(BaseMapFetcher, BaseHebergementsFetcher):
         quefaireEvents = requestView.getQuefaireEvents()
         restos = requestView.getRestos()
         return maisons + infosPrat + infosTour + quefaireEvents + restos
+
+
+class SearchContentFetcher(BaseMapFetcher, SearchHebFetcher):
+    grok.adapts(PloneSite, Interface, IBrowserRequest)
+    grok.provides(IHebergementsMapFetcher)
+
+    def fetch(self):
+        for heb in self():
+            yield hebergementToMapObject(heb, self.context, self.request)
+
+    def mapInfos(self):
+        return {'zoom': None,
+                'center': None}
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
