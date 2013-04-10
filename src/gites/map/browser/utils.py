@@ -55,9 +55,9 @@ class UtilsView(BrowserView):
         maisons = query.execute().fetchall()
         results = []
         for maison in maisons:
-            title = '<a href="%s" title="%s">%s</a>' % (maison.mais_url,
-                                                        maison.mais_nom,
-                                                        maison.mais_nom)
+            title = '<a href="http://%s" title="%s">%s</a>' % (maison.mais_url,
+                                                               maison.mais_nom,
+                                                               maison.mais_nom)
             results.append({'types': ['maisontourisme'],
                             'name': title,
                             'vicinity': '',
@@ -82,9 +82,9 @@ class UtilsView(BrowserView):
         infos = query.execute().fetchall()
         results = []
         for info in infos:
-            title = '<a href="%s" title="%s">%s</a>' % (info.infotour_url,
-                                                        info.infotour_nom,
-                                                        info.infotour_nom)
+            title = '<a href="http://%s" title="%s">%s</a>' % (info.infotour_url,
+                                                               info.infotour_nom,
+                                                               info.infotour_nom)
             results.append({'types': ['infotouristique'],
                             'name': title,
                             'vicinity': info.infotour_localite,
@@ -108,9 +108,9 @@ class UtilsView(BrowserView):
         infos = query.execute().fetchall()
         results = []
         for info in infos:
-            title = '<a href="%s" title="%s">%s</a>' % (info.infoprat_url,
-                                                        info.infoprat_nom,
-                                                        info.infoprat_nom)
+            title = '<a href="http://%s" title="%s">%s</a>' % (info.infoprat_url,
+                                                               info.infoprat_nom,
+                                                               info.infoprat_nom)
             results.append({'types': ['infopratique'],
                             'name': title,
                             'vicinity': info.infoprat_localite,
@@ -178,8 +178,6 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     """
     Transform an hebergement into an object used on the map
     """
-    hebType = hebergement.type.type_heb_code
-    typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambre' or 'gite'
     photo = hebergement.getVignette()
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
@@ -199,7 +197,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                        '%s/++resource++gites.map.images/capacity.png' % portalUrl,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max)
-    return {'types': [typeStr],
+    return {'types': [hebergement.type.type_heb_type],
             'name': title,
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
