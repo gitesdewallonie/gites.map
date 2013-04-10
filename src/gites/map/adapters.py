@@ -77,9 +77,35 @@ class HebergementsContentFetcher(BaseMapFetcher, BaseHebergementsFetcher):
     grok.adapts(IMappableContent, Interface, IBrowserRequest)
     grok.provides(IHebergementsMapFetcher)
 
+    def fetch(self):
+        heb = hebergementToMapObject(hebergement=self.context,
+                                     context=self.context,
+                                     request=self.request)
+        return [heb]
+
+    def checkBoxes(self):
+        checkboxes = ALLCHECKBOXES[:]
+        checkboxes.remove('gites')
+        checkboxes.remove('chambres')
+        return checkboxes
+
     def mapInfos(self):
-        return {'zoom': None,
-                'center': None}
+        return {'zoom': 14,
+                'center': {'latitude': self.context.heb_gps_lat,
+                           'longitude': self.context.heb_gps_long},
+                'boundToAll': False}
+
+    def allMapDatas(self):
+        requestView = queryMultiAdapter((self.context, self.request),
+                                        name="utilsView")
+        location = self.context.heb_location
+
+        maisons = requestView.getMaisonsDuTourisme(location)
+        infosTour = requestView.getInfosTouristiques(location)
+        infosPrat = requestView.getInfosPratiques(location)
+        quefaireEvents = requestView.getQuefaireEvents(location)
+        restos = requestView.getRestos(location)
+        return maisons + infosPrat + infosTour + quefaireEvents + restos
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
