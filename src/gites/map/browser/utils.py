@@ -56,9 +56,9 @@ class UtilsView(BrowserView):
         maisons = query.execute().fetchall()
         results = []
         for maison in maisons:
-            title = '<a href="%s" title="%s">%s</a>' % (maison.mais_url,
-                                                        maison.mais_nom,
-                                                        maison.mais_nom)
+            title = '<a href="http://%s" title="%s">%s</a>' % (maison.mais_url,
+                                                               maison.mais_nom,
+                                                               maison.mais_nom)
             results.append({'types': ['maisontourisme'],
                             'name': title,
                             'vicinity': '',
@@ -83,9 +83,9 @@ class UtilsView(BrowserView):
         infos = query.execute().fetchall()
         results = []
         for info in infos:
-            title = '<a href="%s" title="%s">%s</a>' % (info.infotour_url,
-                                                        info.infotour_nom,
-                                                        info.infotour_nom)
+            title = '<a href="http://%s" title="%s">%s</a>' % (info.infotour_url,
+                                                               info.infotour_nom,
+                                                               info.infotour_nom)
             results.append({'types': ['infotouristique'],
                             'name': title,
                             'vicinity': info.infotour_localite,
@@ -109,9 +109,9 @@ class UtilsView(BrowserView):
         infos = query.execute().fetchall()
         results = []
         for info in infos:
-            title = '<a href="%s" title="%s">%s</a>' % (info.infoprat_url,
-                                                        info.infoprat_nom,
-                                                        info.infoprat_nom)
+            title = '<a href="http://%s" title="%s">%s</a>' % (info.infoprat_url,
+                                                               info.infoprat_nom,
+                                                               info.infoprat_nom)
             results.append({'types': ['infopratique'],
                             'name': title,
                             'vicinity': info.infoprat_localite,
@@ -175,12 +175,10 @@ class UtilsView(BrowserView):
         return results
 
 
-def hebergementToMapObject(hebergement, context, request):
+def hebergementToMapObject(hebergement, context, request, digit=None):
     """
     Transform an hebergement into an object used on the map
     """
-    hebType = hebergement.type.type_heb_code
-    typeStr = hebType in ['CH', 'MH', 'CHECR'] and 'chambres' or 'gites'
     photo = hebergement.getVignette()
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
@@ -200,11 +198,12 @@ def hebergementToMapObject(hebergement, context, request):
                        '%s/++resource++gites.map.images/capacity.png' % portalUrl,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max)
-    return {'types': [typeStr],
+    return {'types': [hebergement.type.type_heb_type],
             'name': title,
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
-            'longitude': hebergement.heb_gps_long}
+            'longitude': hebergement.heb_gps_long,
+            'digit': digit}
 
 
 def packageToMapObject(context):
@@ -240,9 +239,9 @@ def extDataToMapObject(extData, extDataType):
     """
     Transform an hebergement into an object used on the map
     """
-    title = '<a href="%s" title="%s">%s</a>' % (extData.ext_data_url,
-                                                extData.ext_data_title,
-                                                extData.ext_data_title)
+    title = '<a href="%s" title="%s" target="_blank">%s</a>' % (extData.ext_data_url,
+                                                                extData.ext_data_title,
+                                                                extData.ext_data_title)
 
     dateString = ''
     if extData.ext_data_date_begin or extData.ext_data_date_end:

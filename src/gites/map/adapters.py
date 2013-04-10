@@ -3,15 +3,20 @@ import grokcore.component as grok
 from zope.component import queryMultiAdapter
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IBrowserRequest
-from gites.core.adapters.hebergementsfetcher import BaseHebergementsFetcher, PackageHebergementFetcher
+from Products.CMFPlone.Portal import PloneSite
+from gites.db.content.commune import Commune
+from gites.db.content.hebergement.hebergement import Hebergement
+from gites.core.adapters.hebergementsfetcher import (BaseHebergementsFetcher,
+                                                     PackageHebergementFetcher,
+                                                     SearchHebFetcher,
+                                                     CommuneHebFetcher)
 from gites.core.content.interfaces import IPackage
 from gites.map.interfaces import IHebergementsMapFetcher
-from gites.map.browser.interfaces import IMappableView, IMappableContent
 from gites.map.browser.utils import hebergementToMapObject, packageToMapObject
 
 
-ALLCHECKBOXES = ['gites',
-                 'chambres',
+ALLCHECKBOXES = ['gite',
+                 'chambre',
                  'infotouristique',
                  'infopratique',
                  'maisontourisme',
@@ -33,9 +38,7 @@ ALLCHECKBOXES = ['gites',
 
 
 class BaseMapFetcher:
-
-    def fetch(self):
-        return []
+    grok.provides(IHebergementsMapFetcher)
 
     def checkBoxes(self):
         return ALLCHECKBOXES
@@ -47,6 +50,13 @@ class BaseMapFetcher:
 
     def allMapDatas(self):
         return []
+
+    def fetch(self):
+        digit = 0
+        for heb in self():
+            digit += 1
+            yield hebergementToMapObject(heb, self.context, self.request,
+                                         digit)
 
 
 class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher):
@@ -73,44 +83,16 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
         return []
 
 
-class HebergementsContentFetcher(BaseMapFetcher, BaseHebergementsFetcher):
-    grok.adapts(IMappableContent, Interface, IBrowserRequest)
-    grok.provides(IHebergementsMapFetcher)
+class HebergementsInCommuneContentFetcher(BaseMapFetcher, CommuneHebFetcher):
+    grok.adapts(Commune, Interface, IBrowserRequest)
 
-    def fetch(self):
-        heb = hebergementToMapObject(hebergement=self.context,
-                                     context=self.context,
-                                     request=self.request)
-        return [heb]
 
-    def checkBoxes(self):
-        checkboxes = ALLCHECKBOXES[:]
-        checkboxes.remove('gites')
-        checkboxes.remove('chambres')
-        return checkboxes
-
-    def mapInfos(self):
-        return {'zoom': 14,
-                'center': {'latitude': self.context.heb_gps_lat,
-                           'longitude': self.context.heb_gps_long},
-                'boundToAll': False}
-
-    def allMapDatas(self):
-        requestView = queryMultiAdapter((self.context, self.request),
-                                        name="utilsView")
-        location = self.context.heb_location
-
-        maisons = requestView.getMaisonsDuTourisme(location)
-        infosTour = requestView.getInfosTouristiques(location)
-        infosPrat = requestView.getInfosPratiques(location)
-        quefaireEvents = requestView.getQuefaireEvents(location)
-        restos = requestView.getRestos(location)
-        return maisons + infosPrat + infosTour + quefaireEvents + restos
+class SearchContentFetcher(BaseMapFetcher, SearchHebFetcher):
+    grok.adapts(PloneSite, Interface, IBrowserRequest)
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
-    grok.adapts(Interface, IMappableView, IBrowserRequest)
-    grok.provides(IHebergementsMapFetcher)
+    grok.adapts(Hebergement, Interface, IBrowserRequest)
 
     def fetch(self):
         heb = hebergementToMapObject(hebergement=self.context,
@@ -120,8 +102,8 @@ class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
 
     def checkBoxes(self):
         checkboxes = ALLCHECKBOXES[:]
-        checkboxes.remove('gites')
-        checkboxes.remove('chambres')
+        checkboxes.remove('gite')
+        checkboxes.remove('chambre')
         return checkboxes
 
     def mapInfos(self):

@@ -5,9 +5,9 @@ var services = {
         for (var i=0; i < l; i++) {
 
             var request = {
-//                location: googleMapAPI.map.center,
-//                radius: 10000,
-//                rankBy: google.maps.places.RankBy.DISTANCE,
+                // location: googleMapAPI.map.center,
+                // radius: 10000,
+                // rankBy: google.maps.places.RankBy.DISTANCE,
                 bounds: googleMapAPI.map.getBounds(),
                 types: [types[i]],
             };
@@ -31,7 +31,7 @@ var services = {
         }
     },
 
-    getPrimaryMarkers : function() //Temporary creating fake gites
+    getPrimaryMarkers : function()
     {
         // hebergementsJSON coming from the template (python)
         var l = hebergementsJSON.length;
@@ -52,16 +52,6 @@ var services = {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             var l = result.length;
             for (var i=0; i < l; i++) {
-
-                //Temporary change 'cafe' to 'gites' and 'hospital' to 'chambres'
-                if (result[i].types[0] === 'cafe')
-                {
-                    result[i].types = ['gites'];
-                }
-                else if (result[i].types[0] === 'hospital')
-                {
-                    result[i].types = ['chambres'];
-                }
 
                 googleMapAPI.createMarker(result[i], 'primary');
             };
