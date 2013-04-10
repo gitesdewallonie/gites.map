@@ -5,25 +5,33 @@ var googleMapAPI ={
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
     defaultZoom: 10,
     zoomLimit: 10,
-    markers : {primary : {gite: [],
-        chambre: [],
-        infotouristique: [],
-        infopratique: [],
-        maisontourisme: [],
-        restaurant: [],
-        evenementquefaire: []},
-    secondary : {transport: [],
-        culte: [],
-        commerce: [],
-        night: [],
-        entertainment: [],
-        city_hall: [],
-        art_gallery: [],
-        casino: [],
-        library: [],
-        park: [],
-        spa: []}},
-    subCategories: {transport: ['airport', 'bus_station'],
+    markers : {
+        // From python
+        primary : {
+            gite: [],
+            chambre: [],
+            infotouristique: [],
+            infopratique: [],
+            maisontourisme: [],
+            restaurant: [],
+            evenementquefaire: [],
+        },
+        // From google map
+        secondary : {
+            transport: [],
+            culte: [],
+            commerce: [],
+            night: [],
+            entertainment: [],
+            city_hall: [],
+            art_gallery: [],
+            casino: [],
+            library: [],
+            park: [],
+            spa: []}
+    },
+    subCategories: {
+        transport: ['airport', 'bus_station'],
         culte: ['church', 'mosque', 'synagogue'],
         commerce: ['book_store', 'shopping_mall', 'store', 'bakery', 'grocery_or_supermarket'],
         night: ['bar', 'cafe', 'night_club'],
@@ -33,7 +41,25 @@ var googleMapAPI ={
         casino: ['casino'],
         library: ['library'],
         park: ['park'],
-        spa: ['spa']},
+        spa: ['spa']
+    },
+    categoriesToHide: [
+            'infopratique',
+            'maisontourisme',
+            'restaurant',
+            'evenementquefaire',
+            'transport',
+            'culte',
+            'commerce',
+            'night',
+            'entertainment',
+            'city_hall',
+            'art_gallery',
+            'casino',
+            'library',
+            'park',
+            'spa'
+        ],
 
     overlay : null,
 
@@ -182,29 +208,27 @@ var googleMapAPI ={
                 for (var i=0; i < l; i++) {
                     marker = this.markers[category][type][i];
 
-                    switch (category)
+                    // Hide or show secondary marker if checkbox checked/unchecked
+                    //   or if dezoom to the limit
+                    if (googleMapAPI.categoriesToHide.indexOf(type) != -1)
                     {
-                        // Hide or show primary marker if checkbox checked/unchecked
-                        case 'primary':
-                            (marker.checked)?marker.setVisible(true):marker.setVisible(false);
-                            break;
-
-                            // Hide or show secondary marker if checkbox checked/unchecked
-                            //   or if dezoom to the limit
-                        case 'secondary':
-                            if (marker.checked && this.map.zoom > this.zoomLimit)
-                            {
-                                marker.setVisible(true);
-                            }
-                            else if (marker.checked && this.map.zoom <= this.zoomLimit)
-                            {
-                                marker.setVisible(false);
-                            }
-                            else
-                            {
-                                marker.setVisible(false);
-                            }
-                            break;
+                        if (marker.checked && this.map.zoom > this.zoomLimit)
+                        {
+                            marker.setVisible(true);
+                        }
+                        else if (marker.checked && this.map.zoom <= this.zoomLimit)
+                        {
+                            marker.setVisible(false);
+                        }
+                        else
+                        {
+                            marker.setVisible(false);
+                        }
+                    }
+                    // Hide or show markers if checkbox checked/unchecked
+                    else
+                    {
+                        (marker.checked)?marker.setVisible(true):marker.setVisible(false);
                     }
                 };
             }
@@ -225,21 +249,27 @@ var googleMapAPI ={
     manageCheckboxDisabling : function()
     {
         if (this.map.zoom > this.zoomLimit)
-            // dégriser les checkbox secondary_box
+        // dégriser les checkbox qui doivent l etre
         {
-            jQuery('input[name="secondary_box"]').each(function(index, checkBox)
+            jQuery('input[name="map_category_box"]').each(function(index, checkBox)
+                {
+                    if (googleMapAPI.categoriesToHide.indexOf(checkBox.id) != -1)
                     {
                         checkBox.disabled = false;
-                    });
+                    }
+                });
         }
 
-        // griser les checkbox secondary_box cochées si dezoom > limit
+        // griser les checkbox qui doivent l'etre si dezoom > limit
         else
         {
-            jQuery('input[name="secondary_box"]').each(function(index, checkBox)
+            jQuery('input[name="map_category_box"]').each(function(index, checkBox)
+                {
+                    if (googleMapAPI.categoriesToHide.indexOf(checkBox.id) != -1)
                     {
                         checkBox.disabled = true;
-                    });
+                    }
+                });
         }
     },
     boundToAllMarkers : function()
@@ -293,11 +323,14 @@ var googleMapAPI ={
 
             // Prepare secondary types that are checked on template
             var types = [];
-            jQuery('input[name="secondary_box"]').each(function(index, checkBox)
+            jQuery('input[name="map_category_box"]').each(function(index, checkBox)
             {
-                if ( jQuery(checkBox).prop('checked') )
+                if (checkBox.id in googleMapAPI.markers.secondary)
                 {
-                    types.push(checkBox.value);
+                    if ( jQuery(checkBox).prop('checked') )
+                    {
+                        types.push(checkBox.value);
+                    }
                 }
             });
 

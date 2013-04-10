@@ -21,108 +21,108 @@
         <div id="menu">
 
             <tal:if condition="python: 'gite' in checkboxes">
-                <input type="checkbox" name="primary_box" id="gite" value="gite" checked>
+                <input type="checkbox" name="map_category_box" id="gite" value="gite" checked>
                 <label i18n:translate="Gites" for="gite">Gites</label><br />
             </tal:if>
 
             <tal:if condition="python: 'chambre' in checkboxes">
-                <input type="checkbox" name="primary_box" id="chambre" value="chambre" checked>
+                <input type="checkbox" name="map_category_box" id="chambre" value="chambre" checked>
                 <label i18n:translate="Chambres" for="chambre">Chambres</label><br />
             </tal:if>
 
             <tal:if condition="python: 'infotouristique' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/infotouristique.png" />
-                <input type="checkbox" name="primary_box" id="infotouristique" value="infotouristique" checked>
+                <input type="checkbox" name="map_category_box" id="infotouristique" value="infotouristique" checked>
                 <label i18n:translate="Infos_touristiques" for="infotouristique">Infos touristiques</label><br />
             </tal:if>
 
             <tal:if condition="python: 'infopratique' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/infopratique.png" />
-                <input type="checkbox" name="primary_box" id="infopratique" value="infopratique" checked>
+                <input type="checkbox" name="map_category_box" id="infopratique" value="infopratique" checked>
                 <label i18n:translate="Infos_pratiques" for="infopratique">Infos pratiques</label><br />
             </tal:if>
 
             <tal:if condition="python: 'maisontourisme' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/maisontourisme.png" />
-                <input type="checkbox" name="primary_box" id="maisontourisme" value="maisontourisme" checked>
+                <input type="checkbox" name="map_category_box" id="maisontourisme" value="maisontourisme" checked>
                 <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
             </tal:if>
 
             <tal:if condition="python: 'restaurant' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/restaurant.png" />
-                <input type="checkbox" name="primary_box" id="restaurant" value="restaurant" checked>
+                <input type="checkbox" name="map_category_box" id="restaurant" value="restaurant" checked>
                 <label i18n:translate="Restaurants" for="restaurant">Restaurants</label><br />
             </tal:if>
 
             <tal:if condition="python: 'evenementquefaire' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/evenementquefaire.png" />
-                <input type="checkbox" name="primary_box" id="evenementquefaire" value="evenementquefaire" checked>
+                <input type="checkbox" name="map_category_box" id="evenementquefaire" value="evenementquefaire" checked>
                 <label i18n:translate="Evenements" for="evenementquefaire">&Eacute;v&eacute;nements</label><br />
             </tal:if>
 
             <tal:if condition="python: 'transport' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/transport.png" />
-                <input type="checkbox" name="secondary_box" id="transport" value="transport">
+                <input type="checkbox" name="map_category_box" id="transport" value="transport">
                 <label i18n:translate="Moyens_de_transport" for="transport">Moyens de transport</label><br />
             </tal:if>
 
             <tal:if condition="python: 'culte' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/culte.png" />
-                <input type="checkbox" name="secondary_box" id="culte" value="culte">
+                <input type="checkbox" name="map_category_box" id="culte" value="culte">
                 <label i18n:translate="Lieux_de_culte" for="culte">Lieux de culte</label><br />
             </tal:if>
 
             <tal:if condition="python: 'commerce' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/commerce.png" />
-                <input type="checkbox" name="secondary_box" id="commerce" value="commerce">
+                <input type="checkbox" name="map_category_box" id="commerce" value="commerce">
                 <label i18n:translate="Commerces" for="commerce">Commerces</label><br />
             </tal:if>
 
             <tal:if condition="python: 'night' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/night.png" />
-                <input type="checkbox" name="secondary_box" id="night" value="night">
+                <input type="checkbox" name="map_category_box" id="night" value="night">
                 <label i18n:translate="Night_life" for="night">Night life</label><br />
             </tal:if>
 
             <tal:if condition="python: 'divertissement' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/divertissement.png" />
-                <input type="checkbox" name="secondary_box" id="divertissement" value="divertissement">
+                <input type="checkbox" name="map_category_box" id="divertissement" value="divertissement">
                 <label i18n:translate="Divertissements" for="divertissement">Divertissements</label><br />
             </tal:if>
 
             <tal:if condition="python: 'city_hall' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/city_hall.png" />
-                <input type="checkbox" name="secondary_box" id="city_hall" value="city_hall">
+                <input type="checkbox" name="map_category_box" id="city_hall" value="city_hall">
                 <label i18n:translate="Hotel_de_ville" for="city_hall">H&ocirc;tel de ville</label><br />
             </tal:if>
 
             <tal:if condition="python: 'art_gallery' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/art_gallery.png" />
-                <input type="checkbox" name="secondary_box" id="art_gallery" value="art_gallery">
+                <input type="checkbox" name="map_category_box" id="art_gallery" value="art_gallery">
                 <label i18n:translate="Art_gallery" for="art_gallery">Galleries d'art</label><br />
             </tal:if>
 
             <tal:if condition="python: 'casino' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/casino.png" />
-                <input type="checkbox" name="secondary_box" id="casino" value="casino">
+                <input type="checkbox" name="map_category_box" id="casino" value="casino">
                 <label i18n:translate="Casinos" for="casino">Casinos</label><br />
             </tal:if>
 
             <tal:if condition="python: 'library' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/library.png" />
-                <input type="checkbox" name="secondary_box" id="library" value="library">
+                <input type="checkbox" name="map_category_box" id="library" value="library">
                 <label i18n:translate="Bibliotheques" for="library">Biblioth&egrave;ques</label><br />
             </tal:if>
 
             <tal:if condition="python: 'park' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/park.png" />
-                <input type="checkbox" name="secondary_box" id="park" value="park">
+                <input type="checkbox" name="map_category_box" id="park" value="park">
                 <label i18n:translate="parcs" for="park">Parcs</label><br />
             </tal:if>
 
             <tal:if condition="python: 'spa' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/spa.png" />
-                <input type="checkbox" name="secondary_box" id="spa" value="spa">
+                <input type="checkbox" name="map_category_box" id="spa" value="spa">
                 <label i18n:translate="Spas" for="spa">Spas</label><br />
             </tal:if>
 
