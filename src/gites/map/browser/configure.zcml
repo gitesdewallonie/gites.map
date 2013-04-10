@@ -81,7 +81,7 @@
          allowed_interface="Products.Maps.interfaces.map.IMapEnabledView"/>
 
     <include package="z3c.unconfigure" file="meta.zcml" />
-
+    <include package="monet.mapsviewlet"/>
     <unconfigure>
       <browser:page
         for="Products.Archetypes.interfaces.IBaseContent"

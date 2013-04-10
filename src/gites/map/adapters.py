@@ -12,7 +12,7 @@ from gites.core.adapters.hebergementsfetcher import (BaseHebergementsFetcher,
                                                      CommuneHebFetcher)
 from gites.core.content.interfaces import IPackage
 from gites.map.interfaces import IHebergementsMapFetcher
-from gites.map.browser.utils import hebergementToMapObject
+from gites.map.browser.utils import hebergementToMapObject, packageToMapObject
 
 
 ALLCHECKBOXES = ['gite',
@@ -61,6 +61,16 @@ class BaseMapFetcher:
 
 class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher):
     grok.adapts(IPackage, Interface, IBrowserRequest)
+    grok.provides(IHebergementsMapFetcher)
+
+    fetch = PackageHebergementFetcher.__call__
+
+    def fetch(self):
+        for heb in self():
+            yield hebergementToMapObject(hebergement=heb,
+                                         context=self.context,
+                                         request=self.request)
+        yield packageToMapObject(self.context)
 
     def mapInfos(self):
         return {'zoom': None,
