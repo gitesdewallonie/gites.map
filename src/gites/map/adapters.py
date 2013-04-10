@@ -114,8 +114,11 @@ class SearchContentFetcher(BaseMapFetcher, SearchHebFetcher):
     grok.provides(IHebergementsMapFetcher)
 
     def fetch(self):
+        digit = 0
         for heb in self():
-            yield hebergementToMapObject(heb, self.context, self.request)
+            digit += 1
+            yield hebergementToMapObject(heb, self.context, self.request,
+                                         digit)
 
     def mapInfos(self):
         return {'zoom': None,
