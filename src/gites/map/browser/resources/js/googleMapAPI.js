@@ -10,7 +10,10 @@ var googleMapAPI ={
         primary : {
             gite: [],
             chambre: [],
-            infotouristique: [],
+            sport_loisir: [],
+            attraction_musee: [],
+            terroir: [],
+            evenement: [],
             gare: [],
             maisontourisme: [],
             restaurant: [],

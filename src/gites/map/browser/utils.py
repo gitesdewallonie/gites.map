@@ -65,7 +65,7 @@ class UtilsView(BrowserView):
                             'longitude': maison.mais_gps_long})
         return results
 
-    def getInfosTouristiques(self, location=None):
+    def getInfosTouristiques(self, infoType, infoTypePk, location=None):
         wrapper = getSAWrapper('gites_wallons')
         InfoTouristique = wrapper.getMapper('info_touristique')
         TypeInfoTouristique = wrapper.getMapper('type_info_touristique')
@@ -74,7 +74,8 @@ class UtilsView(BrowserView):
                         InfoTouristique.infotour_gps_long,
                         InfoTouristique.infotour_gps_lat,
                         TypeInfoTouristique.typinfotour_nom_fr,
-                        InfoTouristique.infotour_localite])
+                        InfoTouristique.infotour_localite],
+                       InfoTouristique.infotour_type_infotour_fk == infoTypePk)
         if location:
             query.append_whereclause(InfoTouristique.infotour_location.distance_sphere(location) < DISTANCE_METERS)
 
@@ -85,7 +86,7 @@ class UtilsView(BrowserView):
             title = '<a href="http://%s" title="%s">%s</a>' % (info.infotour_url,
                                                                info.infotour_nom,
                                                                info.infotour_nom)
-            results.append({'types': ['infotouristique'],
+            results.append({'types': [infoType],
                             'name': title,
                             'vicinity': info.infotour_localite,
                             'latitude': info.infotour_gps_lat,
