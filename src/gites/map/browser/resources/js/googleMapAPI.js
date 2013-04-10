@@ -131,7 +131,7 @@ var googleMapAPI ={
 
         // Show number on the map
         var image = type;
-        if ((type === 'gite' || type === 'chambre') && place.digit !== undefined)
+        if ((type === 'gite' || type === 'chambre') && place.digit)
         {
             image = type + '_' + place.digit;
         }
