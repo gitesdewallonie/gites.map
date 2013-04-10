@@ -100,13 +100,12 @@ class HebergementsContentFetcher(BaseMapFetcher, BaseHebergementsFetcher):
     def allMapDatas(self):
         requestView = queryMultiAdapter((self.context, self.request),
                                         name="utilsView")
-        location = self.context.heb_location
 
-        maisons = requestView.getMaisonsDuTourisme(location)
-        infosTour = requestView.getInfosTouristiques(location)
-        infosPrat = requestView.getInfosPratiques(location)
-        quefaireEvents = requestView.getQuefaireEvents(location)
-        restos = requestView.getRestos(location)
+        maisons = requestView.getMaisonsDuTourisme()
+        infosTour = requestView.getInfosTouristiques()
+        infosPrat = requestView.getInfosPratiques()
+        quefaireEvents = requestView.getQuefaireEvents()
+        restos = requestView.getRestos()
         return maisons + infosPrat + infosTour + quefaireEvents + restos
 
 
