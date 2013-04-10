@@ -15,6 +15,8 @@ from Products.CMFCore.utils import getToolByName
 
 from gites.map.interfaces import IHebergementsMapFetcher
 
+DISTANCE_METERS = 10000
+
 
 class UtilsView(BrowserView):
     """
@@ -40,13 +42,20 @@ class UtilsView(BrowserView):
         else:
             return True
 
-    def getMaisonsDuTourisme(self):
+    def getMaisonsDuTourisme(self, location=None):
+#        session.query(Hebergement.heb_pk).filter(Hebergement.heb_location.distance_sphere(turbine.heb_location) < 1000).all()
+        #XXX regarder pour si plusieurs location
+        #XXX regarder si le self contient les info qu il faut pour rechercher la distance sur la map
+        #Faire tous les autres
         wrapper = getSAWrapper('gites_wallons')
         MaisonTouristique = wrapper.getMapper('maison_tourisme')
         query = select([MaisonTouristique.mais_nom,
                         MaisonTouristique.mais_url,
                         MaisonTouristique.mais_gps_long,
                         MaisonTouristique.mais_gps_lat])
+        if location:
+            query.append_whereclause(MaisonTouristique.mais_location.distance_sphere(location) < DISTANCE_METERS)
+
         maisons = query.execute().fetchall()
         results = []
         for maison in maisons:
@@ -60,7 +69,7 @@ class UtilsView(BrowserView):
                             'longitude': maison.mais_gps_long})
         return results
 
-    def getInfosTouristiques(self):
+    def getInfosTouristiques(self, location=None):
         wrapper = getSAWrapper('gites_wallons')
         InfoTouristique = wrapper.getMapper('info_touristique')
         TypeInfoTouristique = wrapper.getMapper('type_info_touristique')
@@ -70,6 +79,9 @@ class UtilsView(BrowserView):
                         InfoTouristique.infotour_gps_lat,
                         TypeInfoTouristique.typinfotour_nom_fr,
                         InfoTouristique.infotour_localite])
+        if location:
+            query.append_whereclause(InfoTouristique.infotour_location.distance_sphere(location) < DISTANCE_METERS)
+
         query.append_whereclause(TypeInfoTouristique.typinfotour_pk == InfoTouristique.infotour_type_infotour_fk)
         infos = query.execute().fetchall()
         results = []
@@ -84,7 +96,7 @@ class UtilsView(BrowserView):
                             'longitude': info.infotour_gps_long})
         return results
 
-    def getInfosPratiques(self):
+    def getInfosPratiques(self, location=None):
         wrapper = getSAWrapper('gites_wallons')
         InfoPratique = wrapper.getMapper('info_pratique')
         TypeInfoPratique = wrapper.getMapper('type_info_pratique')
@@ -94,6 +106,8 @@ class UtilsView(BrowserView):
                         InfoPratique.infoprat_gps_lat,
                         TypeInfoPratique.typinfoprat_nom_fr,
                         InfoPratique.infoprat_localite])
+        if location:
+            query.append_whereclause(InfoPratique.infoprat_location.distance_sphere(location) < DISTANCE_METERS)
         query.append_whereclause(InfoPratique.infoprat_type_infoprat_fk == TypeInfoPratique.typinfoprat_pk)
         infos = query.execute().fetchall()
         results = []
@@ -130,21 +144,21 @@ class UtilsView(BrowserView):
                                                   request=self.request))
         return results
 
-    def getQuefaireEvents(self):
+    def getQuefaireEvents(self, location=None):
         """
         get events from quefaire.be service
         map_external_data is filled by quefaire.be service
         """
-        return self.getExtDatas('quefaire.be', 'evenementquefaire')
+        return self.getExtDatas('quefaire.be', 'evenementquefaire', location)
 
-    def getRestos(self):
+    def getRestos(self, location=None):
         """
         get restos from resto.be service
         map_external_data is filled by resto.be service
         """
-        return self.getExtDatas('resto.be', 'restaurant')
+        return self.getExtDatas('resto.be', 'restaurant', location)
 
-    def getExtDatas(self, extDataProvider, extDataType):
+    def getExtDatas(self, extDataProvider, extDataType, location):
         """
         Get map external datas by type
         """
@@ -154,6 +168,8 @@ class UtilsView(BrowserView):
         query = session.query(ExtData).outerjoin('blacklist')
         query = query.filter(ExtData.ext_data_provider_pk == extDataProvider)
         query = query.filter(ExtData.blacklist == None)
+        if location:
+            query = query.filter(ExtData.ext_data_location.distance_sphere(location) < DISTANCE_METERS)
 
         results = []
         for extData in query.all():
