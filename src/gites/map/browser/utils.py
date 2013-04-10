@@ -211,9 +211,9 @@ def extDataToMapObject(extData, extDataType):
     """
     Transform an hebergement into an object used on the map
     """
-    title = '<a href="%s" title="%s">%s</a>' % (extData.ext_data_url,
-                                                extData.ext_data_title,
-                                                extData.ext_data_title)
+    title = '<a href="%s" title="%s" target="_blank">%s</a>' % (extData.ext_data_url,
+                                                                extData.ext_data_title,
+                                                                extData.ext_data_title)
 
     dateString = ''
     if extData.ext_data_date_begin or extData.ext_data_date_end:
