@@ -4,7 +4,7 @@ var googleMapAPI ={
     //Wallonie center
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
     defaultZoom: 10,
-    zoomLimit: 13,
+    zoomLimit: 10,
     markers : {primary : {gite: [],
         chambre: [],
         infotouristique: [],
