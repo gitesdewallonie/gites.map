@@ -2,6 +2,7 @@ var services = {
     getSecondaryMarkers : function(types)
     {
         var l = types.length;
+        var service = googleMapAPI.placeService;
         for (var i=0; i < l; i++) {
 
             var request = {
@@ -11,7 +12,6 @@ var services = {
                 bounds: googleMapAPI.map.getBounds(),
                 types: [types[i]],
             };
-            var service = new google.maps.places.PlacesService(googleMapAPI.map);
             service.nearbySearch(request, services.callBack_getSecondaryMarkers);
         };
 

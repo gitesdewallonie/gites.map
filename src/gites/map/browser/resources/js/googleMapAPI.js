@@ -1,5 +1,6 @@
 var googleMapAPI ={
     map : null,
+    placeService : null,
     infowindow: null,
     //Wallonie center
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
@@ -93,6 +94,8 @@ var googleMapAPI ={
             scrollwheel: false,
         });
 
+        this.placeService = new google.maps.places.PlacesService(this.map);
+
         //initialize infowindow
         this.infowindow = new google.maps.InfoWindow(
                 {
@@ -153,6 +156,7 @@ var googleMapAPI ={
         {
             type = place.types[0];
         }
+
         if (type === undefined)
         {
             // If no type found (must never append)
