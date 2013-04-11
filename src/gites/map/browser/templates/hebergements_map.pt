@@ -72,12 +72,6 @@
                 <label i18n:translate="Restaurants" for="restaurant">Restaurants</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'transport' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/transport.png" />
-                <input type="checkbox" name="map_category_box" id="transport" value="transport">
-                <label i18n:translate="Moyens_de_transport" for="transport">Moyens de transport</label><br />
-            </tal:if>
-
             <tal:if condition="python: 'culte' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/culte.png" />
                 <input type="checkbox" name="map_category_box" id="culte" value="culte">
