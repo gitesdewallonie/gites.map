@@ -7,7 +7,7 @@
         cookable="True"
         enabled="True"
         expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'fr'"
-        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=fr"
+        id="http://maps.googleapis.com/maps/api/js?v=3&libraries=places&amp;sensor=true&amp;language=fr"
         inline="False"/>
 
     <javascript
@@ -16,7 +16,7 @@
         cookable="True"
         enabled="True"
         expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'en'"
-        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=en"
+        id="http://maps.googleapis.com/maps/api/js?v=3&libraries=places&amp;sensor=true&amp;language=en"
         inline="False"/>
 
     <javascript
@@ -25,7 +25,7 @@
         cookable="True"
         enabled="True"
         expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'de'"
-        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=de"
+        id="http://maps.googleapis.com/maps/api/js?v=3&libraries=places&amp;sensor=true&amp;language=de"
         inline="False"/>
 
     <javascript
@@ -34,7 +34,7 @@
         cookable="True"
         enabled="True"
         expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'it'"
-        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=it"
+        id="http://maps.googleapis.com/maps/api/js?v=3&libraries=places&amp;sensor=true&amp;language=it"
         inline="False"/>
 
     <javascript
@@ -43,7 +43,7 @@
         cookable="True"
         enabled="True"
         expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'nl'"
-        id="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=true&amp;language=nl"
+        id="http://maps.googleapis.com/maps/api/js?v=3&libraries=places&amp;sensor=true&amp;language=nl"
         inline="False"/>
 
     <javascript
