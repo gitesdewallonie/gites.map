@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from five import grok
 from zope.interface import implements, Interface
-from gites.map.browser.viewlets import GitesMapViewlet
+from gites.map.browser.viewlets import GitesMapBase
 
 
-class MapListing(grok.View):
+class MapListing(GitesMapBase, grok.View):
     implements(Interface)
     grok.context(Interface)
     grok.name('update_map_listing')

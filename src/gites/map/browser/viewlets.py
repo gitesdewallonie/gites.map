@@ -14,14 +14,33 @@ from sqlalchemy import select
 from z3c.json.interfaces import IJSONWriter
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import getUtility, getMultiAdapter
-from plone.app.layout.viewlets.common import ViewletBase
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from gites.core.viewlets.map import MapViewletManager
 from gites.map.interfaces import IHebergementsMapFetcher
 
 
-class GitesMapViewlet(grok.Viewlet):
+class GitesMapBase(object):
+
+    def _makeJSON(self, obj):
+        writer = getUtility(IJSONWriter)
+        return writer.write(obj)
+
+    @property
+    def _fetcher(self):
+        return getMultiAdapter((self.context, self.view, self.request),
+                               IHebergementsMapFetcher)
+
+    def getHebergements(self):
+        localHebergements = list(self._fetcher.fetch())
+        if localHebergements:
+            return self._makeJSON(localHebergements)
+        else:
+            # XXX temporary
+            return self.getAllHebergements()
+
+
+class GitesMapViewlet(GitesMapBase, grok.Viewlet):
     render = ViewPageTemplateFile('templates/hebergements_map.pt')
     grok.viewletmanager(MapViewletManager)
     grok.context(zope.interface.Interface)
@@ -31,23 +50,6 @@ class GitesMapViewlet(grok.Viewlet):
         requestView = getMultiAdapter((self.context, self.request),
                                       name="utilsView")
         return requestView.shouldShowMapViewlet(view=self.view)
-
-    @property
-    def _fetcher(self):
-        return getMultiAdapter((self.context, self.view, self.request),
-                               IHebergementsMapFetcher)
-
-    def _makeJSON(self, obj):
-        writer = getUtility(IJSONWriter)
-        return writer.write(obj)
-
-    def getHebergements(self):
-        localHebergements = list(self._fetcher.fetch())
-        if localHebergements:
-            return self._makeJSON(localHebergements)
-        else:
-            # XXX temporary
-            return self.getAllHebergements()
 
     def getCheckboxes(self):
         """
