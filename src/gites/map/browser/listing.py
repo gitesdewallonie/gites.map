@@ -4,7 +4,7 @@ from zope.interface import implements, Interface
 from gites.map.browser.viewlets import GitesMapViewlet
 
 
-class MapListing(GitesMapViewlet, grok.View):
+class MapListing(grok.View):
     implements(Interface)
     grok.context(Interface)
     grok.name('update_map_listing')

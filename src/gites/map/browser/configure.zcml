@@ -8,15 +8,6 @@
 
     <grok:grok package="."/>
 
-    <browser:viewlet
-        name="gites.map.hebergements"
-        for="*"
-        manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
-        class=".viewlets.GitesMapViewlet"
-        layer=".interfaces.IGitesMap"
-        permission="zope.Public"
-        />
-
     <browser:page
         name="shouldShowMapViewlet"
         for="*"
