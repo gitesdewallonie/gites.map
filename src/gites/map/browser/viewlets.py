@@ -33,11 +33,7 @@ class GitesMapBase(object):
 
     def getHebergements(self):
         localHebergements = list(self._fetcher.fetch())
-        if localHebergements:
-            return self._makeJSON(localHebergements)
-        else:
-            # XXX temporary
-            return self.getAllHebergements()
+        return self._makeJSON(localHebergements)
 
 
 class GitesMapViewlet(GitesMapBase, grok.Viewlet):
