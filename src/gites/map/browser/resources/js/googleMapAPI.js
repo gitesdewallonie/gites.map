@@ -9,6 +9,7 @@ var googleMapAPI ={
     markers : {
         // From python
         primary : {
+            map_package: [],
             gite: [],
             chambre: [],
             sport_loisir: [],

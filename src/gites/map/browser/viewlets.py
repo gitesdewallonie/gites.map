@@ -8,6 +8,8 @@ Copyright by Affinitic sprl
 $Id: viewlets.py 4587 2012-12-04 schminitz
 """
 
+import zope.interface
+from five import grok
 from sqlalchemy import select
 from z3c.json.interfaces import IJSONWriter
 from z3c.sqlalchemy import getSAWrapper
@@ -15,11 +17,15 @@ from zope.component import getUtility, getMultiAdapter
 from plone.app.layout.viewlets.common import ViewletBase
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from gites.core.viewlets.map import MapViewletManager
 from gites.map.interfaces import IHebergementsMapFetcher
 
 
-class GitesMapViewlet(ViewletBase):
+class GitesMapViewlet(grok.Viewlet):
     render = ViewPageTemplateFile('templates/hebergements_map.pt')
+    grok.viewletmanager(MapViewletManager)
+    grok.context(zope.interface.Interface)
+    grok.name('gites.map.hebergements')
 
     def available(self):
         requestView = getMultiAdapter((self.context, self.request),
