@@ -55,9 +55,9 @@ class UtilsView(BrowserView):
         maisons = query.execute().fetchall()
         results = []
         for maison in maisons:
-            title = '<a href="http://%s" title="%s">%s</a>' % (maison.mais_url,
-                                                               maison.mais_nom,
-                                                               maison.mais_nom)
+            title = '<a href="http://%s" title="%s" target="_blank">%s</a>' % (maison.mais_url,
+                                                                               maison.mais_nom,
+                                                                               maison.mais_nom)
             results.append({'types': ['maisontourisme'],
                             'name': title,
                             'vicinity': '',
@@ -83,9 +83,9 @@ class UtilsView(BrowserView):
         infos = query.execute().fetchall()
         results = []
         for info in infos:
-            title = '<a href="http://%s" title="%s">%s</a>' % (info.infotour_url,
-                                                               info.infotour_nom,
-                                                               info.infotour_nom)
+            title = '<a href="http://%s" title="%s" target="_blank">%s</a>' % (info.infotour_url,
+                                                                               info.infotour_nom,
+                                                                               info.infotour_nom)
             results.append({'types': [infoType],
                             'name': title,
                             'vicinity': info.infotour_localite,
@@ -110,9 +110,9 @@ class UtilsView(BrowserView):
         infos = query.execute().fetchall()
         results = []
         for info in infos:
-            title = '<a href="http://%s" title="%s">%s</a>' % (info.infoprat_url,
-                                                               info.infoprat_nom,
-                                                               info.infoprat_nom)
+            title = '<a href="http://%s" title="%s" target="_blank">%s</a>' % (info.infoprat_url,
+                                                                               info.infoprat_nom,
+                                                                               info.infoprat_nom)
             results.append({'types': ['gare'],
                             'name': title,
                             'vicinity': info.infoprat_localite,
