@@ -48,12 +48,6 @@
                 <label i18n:translate="Produits_du_terroir" for="terroir">Produits du terroir</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'evenement' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/evenement.png" />
-                <input type="checkbox" name="map_category_box" id="evenement" value="evenement" checked>
-                <label i18n:translate="Evenements" for="evenement">&Eacute;v&eacute;nements</label><br />
-            </tal:if>
-
             <tal:if condition="python: 'gare' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/gare.png" />
                 <input type="checkbox" name="map_category_box" id="gare" value="gare" checked>
@@ -66,16 +60,16 @@
                 <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
             </tal:if>
 
+            <tal:if condition="python: 'evenement' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/evenement.png" />
+                <input type="checkbox" name="map_category_box" id="evenement" value="evenement" checked>
+                <label i18n:translate="Evenements" for="evenement">&Eacute;v&eacute;nements</label><br />
+            </tal:if>
+
             <tal:if condition="python: 'restaurant' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/restaurant.png" />
                 <input type="checkbox" name="map_category_box" id="restaurant" value="restaurant" checked>
                 <label i18n:translate="Restaurants" for="restaurant">Restaurants</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'evenementquefaire' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/evenementquefaire.png" />
-                <input type="checkbox" name="map_category_box" id="evenementquefaire" value="evenementquefaire" checked>
-                <label i18n:translate="Evenements" for="evenementquefaire">&Eacute;v&eacute;nements</label><br />
             </tal:if>
 
             <tal:if condition="python: 'transport' in checkboxes">

@@ -147,7 +147,7 @@ class UtilsView(BrowserView):
         get events from quefaire.be service
         map_external_data is filled by quefaire.be service
         """
-        return self.getExtDatas('quefaire.be', 'evenementquefaire', location)
+        return self.getExtDatas('quefaire.be', 'evenement', location)
 
     def getRestos(self, location=None):
         """

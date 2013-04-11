@@ -15,15 +15,13 @@ var googleMapAPI ={
             sport_loisir: [],
             attraction_musee: [],
             terroir: [],
-            evenement: [],
             gare: [],
             maisontourisme: [],
+            evenement: [],
             restaurant: [],
-            evenementquefaire: [],
         },
         // From google map
         secondary : {
-            transport: [],
             culte: [],
             commerce: [],
             night: [],
