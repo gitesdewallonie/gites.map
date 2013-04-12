@@ -69,10 +69,13 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
     fetch = PackageHebergementFetcher.__call__
 
     def fetch(self):
+        digit = 0
         for heb in self():
+            digit += 1
             yield hebergementToMapObject(hebergement=heb,
                                          context=self.context,
-                                         request=self.request)
+                                         request=self.request,
+                                         digit=digit)
         yield packageToMapObject(self.context)
 
     def mapInfos(self):
@@ -92,6 +95,9 @@ class HebergementsInCommuneContentFetcher(BaseMapFetcher, CommuneHebFetcher):
 
 class SearchContentFetcher(BaseMapFetcher, SearchHebFetcher):
     grok.adapts(PloneSite, Interface, IBrowserRequest)
+
+    def checkBoxes(self):
+        return []
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
