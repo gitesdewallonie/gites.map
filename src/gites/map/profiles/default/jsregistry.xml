@@ -2,12 +2,48 @@
 <object name="portal_javascripts">
 
     <javascript
-        cacheable="True"
-        compression="safe"
-        cookable="True"
+        cacheable="False"
+        compression="none"
+        cookable="False"
         enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'fr'"
-        id="http://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=true&amp;language=fr"
+        expression="python:request.get('LANGUAGE', 'en') == 'fr'"
+        id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=fr&amp;region=be"
+        inline="False"/>
+
+    <javascript
+        cacheable="False"
+        compression="none"
+        cookable="False"
+        enabled="True"
+        expression="python:request.get('LANGUAGE', 'en') == 'en'"
+        id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=en&amp;region=be"
+        inline="False"/>
+
+    <javascript
+        cacheable="False"
+        compression="none"
+        cookable="False"
+        enabled="True"
+        expression="python:request.get('LANGUAGE', 'en') == 'de'"
+        id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=de&amp;region=be"
+        inline="False"/>
+
+    <javascript
+        cacheable="False"
+        compression="none"
+        cookable="False"
+        enabled="True"
+        expression="python:request.get('LANGUAGE', 'en') == 'it'"
+        id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=it&amp;region=be"
+        inline="False"/>
+
+    <javascript
+        cacheable="False"
+        compression="none"
+        cookable="False"
+        enabled="True"
+        expression="python:request.get('LANGUAGE', 'en') == 'nl'"
+        id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=nl&amp;region=be"
         inline="False"/>
 
     <javascript
@@ -15,35 +51,8 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'en'"
-        id="http://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=true&amp;language=en"
-        inline="False"/>
-
-    <javascript
-        cacheable="True"
-        compression="safe"
-        cookable="True"
-        enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'de'"
-        id="http://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=true&amp;language=de"
-        inline="False"/>
-
-    <javascript
-        cacheable="True"
-        compression="safe"
-        cookable="True"
-        enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'it'"
-        id="http://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=true&amp;language=it"
-        inline="False"/>
-
-    <javascript
-        cacheable="True"
-        compression="safe"
-        cookable="True"
-        enabled="True"
-        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')() and request.get('LANGUAGE', 'en') == 'nl'"
-        id="http://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=true&amp;language=nl"
+        expression=""
+        id="++resource++gites.map.js/autocomplete.js"
         inline="False"/>
 
     <javascript
