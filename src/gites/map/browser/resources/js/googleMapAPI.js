@@ -121,7 +121,7 @@ var googleMapAPI ={
         {
             googleMapAPI.boundToAllMarkers();
         }
-        handlers.initHandlers();
+        giteMapHandlers.initHandlers();
     },
 
     createMarker : function(place, category)
@@ -196,6 +196,12 @@ var googleMapAPI ={
         });
 
         marker.checked = true;
+
+        // Add heb_pk on markers that need it
+        if (place.heb_pk !== undefined)
+        {
+            marker.heb_pk = place.heb_pk;
+        }
 
         // Add listener for infowindow
         google.maps.event.addListener(marker, 'click', function() {

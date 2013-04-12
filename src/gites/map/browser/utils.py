@@ -204,7 +204,8 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
             'longitude': hebergement.heb_gps_long,
-            'digit': digit}
+            'digit': digit,
+            'heb_pk': hebergement.heb_pk}
 
 
 def packageToMapObject(context):
