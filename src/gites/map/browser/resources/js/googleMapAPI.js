@@ -16,7 +16,7 @@ var googleMapAPI ={
             attraction_musee: [],
             terroir: [],
             gare: [],
-            informationtouristique: [],
+            information_touristique: [],
             evenement: [],
             restaurant: [],
         },

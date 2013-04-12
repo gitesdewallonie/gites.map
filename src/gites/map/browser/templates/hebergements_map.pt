@@ -30,10 +30,10 @@
                 <label i18n:translate="Chambres" for="chambre">Chambres</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'informationtouristique' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/informationtouristique.png" />
-                <input type="checkbox" name="map_category_box" id="informationtouristique" value="informationtouristique" checked>
-                <label i18n:translate="Informations_touristiques" for="informationtouristique">Informations touristiques</label><br />
+            <tal:if condition="python: 'information_touristique' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/information_touristique.png" />
+                <input type="checkbox" name="map_category_box" id="information_touristique" value="information_touristique" checked>
+                <label i18n:translate="Informations_touristiques" for="information_touristique">Informations touristiques</label><br />
             </tal:if>
 
             <tal:if condition="python: 'attraction_musee' in checkboxes">

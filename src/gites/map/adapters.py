@@ -22,7 +22,7 @@ ALLCHECKBOXES = ['gite',
                  'terroir',
                  'evenement',
                  'gare',
-                 'informationtouristique',
+                 'information_touristique',
                  'restaurant',
                  'evenementquefaire',
 

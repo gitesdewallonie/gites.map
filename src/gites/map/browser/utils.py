@@ -58,7 +58,7 @@ class UtilsView(BrowserView):
             title = '<a href="http://%s" title="%s" target="_blank">%s</a>' % (maison.mais_url,
                                                                                maison.mais_nom,
                                                                                maison.mais_nom)
-            results.append({'types': ['informationtouristique'],
+            results.append({'types': ['information_touristique'],
                             'name': title,
                             'vicinity': '',
                             'latitude': maison.mais_gps_lat,
