@@ -30,10 +30,10 @@
                 <label i18n:translate="Chambres" for="chambre">Chambres</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'sport_loisir' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/sport_loisir.png" />
-                <input type="checkbox" name="map_category_box" id="sport_loisir" value="sport_loisir" checked>
-                <label i18n:translate="Sports_loisirs" for="sport_loisir">Sports & loisirs</label><br />
+            <tal:if condition="python: 'informationtouristique' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/informationtouristique.png" />
+                <input type="checkbox" name="map_category_box" id="informationtouristique" value="informationtouristique" checked>
+                <label i18n:translate="Informations_touristiques" for="informationtouristique">Informations touristiques</label><br />
             </tal:if>
 
             <tal:if condition="python: 'attraction_musee' in checkboxes">
@@ -42,22 +42,16 @@
                 <label i18n:translate="Attrations_et_musees" for="attraction_musee">Attractions & mus&eacute;es</label><br />
             </tal:if>
 
+            <tal:if condition="python: 'sport_loisir' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/sport_loisir.png" />
+                <input type="checkbox" name="map_category_box" id="sport_loisir" value="sport_loisir" checked>
+                <label i18n:translate="Sports_loisirs" for="sport_loisir">Sports & loisirs</label><br />
+            </tal:if>
+
             <tal:if condition="python: 'terroir' in checkboxes">
                 <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/terroir.png" />
                 <input type="checkbox" name="map_category_box" id="terroir" value="terroir" checked>
                 <label i18n:translate="Produits_du_terroir" for="terroir">Produits du terroir</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'gare' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/gare.png" />
-                <input type="checkbox" name="map_category_box" id="gare" value="gare" checked>
-                <label i18n:translate="Gares" for="gare">Gares</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'maisontourisme' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/maisontourisme.png" />
-                <input type="checkbox" name="map_category_box" id="maisontourisme" value="maisontourisme" checked>
-                <label i18n:translate="Maison_du_tourisme" for="maisontourisme">Maison du tourisme</label><br />
             </tal:if>
 
             <tal:if condition="python: 'evenement' in checkboxes">
@@ -72,46 +66,10 @@
                 <label i18n:translate="Restaurants" for="restaurant">Restaurants</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'culte' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/culte.png" />
-                <input type="checkbox" name="map_category_box" id="culte" value="culte">
-                <label i18n:translate="Lieux_de_culte" for="culte">Lieux de culte</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'commerce' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/commerce.png" />
-                <input type="checkbox" name="map_category_box" id="commerce" value="commerce">
-                <label i18n:translate="Commerces" for="commerce">Commerces</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'night' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/night.png" />
-                <input type="checkbox" name="map_category_box" id="night" value="night">
-                <label i18n:translate="Night_life" for="night">Night life</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'divertissement' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/divertissement.png" />
-                <input type="checkbox" name="map_category_box" id="divertissement" value="divertissement">
-                <label i18n:translate="Divertissements" for="divertissement">Divertissements</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'city_hall' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/city_hall.png" />
-                <input type="checkbox" name="map_category_box" id="city_hall" value="city_hall">
-                <label i18n:translate="Hotel_de_ville" for="city_hall">H&ocirc;tel de ville</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'art_gallery' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/art_gallery.png" />
-                <input type="checkbox" name="map_category_box" id="art_gallery" value="art_gallery">
-                <label i18n:translate="Art_gallery" for="art_gallery">Galleries d'art</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'casino' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/casino.png" />
-                <input type="checkbox" name="map_category_box" id="casino" value="casino">
-                <label i18n:translate="Casinos" for="casino">Casinos</label><br />
+            <tal:if condition="python: 'magasin' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/magasin.png" />
+                <input type="checkbox" name="map_category_box" id="magasin" value="magasin">
+                <label i18n:translate="Magasins" for="magasin">Magasins</label><br />
             </tal:if>
 
             <tal:if condition="python: 'library' in checkboxes">
@@ -126,10 +84,28 @@
                 <label i18n:translate="parcs" for="park">Parcs</label><br />
             </tal:if>
 
-            <tal:if condition="python: 'spa' in checkboxes">
-                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/spa.png" />
-                <input type="checkbox" name="map_category_box" id="spa" value="spa">
-                <label i18n:translate="Spas" for="spa">Spas</label><br />
+            <tal:if condition="python: 'wellness' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/wellness.png" />
+                <input type="checkbox" name="map_category_box" id="wellness" value="wellness">
+                <label i18n:translate="Wellness" for="wellness">Wellness</label><br />
+            </tal:if>
+
+            <tal:if condition="python: 'casino' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/casino.png" />
+                <input type="checkbox" name="map_category_box" id="casino" value="casino">
+                <label i18n:translate="Casinos" for="casino">Casinos</label><br />
+            </tal:if>
+
+            <tal:if condition="python: 'night' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/night.png" />
+                <input type="checkbox" name="map_category_box" id="night" value="night">
+                <label i18n:translate="Night_life" for="night">Night life</label><br />
+            </tal:if>
+
+            <tal:if condition="python: 'gare' in checkboxes">
+                <img tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/gare.png" />
+                <input type="checkbox" name="map_category_box" id="gare" value="gare">
+                <label i18n:translate="Gares" for="gare">Gares</label><br />
             </tal:if>
 
             <!-- input type="button" id="bound_button" value="bound!" /-->

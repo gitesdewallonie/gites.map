@@ -16,52 +16,43 @@ var googleMapAPI ={
             attraction_musee: [],
             terroir: [],
             gare: [],
-            maisontourisme: [],
+            informationtouristique: [],
             evenement: [],
             restaurant: [],
         },
         // From google map
         secondary : {
-            culte: [],
-            commerce: [],
+            magasin: [],
             night: [],
             entertainment: [],
-            city_hall: [],
-            art_gallery: [],
             casino: [],
             library: [],
             park: [],
-            spa: []}
+            wellness: []}
     },
     subCategories: {
         transport: ['airport', 'bus_station'],
-        culte: ['church', 'mosque', 'synagogue'],
-        commerce: ['book_store', 'shopping_mall', 'store', 'bakery', 'grocery_or_supermarket'],
+        magasin: ['book_store', 'shopping_mall', 'store', 'bakery', 'grocery_or_supermarket'],
         night: ['bar', 'cafe', 'night_club'],
         entertainment: ['amusement_park', 'aquarium', 'museum', 'zoo'],
-        city_hall: ['city_hall'],
-        art_gallery: ['art_gallery'],
         casino: ['casino'],
         library: ['library'],
         park: ['park'],
-        spa: ['spa']
+        wellness: ['wellness']
     },
     categoriesToHide: [
             'gare',
-            'maisontourisme',
+            'informationtouristique',
             'restaurant',
             'evenementquefaire',
             'transport',
-            'culte',
-            'commerce',
+            'magasin',
             'night',
             'entertainment',
-            'city_hall',
-            'art_gallery',
             'casino',
             'library',
             'park',
-            'spa'
+            'wellness'
         ],
 
     overlay : null,
