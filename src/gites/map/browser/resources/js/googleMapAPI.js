@@ -281,7 +281,7 @@ var googleMapAPI ={
     },
     boundToAllMarkers : function()
     {
-        var bound = new google.maps.LatLngBounds();
+        var bounds = new google.maps.LatLngBounds();
 
         for (var category in this.markers) {
             for (var type in this.markers[category]) {
@@ -290,15 +290,24 @@ var googleMapAPI ={
                     marker = this.markers[category][type][i];
                     if (marker.checked)
                     {
-                        bound.extend(marker.getPosition());
+                        bounds.extend(marker.getPosition());
                     }
                 };
             }
         }
 
-        if (!bound.isEmpty())
+        if (!bounds.isEmpty())
         {
-            this.map.fitBounds(bound);
+            // Don't zoom in too far on only one marker
+            if (bounds.getNorthEast().equals(bounds.getSouthWest()))
+            {
+                var extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
+                var extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
+                bounds.extend(extendPoint1);
+                bounds.extend(extendPoint2);
+            }
+
+            this.map.fitBounds(bounds);
         }
     },
 
