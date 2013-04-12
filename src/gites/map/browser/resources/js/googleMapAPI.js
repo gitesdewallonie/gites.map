@@ -43,7 +43,6 @@ var googleMapAPI ={
     categoriesToHide: [
             'gare',
             'informationtouristique',
-            'restaurant',
             'evenementquefaire',
             'transport',
             'magasin',
@@ -262,6 +261,8 @@ var googleMapAPI ={
                         checkBox.disabled = false;
                     }
                 });
+            jQuery('#disable_legend_sentence').hide();
+            jQuery('.disable_legend_label').css('font-weight', 'bold');
         }
 
         // griser les checkbox qui doivent l'etre si dezoom > limit
@@ -274,6 +275,8 @@ var googleMapAPI ={
                         checkBox.disabled = true;
                     }
                 });
+            jQuery('#disable_legend_sentence').show();
+            jQuery('.disable_legend_label').css('font-weight', 'normal');
         }
     },
     boundToAllMarkers : function()
