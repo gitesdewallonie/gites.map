@@ -20,6 +20,12 @@ var giteMapHandlers = {
         {
             giteMapHandlers._boundExternalDigitMarker(primaryMarkers.gite[i]);
         }
+
+        var lchambre = primaryMarkers.chambre.length;
+        for (var i=0; i < lchambre; i++)
+        {
+            giteMapHandlers._boundExternalDigitMarker(primaryMarkers.chambre[i]);
+        }
     },
 
     // Bound the external digit marker depending on map marker send
@@ -44,6 +50,16 @@ var giteMapHandlers = {
                 new google.maps.event.trigger(primaryMarkers.gite[i], 'click');
             }
         }
+
+        var lchambre = primaryMarkers.chambre.length;
+        for (var i=0; i < lchambre; i++)
+        {
+            if (primaryMarkers.chambre[i].heb_pk === event.data.heb_pk)
+            {
+                new google.maps.event.trigger(primaryMarkers.chambre[i], 'click');
+            }
+        }
+        jQuery("html,body").scrollTop(jQuery('#map_div').position().top);
     },
 
     categoryCheckboxHandler: function(event)
