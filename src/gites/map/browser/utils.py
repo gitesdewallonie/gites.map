@@ -193,12 +193,18 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                     <img src="%s" />
                     <br />
                     <img src="%s" />
-                    %s/%s""" \
+                    %s/%s
+                    Chambres: %s
+                    Epis: %s
+                    """ \
                     % (hebergement.heb_localite,
                        photoUrl,
                        '%s/++resource++gites.map.images/capacity.png' % portalUrl,
                        hebergement.heb_cgt_cap_min,
-                       hebergement.heb_cgt_cap_max)
+                       hebergement.heb_cgt_cap_max,
+                       hebergement.heb_cgt_nbre_chmbre,
+                       ' '.join([str(epi.heb_nombre_epis) for epi in hebergement.epis])
+                       )
     return {'types': [hebergement.type.type_heb_type],
             'name': title,
             'vicinity': bodyText,
