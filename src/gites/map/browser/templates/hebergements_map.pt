@@ -14,7 +14,6 @@
               var googleBlacklistJSON = ${googleBlacklist};
             -->">
         </script>
-
         <div id="map_div">
         </div>
 
