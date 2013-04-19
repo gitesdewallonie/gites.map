@@ -17,7 +17,7 @@
         <div id="map_div">
         </div>
 
-        <div id="menu">
+        <div id="map_menu">
 
             <tal:if condition="python: 'gite' in checkboxes">
                 <input type="checkbox" name="map_category_box" id="gite" value="gite" checked>
