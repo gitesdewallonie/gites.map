@@ -108,10 +108,11 @@
                 <label i18n:translate="Gares" for="gare" class="disable_legend_label">Gares</label><br />
             </tal:if>
 
-            <div id="disable_legend_sentence" i18n:translate="Pour_selectionner_zoomer">
+            <div id="disable_legend_sentence" i18n:translate="Pour_selectionner_zoomer"
+                 tal:condition="checkboxes">
                 Pour s&eacute;lectionner les autres points d’int&eacute;r&ecirc;t, merci de zoomer sur la carte.
             </div>
-            <!-- input type="button" id="bound_button" value="bound!" /-->
+
         </div>
 
     </div>
