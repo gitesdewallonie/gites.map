@@ -66,6 +66,12 @@
                 <label i18n:translate="Restaurants" for="restaurant">Restaurants</label><br />
             </tal:if>
 
+            <tal:if condition="python: 'gare' in checkboxes">
+                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/gare.png" />
+                <input type="checkbox" name="map_category_box" id="gare" value="gare" checked>
+                <label i18n:translate="Gares" for="gare" class="disable_legend_label">Gares</label><br />
+            </tal:if>
+
             <tal:if condition="python: 'magasin' in checkboxes">
                 <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/magasin.png" />
                 <input type="checkbox" name="map_category_box" id="magasin" value="magasin">
@@ -100,12 +106,6 @@
                 <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/night.png" />
                 <input type="checkbox" name="map_category_box" id="night" value="night">
                 <label i18n:translate="Night_life" for="night" class="disable_legend_label">Night life</label><br />
-            </tal:if>
-
-            <tal:if condition="python: 'gare' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/gare.png" />
-                <input type="checkbox" name="map_category_box" id="gare" value="gare">
-                <label i18n:translate="Gares" for="gare" class="disable_legend_label">Gares</label><br />
             </tal:if>
 
             <div id="disable_legend_sentence" i18n:translate="Pour_selectionner_zoomer"
