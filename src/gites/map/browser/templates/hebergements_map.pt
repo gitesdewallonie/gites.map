@@ -4,7 +4,8 @@
                      autresinfos view/getAllMapData;
                      mapInfos view/getMapInfos;
                      checkboxes view/getCheckboxes;
-                     googleBlacklist view/getGoogleBlacklist">
+                     googleBlacklist view/getGoogleBlacklist"
+         i18n:domain="gites">
 
         <script type="text/javascript" tal:content="structure string:
             <!--
@@ -107,7 +108,7 @@
                 <label i18n:translate="Gares" for="gare" class="disable_legend_label">Gares</label><br />
             </tal:if>
 
-            <div id="disable_legend_sentence">
+            <div id="disable_legend_sentence" i18n:translate="Pour_selectionner_zoomer">
                 Pour s&eacute;lectionner les autres points d’int&eacute;r&ecirc;t, merci de zoomer sur la carte.
             </div>
             <!-- input type="button" id="bound_button" value="bound!" /-->

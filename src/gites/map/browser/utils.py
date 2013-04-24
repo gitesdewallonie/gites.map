@@ -13,6 +13,7 @@ from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
+from gites.locales import GitesMessageFactory as _
 from gites.map.interfaces import IHebergementsMapFetcher
 
 DISTANCE_METERS = 10000
@@ -183,8 +184,6 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     photo = hebergement.getVignette()
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
-    # XXX temporary photo (no photos on localhost)
-    photoUrl = 'http://www.gitesdewallonie.be/vignettes_heb/GR9100523900.jpg'
     hebUrl = queryMultiAdapter((hebergement, request), name="url")()
     hebName = hebergement.heb_nom
     title = '<a href="%s" title="%s">%s</a>' % (hebUrl, hebName, hebName)
@@ -194,15 +193,17 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                     <br />
                     <img src="%s" />
                     %s/%s
-                    Chambres: %s
-                    Epis: %s
+                    %s: %s
+                    %s: %s
                     """ \
                     % (hebergement.heb_localite,
                        photoUrl,
                        '%s/++resource++gites.map.images/capacity.png' % portalUrl,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max,
+                       _("Chambres"),
                        hebergement.heb_cgt_nbre_chmbre,
+                       _("Epis"),
                        ' '.join([str(epi.heb_nombre_epis) for epi in hebergement.epis])
                        )
     return {'types': [hebergement.type.type_heb_type],
