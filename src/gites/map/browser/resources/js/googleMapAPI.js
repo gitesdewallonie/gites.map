@@ -259,6 +259,8 @@ var googleMapAPI ={
                     if (googleMapAPI.categoriesToHide.indexOf(checkBox.id) != -1)
                     {
                         checkBox.disabled = false;
+                        label = jQuery("label[for=" + checkBox.id + "]");
+                        label.removeClass("unzoomed_legend_label");
                     }
                 });
             jQuery('#disable_legend_sentence').hide();
@@ -273,6 +275,8 @@ var googleMapAPI ={
                     if (googleMapAPI.categoriesToHide.indexOf(checkBox.id) != -1)
                     {
                         checkBox.disabled = true;
+                        label = jQuery("label[for=" + checkBox.id + "]");
+                        label.addClass("unzoomed_legend_label");
                     }
                 });
             jQuery('#disable_legend_sentence').show();
