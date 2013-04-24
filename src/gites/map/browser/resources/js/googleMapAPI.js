@@ -98,11 +98,11 @@ var googleMapAPI ={
             paths: [belgiumCoords.world,
             belgiumCoords.wallonie,
             belgiumCoords.comines],
-            strokeColor: "#50C773",
-            strokeOpacity: 1,
-            strokeWeight: 1,
-            fillColor: "#CEEBD7",
-            fillOpacity: 0.80
+            strokeColor: "",
+            strokeOpacity: 0,
+            strokeWeight: 0,
+            fillColor: "",
+            fillOpacity: 0.08
         });
         this.overlay.setMap(this.map);
 
