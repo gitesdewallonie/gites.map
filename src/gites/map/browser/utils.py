@@ -14,6 +14,7 @@ from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
 from gites.locales import GitesMessageFactory as _
+from gites.db.content.hebergement.hebergement import Hebergement
 from gites.map.interfaces import IHebergementsMapFetcher
 
 DISTANCE_METERS = 10000
@@ -124,7 +125,6 @@ class UtilsView(BrowserView):
     def getAllHebergements(self):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
-        Hebergement = wrapper.getMapper('hebergement')
         TypeHebergement = wrapper.getMapper('type_heb')
         Proprio = wrapper.getMapper('proprio')
         query = session.query(Hebergement)
@@ -181,11 +181,24 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     """
     Transform an hebergement into an object used on the map
     """
-    photo = hebergement.getVignette()
+    photo = '%s.jpg' % hebergement.heb_code_gdw
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
-    hebUrl = queryMultiAdapter((hebergement, request), name="url")()
+    # XXX temporary photo (no photos on localhost)
+    photoUrl = 'http://www.gitesdewallonie.be/vignettes_heb/GR9100523900.jpg'
+    hebUrl = queryMultiAdapter((hebergement, request), name="url")
+    if hebUrl:
+        hebUrl = hebUrl()
     hebName = hebergement.heb_nom
+    if isinstance(hebergement, Hebergement):  #XXX Adapter
+        epis = hebergement.epis[0].heb_nombre_epis
+    else:
+        epis = hebergement.heb_nombre_epis
+    if isinstance(hebergement, Hebergement):
+        type_heb = hebergement.type.type_heb_type
+    else:
+        type_heb = hebergement.heb_type_type
+
     title = '<a href="%s" title="%s">%s</a>' % (hebUrl, hebName, hebName)
     bodyText = """%s
                     <br />
@@ -204,9 +217,8 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                        _("Chambres"),
                        hebergement.heb_cgt_nbre_chmbre,
                        _("Epis"),
-                       ' '.join([str(epi.heb_nombre_epis) for epi in hebergement.epis])
-                       )
-    return {'types': [hebergement.type.type_heb_type],
+                       epis)
+    return {'types': [type_heb],
             'name': title,
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
