@@ -181,16 +181,14 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     """
     Transform an hebergement into an object used on the map
     """
-    photo = '%s.jpg' % hebergement.heb_code_gdw
+    photo = '%s00.jpg' % hebergement.heb_code_gdw
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
-    # XXX temporary photo (no photos on localhost)
-    photoUrl = 'http://www.gitesdewallonie.be/vignettes_heb/GR9100523900.jpg'
     hebUrl = queryMultiAdapter((hebergement, request), name="url")
     if hebUrl:
         hebUrl = hebUrl()
     hebName = hebergement.heb_nom
-    if isinstance(hebergement, Hebergement):  #XXX Adapter
+    if isinstance(hebergement, Hebergement):  # XXX Adapter
         epis = hebergement.epis[0].heb_nombre_epis
     else:
         epis = hebergement.heb_nombre_epis
