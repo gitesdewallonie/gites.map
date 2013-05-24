@@ -184,7 +184,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     photo = '%s00.jpg' % hebergement.heb_code_gdw
     portalUrl = getToolByName(context, 'portal_url')()
     photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
-    hebUrl = queryMultiAdapter((hebergement, request), name="url")
+    hebUrl = queryMultiAdapter((hebergement, request), name="url_heb")
     if hebUrl:
         hebUrl = hebUrl()
     hebName = hebergement.heb_nom
