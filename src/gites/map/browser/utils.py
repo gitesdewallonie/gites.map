@@ -197,27 +197,42 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     else:
         type_heb = hebergement.heb_type_type
 
-    title = '<a href="%s" title="%s">%s</a>' % (hebUrl, hebName, hebName)
-    bodyText = """%s
+    link = '<a href="%s" title="%s" class="map_infowindow_title">%s</a>' % (
+        hebUrl, hebName, hebName)
+    bodyText = """<div class="map_infowindow_%s">
+                    %s
                     <br />
-                    <img src="%s" />
+                    <span class="map_infowindow_subtitle">%s</span>
                     <br />
-                    <img src="%s" />
-                    %s/%s
-                    %s: %s
-                    %s: %s
-                    """ \
-                    % (hebergement.heb_localite,
-                       photoUrl,
-                       '%s/++resource++gites.map.images/capacity.png' % portalUrl,
-                       hebergement.heb_cgt_cap_min,
-                       hebergement.heb_cgt_cap_max,
-                       _("Chambres"),
-                       hebergement.heb_cgt_nbre_chmbre,
-                       _("Epis"),
-                       epis)
+                    <img class="map_infowindow_img" src="%s">
+                    <br />
+                    <div class="info_box">
+                        <span class="map_infowindow_nombre"> %s/%s</span>
+                        %s
+                    </div>
+                    <div class="info_box">
+                        <span class="map_infowindow_nombre"> %s</span>
+                        %s
+                    </div>
+                    <div class="info_box">
+                        <span class="map_infowindow_nombre"> %s</span>
+                        %s
+                    </div>
+                  </div>
+                  """ \
+                  % (type_heb,
+                     link,
+                     hebergement.heb_localite,
+                     photoUrl,
+                     hebergement.heb_cgt_cap_min,
+                     hebergement.heb_cgt_cap_max,
+                     _(u"x_personnes", u"personnes"),
+                     hebergement.heb_cgt_nbre_chmbre,
+                     _(u"x_chambres", u"chambres"),
+                     epis,
+                     _(u"x_epis", u"epis"))
     return {'types': [type_heb],
-            'name': title,
+            'name': '',
             'vicinity': bodyText,
             'latitude': hebergement.heb_gps_lat,
             'longitude': hebergement.heb_gps_long,
