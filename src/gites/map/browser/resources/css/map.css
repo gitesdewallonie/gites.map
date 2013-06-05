@@ -4,11 +4,6 @@
     background-color: #DDD;
 }
 
-.map_infowindow img{
-    margin-top: 5;
-    margin-bottom: 5px;
-}
-
 div.map_infowindow_gite div.info_box{
     background-color:rgba(200,232,167,0.31);
 }
@@ -21,7 +16,21 @@ div.map_infowindow_gite,
 div.map_infowindow_chambre,
 div.map_infowindow_package,
 div.map_infowindow_extdata{
-    width: 263px;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
+
+div.map_infowindow_gite,
+div.map_infowindow_chambre{
+    width: 216px;
+}
+
+div.map_infowindow_package{
+    width: 259px;
+}
+
+div.map_infowindow_extdata{
+    width: 260px;
 }
 
 #map_div a.map_infowindow_title{
@@ -37,40 +46,42 @@ div.map_infowindow_extdata{
     text-indent:15px;
 }
 
-img.map_infowindow_img{
+div.map_infowindow_gite img.map_infowindow_img,
+div.map_infowindow_chambre img.map_infowindow_img,
+div.map_infowindow_package img.map_infowindow_img{
     border: 1px solid #999999;
-    box-shadow: 2px 2px 4px rgba(50, 50, 50, 0.3);
-    margin: 3px 8px 0 3px;
+    box-shadow: 2px 2px 2px rgba(50, 50, 50, 0.3);
+    margin: 0 8px 0 3px;
 }
 
 div.map_infowindow_gite img.map_infowindow_img,
-div.map_infowindow_chambre img.map_infowindow_img,
+div.map_infowindow_chambre img.map_infowindow_img
 {
-    height: 162px;
-    width: 250px;
+    width: 203;
+    height: 132px;
 }
 
-div.map_infowindow_package img.map_infowindow_img,
+div.map_infowindow_package img.map_infowindow_img
 {
-    height: 115;
     width: 246px;
+    height: 115px;
 }
 
 div.map_infowindow_gite div.info_box,
 div.map_infowindow_chambre div.info_box{
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 3px 3px 3px rgba(50, 50, 50, 0.5);
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 2px 2px 2px rgba(50, 50, 50, 0.5);
     color: #333333;
     float: left;
-    font-size: 9pt;
-    font-weight: bold;
+    font-size: 8pt;
     height: 40px;
-    margin: 8px 5px;
+    margin: 8px 3px;
     text-align: center;
-    width: 76px;
+    width: 64px;
 }
 
 .map_infowindow_nombre{
+    font-weight: bold;
     margin-bottom: -3px;
     margin-top: 3px;
     font-weight:bold;
