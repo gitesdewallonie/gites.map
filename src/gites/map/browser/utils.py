@@ -204,7 +204,6 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                     %s
                     <br />
                     <p class="map_infowindow_description">%s</p>
-                    <br />
                     <img class="map_infowindow_img" src="%s">
                     <br />
                     <div class="info_box">
@@ -250,8 +249,8 @@ def packageToMapObject(context):
     imageUrl = getVignetteURL(context)
     rangeOfDate = ""
     if context.endDate is not None:
-        rangeOfDate = "Du %s au %s" % (context.startDate.strftime('%d/%m/%Y'),
-                                       context.endDate.strftime('%d/%m/%Y'))
+        rangeOfDate = "%s / %s" % (context.startDate.strftime('%d/%m/%Y'),
+                                   context.endDate.strftime('%d/%m/%Y'))
     link = """<a href="%s" title="%s" class="map_infowindow_title">%s</a>""" % (
         context.absolute_url(), context.Title(), context.Title())
     bodyText = """<div class="map_infowindow_package">
@@ -278,28 +277,29 @@ def extDataToMapObject(extData, extDataType):
     """
     Transform an hebergement into an object used on the map
     """
-    title = '<a href="%s" title="%s" target="_blank">%s</a>' % (extData.ext_data_url,
-                                                                extData.ext_data_title,
-                                                                extData.ext_data_title)
+    link = '<a href="%s" title="%s" class="map_infowindow_title" target="_blank">%s</a>' % (
+        extData.ext_data_url,
+        extData.ext_data_title,
+        extData.ext_data_title)
 
     dateString = ''
     if extData.ext_data_date_begin or extData.ext_data_date_end:
         dateString = '%s / %s' % (extData.ext_data_date_begin and extData.ext_data_date_begin.strftime('%d-%m-%Y') or '',
                                   extData.ext_data_date_end and extData.ext_data_date_end.strftime('%d-%m-%Y') or '')
 
-    bodyText = """<div class="map_infowindow_package">
-                    %s
-                    <br />
-                    <img class="map_infowindow_img" src="%s" />
-                    <br />
-                    %s
+    bodyText = """<div class="map_infowindow_extdata">
+                    %s,
+                    <p class="map_infowindow_description">%s</p>
+                    <p class="map_infowindow_description">%s</p>
+                    <p class="map_infowindow_description"><img class="map_infowindow_img" src="%s" /></p>
                   </div>
                   """ % (
+        link,
         extData.ext_data_type or '',
-        extData.ext_data_picture_url or '',
-        dateString)
+        dateString,
+        extData.ext_data_picture_url or '')
     return {'types': [extDataType],
-            'name': title,
+            'name': '',
             'vicinity': bodyText,
             'latitude': extData.ext_data_latitude,
             'longitude': extData.ext_data_longitude}
