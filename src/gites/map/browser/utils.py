@@ -16,6 +16,7 @@ from Products.CMFCore.utils import getToolByName
 from gites.locales import GitesMessageFactory as _
 from gites.db.content.hebergement.hebergement import Hebergement
 from gites.map.interfaces import IHebergementsMapFetcher
+from gites.core.browser.package import getVignetteURL
 
 DISTANCE_METERS = 10000
 
@@ -202,7 +203,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     bodyText = """<div class="map_infowindow_%s">
                     %s
                     <br />
-                    <span class="map_infowindow_subtitle">%s</span>
+                    <p class="map_infowindow_description">%s</p>
                     <br />
                     <img class="map_infowindow_img" src="%s">
                     <br />
@@ -246,23 +247,28 @@ def packageToMapObject(context):
     """
     if context.geolocation is None:
         return
-    portalUrl = getToolByName(context, 'portal_url')()
-    imageUrl = "%s/%s/%s" % (portalUrl, context.id, 'largePhoto_preview')
+    imageUrl = getVignetteURL(context)
     rangeOfDate = ""
     if context.endDate is not None:
-        rangeOfDate = "du %s au %s" % (context.startDate.strftime('%d/%m/%Y'),
+        rangeOfDate = "Du %s au %s" % (context.startDate.strftime('%d/%m/%Y'),
                                        context.endDate.strftime('%d/%m/%Y'))
-    bodyText = """%s
-                    <br />
+    link = """<a href="%s" title="%s" class="map_infowindow_title">%s</a>""" % (
+        context.absolute_url(), context.Title(), context.Title())
+    bodyText = """<div class="map_infowindow_package">
                     %s
                     <br />
-                    <img src="%s" />
-                    <br />""" \
-                    % (context.description(),
+                    <p class="map_infowindow_description">%s</p>
+                    <p class="map_infowindow_description">%s</p>
+                    <img class="map_infowindow_img" src="%s" />
+                    <br />
+                  </div>
+                  """ \
+                    % (link,
+                       context.description(),
                        rangeOfDate,
                        imageUrl)
     return {'types': ['map_package'],
-            'name': context.Title(),
+            'name': '',
             'vicinity': bodyText,
             'latitude': float(context.geolocation[0]),
             'longitude': float(context.geolocation[1])}
@@ -281,9 +287,17 @@ def extDataToMapObject(extData, extDataType):
         dateString = '%s / %s' % (extData.ext_data_date_begin and extData.ext_data_date_begin.strftime('%d-%m-%Y') or '',
                                   extData.ext_data_date_end and extData.ext_data_date_end.strftime('%d-%m-%Y') or '')
 
-    bodyText = """%s<br /><img src="%s" /><br />%s""" % (extData.ext_data_type or '',
-                                                         extData.ext_data_picture_url or '',
-                                                         dateString)
+    bodyText = """<div class="map_infowindow_package">
+                    %s
+                    <br />
+                    <img class="map_infowindow_img" src="%s" />
+                    <br />
+                    %s
+                  </div>
+                  """ % (
+        extData.ext_data_type or '',
+        extData.ext_data_picture_url or '',
+        dateString)
     return {'types': [extDataType],
             'name': title,
             'vicinity': bodyText,

@@ -18,7 +18,9 @@ div.map_infowindow_chambre div.info_box{
 }
 
 div.map_infowindow_gite,
-div.map_infowindow_chambre{
+div.map_infowindow_chambre,
+div.map_infowindow_package,
+div.map_infowindow_extdata{
     width: 263px;
 }
 
@@ -31,16 +33,27 @@ div.map_infowindow_chambre{
     border-bottom: 0;
 }
 
-#map_div .map_infowindow_subtitle{
-    padding-left:15px;
+#map_div p.map_infowindow_description{
+    text-indent:15px;
 }
 
-.map_infowindow_img{
+img.map_infowindow_img{
     border: 1px solid #999999;
     box-shadow: 2px 2px 4px rgba(50, 50, 50, 0.3);
-    height: 162px;
     margin: 3px 8px 0 3px;
+}
+
+div.map_infowindow_gite img.map_infowindow_img,
+div.map_infowindow_chambre img.map_infowindow_img,
+{
+    height: 162px;
     width: 250px;
+}
+
+div.map_infowindow_package img.map_infowindow_img,
+{
+    height: 115;
+    width: 246px;
 }
 
 div.map_infowindow_gite div.info_box,
