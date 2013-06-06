@@ -9,6 +9,7 @@ Copyright by Affinitic sprl
 from sqlalchemy import select
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter, getMultiAdapter
+from zope.i18n import translate
 from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
@@ -198,6 +199,11 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
         type_heb = hebergement.heb_type_type
         isCle = hebergement.heb_type_code == 'MV'
 
+    personnesTrans = translate(_(u"x_personnes", u"personnes"), context=request)
+    chambresTrans = translate(_(u"x_chambres", u"chambres"), context=request)
+    episTrans = translate(_(u"x_cles", u"clés"), context=request)
+    clesTrans = translate(_(u"x_epis", u"épis"), context=request)
+
     link = '<a href="%s" title="%s" class="map_infowindow_title">%s</a>' % (
         hebUrl, hebName, hebName)
     bodyText = """<div class="map_infowindow_%s">
@@ -226,11 +232,11 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                      photoUrl,
                      hebergement.heb_cgt_cap_min,
                      hebergement.heb_cgt_cap_max,
-                     _(u"x_personnes", u"personnes"),
+                     personnesTrans,
                      hebergement.heb_cgt_nbre_chmbre,
-                     _(u"x_chambres", u"chambres"),
+                     chambresTrans,
                      epis,
-                     isCle and _(u"x_cles", u"clés") or _(u"x_epis", u"épis"))
+                     isCle and clesTrans or episTrans)
     return {'types': [type_heb],
             'name': '',
             'vicinity': bodyText,
