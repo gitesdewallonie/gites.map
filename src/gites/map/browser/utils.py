@@ -191,12 +191,12 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
     hebName = hebergement.heb_nom
     if isinstance(hebergement, Hebergement):  # XXX Adapter
         epis = hebergement.epis[0].heb_nombre_epis
+        type_heb = hebergement.type.type_heb_type
+        isCle = hebergement.type.heb_type_code == 'MV'
     else:
         epis = hebergement.heb_nombre_epis
-    if isinstance(hebergement, Hebergement):
-        type_heb = hebergement.type.type_heb_type
-    else:
         type_heb = hebergement.heb_type_type
+        isCle = hebergement.heb_type_code == 'MV'
 
     link = '<a href="%s" title="%s" class="map_infowindow_title">%s</a>' % (
         hebUrl, hebName, hebName)
@@ -230,7 +230,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                      hebergement.heb_cgt_nbre_chmbre,
                      _(u"x_chambres", u"chambres"),
                      epis,
-                     _(u"x_epis", u"epis"))
+                     isCle and _(u"x_cles", u"clés") or _(u"x_epis", u"épis"))
     return {'types': [type_heb],
             'name': '',
             'vicinity': bodyText,
