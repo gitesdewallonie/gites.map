@@ -191,6 +191,7 @@ var googleMapAPI ={
         if (place.heb_pk !== undefined)
         {
             marker.heb_pk = place.heb_pk;
+            marker.heb_type = place.heb_type;
         }
 
         // Add listener for infowindow

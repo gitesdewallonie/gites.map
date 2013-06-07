@@ -31,11 +31,15 @@ var giteMapHandlers = {
     // Bound the external digit marker depending on map marker send
     _boundExternalDigitMarker: function(marker)
     {
-        var selector = 'div#map_picto_' + marker.heb_pk;
+        // Allow to select grouped or not
+        var selector = 'div#map_picto_' + marker.heb_pk + '_' + marker.heb_type;
+
         // Cause that div map_picto_... is loaded by javascript after the document is ready:
         var externalDigitMarker = jQuery(selector);
         externalDigitMarker.waitUntilExists(function(){
-            jQuery(selector).click({'heb_pk': marker.heb_pk}, giteMapHandlers.clickedMarkerHandler);
+            jQuery(selector).click({'heb_pk': marker.heb_pk,
+                                    'heb_type': marker.heb_type},
+                                   giteMapHandlers.clickedMarkerHandler);
         });
     },
 
@@ -47,7 +51,10 @@ var giteMapHandlers = {
         {
             if (primaryMarkers.gite[i].heb_pk === event.data.heb_pk)
             {
-                new google.maps.event.trigger(primaryMarkers.gite[i], 'click');
+                if (primaryMarkers.gite[i].heb_type === event.data.heb_type)
+                {
+                    new google.maps.event.trigger(primaryMarkers.gite[i], 'click');
+                }
             }
         }
 
@@ -56,7 +63,10 @@ var giteMapHandlers = {
         {
             if (primaryMarkers.chambre[i].heb_pk === event.data.heb_pk)
             {
-                new google.maps.event.trigger(primaryMarkers.chambre[i], 'click');
+                if (primaryMarkers.chambre[i].heb_type === event.data.heb_type)
+                {
+                    new google.maps.event.trigger(primaryMarkers.chambre[i], 'click');
+                }
             }
         }
         jQuery("html,body").scrollTop(jQuery('#map_div').position().top);

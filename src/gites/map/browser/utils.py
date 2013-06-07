@@ -6,13 +6,15 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter, getMultiAdapter
+from zope.i18n import translate
 from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
+from gites.core.browser.package import getVignetteURL
 from gites.core.interfaces import IMapRequest
 from gites.locales import GitesMessageFactory as _
 from gites.db.content.hebergement.hebergement import Hebergement
@@ -171,52 +173,110 @@ class UtilsView(BrowserView):
         return results
 
 
+def getHebergementsByGroup(groupement_pk):
+    """
+    Return all hebergements grouped by that groupement_pk
+    XXX bouger cette fonction d'ici car rien a voir avec gites.map
+    """
+    wrapper = getSAWrapper('gites_wallons')
+    hebergementTable = wrapper.getMapper('hebergement')
+    proprioTable = wrapper.getMapper('proprio')
+    session = wrapper.session
+    query = session.query(hebergementTable)
+    query = query.filter(hebergementTable.heb_groupement_pk == groupement_pk)
+    query = query.filter(and_(hebergementTable.heb_site_public == '1',
+                              proprioTable.pro_etat == True))
+    return query.all()
+
+
 def hebergementToMapObject(hebergement, context, request, digit=None):
     """
     Transform an hebergement into an object used on the map
+    XXX clean cette fonction
     """
-    photo = '%s00.jpg' % hebergement.heb_code_gdw
-    portalUrl = getToolByName(context, 'portal_url')()
-    photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
-    hebUrl = queryMultiAdapter((hebergement, request), name="url")
-    if hebUrl:
-        hebUrl = hebUrl()
-    hebName = hebergement.heb_nom
+    # On hebergement detail
     if isinstance(hebergement, Hebergement):  # XXX Adapter
         epis = hebergement.epis[0].heb_nombre_epis
+        type_heb = hebergement.type.type_heb_type
+        isCle = hebergement.type.type_heb_code == 'MV'
+        # We dont need heb_type if not in listing
+        heb_type = ''
+    # On listing
     else:
         epis = hebergement.heb_nombre_epis
-    if isinstance(hebergement, Hebergement):
-        type_heb = hebergement.type.type_heb_type
-    else:
         type_heb = hebergement.heb_type_type
+        isCle = hebergement.heb_type_code == 'MV'
+        heb_type = hebergement.heb_type
 
-    title = '<a href="%s" title="%s">%s</a>' % (hebUrl, hebName, hebName)
-    bodyText = """%s
-                    <br />
-                    <img src="%s" />
-                    <br />
-                    <img src="%s" />
-                    %s/%s
-                    %s: %s
-                    %s: %s
+    personnesTrans = translate(_(u"x_personnes", u"personnes"), context=request)
+    chambresTrans = translate(_(u"x_chambres", u"chambres"), context=request)
+    episTrans = translate(_(u"x_cles", u"clés"), context=request)
+    clesTrans = translate(_(u"x_epis", u"épis"), context=request)
+
+    if heb_type == 'gite-groupes':
+        #XXXnext aller chercher le nom des gites groupés à celui ci (faire une requete pour recupérer tous les gites ghroupés)
+        groupedHebs = getHebergementsByGroup(hebergement.heb_groupement_pk)
+        bodyText = """<div class="map_infowindow_%s">""" % type_heb
+        for heb in groupedHebs:
+            hebUrl = queryMultiAdapter((heb, request), name="url_heb")()
+            hebName = heb.heb_nom
+            bodyText = """%s
+                        <a href="%s" title="%s" class="map_infowindow_title">%s</a>
+                        <br />""" \
+                        % (bodyText, hebUrl, hebName, hebName)
+
+    else:
+        photo = '%s00.jpg' % hebergement.heb_code_gdw
+        portalUrl = getToolByName(context, 'portal_url')()
+        photoUrl = "%s/photos_heb/%s" % (portalUrl, photo)
+        hebUrl = queryMultiAdapter((hebergement, request), name="url_heb")
+        if hebUrl:
+            hebUrl = hebUrl()
+        hebName = hebergement.heb_nom
+
+        link = '<a href="%s" title="%s" class="map_infowindow_title">%s</a>' % (
+            hebUrl, hebName, hebName)
+        bodyText = """<div class="map_infowindow_%s">
+                        %s
+                        <br />
+                        <p class="map_infowindow_description">%s</p>
+                        <img class="map_infowindow_img" src="%s">
+                        <br />
+                        <div class="info_box">
+                            <span class="map_infowindow_nombre"> %s/%s</span>
+                            %s
+                        </div>
+                        <div class="info_box">
+                            <span class="map_infowindow_nombre"> %s</span>
+                            %s
+                        </div>
+                        <div class="info_box">
+                            <span class="map_infowindow_nombre"> %s</span>
+                            %s
+                        </div>
+                    </div>
                     """ \
-                    % (hebergement.heb_localite,
+                    % (type_heb,
+                       link,
+                       hebergement.heb_localite,
                        photoUrl,
-                       '%s/++resource++gites.map.images/capacity.png' % portalUrl,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max,
-                       _("Chambres"),
+                       personnesTrans,
                        hebergement.heb_cgt_nbre_chmbre,
-                       _("Epis"),
-                       epis)
-    return {'types': [type_heb],
-            'name': title,
-            'vicinity': bodyText,
-            'latitude': hebergement.heb_gps_lat,
-            'longitude': hebergement.heb_gps_long,
-            'digit': digit,
-            'heb_pk': hebergement.heb_pk}
+                       chambresTrans,
+                       epis,
+                       isCle and clesTrans or episTrans)
+
+    datas = {'types': [type_heb],
+             'name': '',
+             'vicinity': bodyText,
+             'latitude': hebergement.heb_gps_lat,
+             'longitude': hebergement.heb_gps_long,
+             'digit': digit,
+             'heb_pk': hebergement.heb_pk,
+             'heb_type': heb_type}
+    return datas
 
 
 def packageToMapObject(context):
@@ -225,23 +285,28 @@ def packageToMapObject(context):
     """
     if context.geolocation is None:
         return
-    portalUrl = getToolByName(context, 'portal_url')()
-    imageUrl = "%s/%s/%s" % (portalUrl, context.id, 'largePhoto_preview')
+    imageUrl = getVignetteURL(context)
     rangeOfDate = ""
     if context.endDate is not None:
-        rangeOfDate = "du %s au %s" % (context.startDate.strftime('%d/%m/%Y'),
-                                       context.endDate.strftime('%d/%m/%Y'))
-    bodyText = """%s
-                    <br />
+        rangeOfDate = "%s / %s" % (context.startDate.strftime('%d/%m/%Y'),
+                                   context.endDate.strftime('%d/%m/%Y'))
+    link = """<a href="%s" title="%s" class="map_infowindow_title">%s</a>""" % (
+        context.absolute_url(), context.Title(), context.Title())
+    bodyText = """<div class="map_infowindow_package">
                     %s
                     <br />
-                    <img src="%s" />
-                    <br />""" \
-                    % (context.description(),
+                    <p class="map_infowindow_description">%s</p>
+                    <p class="map_infowindow_description">%s</p>
+                    <img class="map_infowindow_img" src="%s" />
+                    <br />
+                  </div>
+                  """ \
+                    % (link,
+                       context.description(),
                        rangeOfDate,
                        imageUrl)
     return {'types': ['map_package'],
-            'name': context.Title(),
+            'name': '',
             'vicinity': bodyText,
             'latitude': float(context.geolocation[0]),
             'longitude': float(context.geolocation[1])}
@@ -251,20 +316,29 @@ def extDataToMapObject(extData, extDataType):
     """
     Transform an hebergement into an object used on the map
     """
-    title = '<a href="%s" title="%s" target="_blank">%s</a>' % (extData.ext_data_url,
-                                                                extData.ext_data_title,
-                                                                extData.ext_data_title)
+    link = '<a href="%s" title="%s" class="map_infowindow_title" target="_blank">%s</a>' % (
+        extData.ext_data_url,
+        extData.ext_data_title,
+        extData.ext_data_title)
 
     dateString = ''
     if extData.ext_data_date_begin or extData.ext_data_date_end:
         dateString = '%s / %s' % (extData.ext_data_date_begin and extData.ext_data_date_begin.strftime('%d-%m-%Y') or '',
                                   extData.ext_data_date_end and extData.ext_data_date_end.strftime('%d-%m-%Y') or '')
 
-    bodyText = """%s<br /><img src="%s" /><br />%s""" % (extData.ext_data_type or '',
-                                                         extData.ext_data_picture_url or '',
-                                                         dateString)
+    bodyText = """<div class="map_infowindow_extdata">
+                    %s,
+                    <p class="map_infowindow_description">%s</p>
+                    <p class="map_infowindow_description">%s</p>
+                    <p class="map_infowindow_description"><img class="map_infowindow_img" src="%s" /></p>
+                  </div>
+                  """ % (
+        link,
+        extData.ext_data_type or '',
+        dateString,
+        extData.ext_data_picture_url or '')
     return {'types': [extDataType],
-            'name': title,
+            'name': '',
             'vicinity': bodyText,
             'latitude': extData.ext_data_latitude,
             'longitude': extData.ext_data_longitude}
