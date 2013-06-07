@@ -13,9 +13,9 @@ from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
+from gites.core.interfaces import IMapRequest
 from gites.locales import GitesMessageFactory as _
 from gites.db.content.hebergement.hebergement import Hebergement
-from gites.map.interfaces import IHebergementsMapFetcher
 
 DISTANCE_METERS = 10000
 
@@ -36,13 +36,7 @@ class UtilsView(BrowserView):
             view = self
         if self._isEditView():
             return False
-        fetcher = queryMultiAdapter((self.context, view, self.request),
-                                    IHebergementsMapFetcher)
-        #XXX ne marche pas avec les jsregistry expressions actuelles
-        if fetcher is None:
-            return False
-        else:
-            return True
+        return IMapRequest.providedBy(self.request)
 
     def getMaisonsDuTourisme(self, location=None):
         wrapper = getSAWrapper('gites_wallons')

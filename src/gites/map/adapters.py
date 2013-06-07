@@ -2,7 +2,6 @@
 import grokcore.component as grok
 from zope.component import queryMultiAdapter
 from zope.interface import Interface
-from zope.publisher.interfaces.browser import IBrowserRequest
 from Products.CMFPlone.Portal import PloneSite
 from gites.db.content.commune import Commune
 from gites.db.content.hebergement.hebergement import Hebergement
@@ -10,6 +9,7 @@ from gites.core.adapters.hebergementsfetcher import (BaseHebergementsFetcher,
                                                      PackageHebergementFetcher,
                                                      SearchHebFetcher,
                                                      CommuneHebFetcher)
+from gites.core.interfaces import IMapRequest
 from gites.core.content.interfaces import IPackage
 from gites.map.interfaces import IHebergementsMapFetcher
 from gites.map.browser.utils import hebergementToMapObject, packageToMapObject
@@ -60,7 +60,7 @@ class BaseMapFetcher:
 
 
 class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher):
-    grok.adapts(IPackage, Interface, IBrowserRequest)
+    grok.adapts(IPackage, Interface, IMapRequest)
     grok.provides(IHebergementsMapFetcher)
 
     fetch = PackageHebergementFetcher.__call__
@@ -87,18 +87,18 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
 
 
 class HebergementsInCommuneContentFetcher(BaseMapFetcher, CommuneHebFetcher):
-    grok.adapts(Commune, Interface, IBrowserRequest)
+    grok.adapts(Commune, Interface, IMapRequest)
 
 
 class SearchContentFetcher(BaseMapFetcher, SearchHebFetcher):
-    grok.adapts(PloneSite, Interface, IBrowserRequest)
+    grok.adapts(PloneSite, Interface, IMapRequest)
 
     def checkBoxes(self):
         return []
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
-    grok.adapts(Hebergement, Interface, IBrowserRequest)
+    grok.adapts(Hebergement, Interface, IMapRequest)
 
     def fetch(self):
         heb = hebergementToMapObject(hebergement=self.context,

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from five import grok
-from zope.interface import implements, Interface
+from zope.interface import alsoProvides, implements, Interface
+from gites.core.interfaces import IMapRequest
 from gites.map.browser.viewlets import GitesMapBase
 
 
@@ -14,5 +15,6 @@ class MapListing(GitesMapBase, grok.View):
         self.view = self
 
     def render(self):
+        alsoProvides(self.request, IMapRequest)
         self.request.environ['plone.transformchain.disable'] = True
         return self.getHebergements()
