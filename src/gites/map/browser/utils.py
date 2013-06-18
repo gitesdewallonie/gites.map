@@ -240,7 +240,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                         %s
                         <br />
                         <p class="map_infowindow_description">%s</p>
-                        <img class="map_infowindow_img" src="%s">
+                        <img class="map_infowindow_img" alt="%s" src="%s">
                         <br />
                         <div class="info_box">
                             <span class="map_infowindow_nombre"> %s/%s</span>
@@ -259,6 +259,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                     % (type_heb,
                        link,
                        hebergement.heb_localite,
+                       hebName,
                        photoUrl,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max,
@@ -297,13 +298,14 @@ def packageToMapObject(context):
                     <br />
                     <p class="map_infowindow_description">%s</p>
                     <p class="map_infowindow_description">%s</p>
-                    <img class="map_infowindow_img" src="%s" />
+                    <img class="map_infowindow_img" alt="%s" src="%s" />
                     <br />
                   </div>
                   """ \
                     % (link,
                        context.description(),
                        rangeOfDate,
+                       context.Title(),
                        imageUrl)
     return {'types': ['map_package'],
             'name': '',
@@ -330,13 +332,14 @@ def extDataToMapObject(extData, extDataType):
                     %s,
                     <p class="map_infowindow_description">%s</p>
                     <p class="map_infowindow_description">%s</p>
-                    <p class="map_infowindow_description"><img class="map_infowindow_img" src="%s" /></p>
+                    <p class="map_infowindow_description"><img class="map_infowindow_img" src="%s" alt="%s" /></p>
                   </div>
                   """ % (
         link,
         extData.ext_data_type or '',
         dateString,
-        extData.ext_data_picture_url or '')
+        extData.ext_data_picture_url or '',
+        extData.ext_data_title)
     return {'types': [extDataType],
             'name': '',
             'vicinity': bodyText,
