@@ -31,35 +31,40 @@
             </tal:if>
 
             <tal:if condition="python: 'information_touristique' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/information_touristique.png"
+                <img alt="Informations touristiques"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/information_touristique.png"
                      i18n:attributes="alt Informations_touristiques" />
                 <input type="checkbox" name="map_category_box" id="information_touristique" value="information_touristique" checked>
                 <label i18n:translate="Informations_touristiques" for="information_touristique">Informations touristiques</label><br />
             </tal:if>
 
             <tal:if condition="python: 'attraction_musee' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/attraction_musee.png"
+                <img alt="Attractions & mus&eacute;es"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/attraction_musee.png"
                      i18n:attributes="alt Attrations_et_musees" />
                 <input type="checkbox" name="map_category_box" id="attraction_musee" value="attraction_musee" checked>
                 <label i18n:translate="Attrations_et_musees" for="attraction_musee">Attractions & mus&eacute;es</label><br />
             </tal:if>
 
             <tal:if condition="python: 'sport_loisir' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/sport_loisir.png"
+                <img alt="Sports & loisirs"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/sport_loisir.png"
                      i18n:attributes="alt Sports_loisirs" />
                 <input type="checkbox" name="map_category_box" id="sport_loisir" value="sport_loisir" checked>
                 <label i18n:translate="Sports_loisirs" for="sport_loisir">Sports & loisirs</label><br />
             </tal:if>
 
             <tal:if condition="python: 'terroir' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/terroir.png"
+                <img alt="Produits du terroir"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/terroir.png"
                      i18n:attributes="alt Produits_du_terroir" />
                 <input type="checkbox" name="map_category_box" id="terroir" value="terroir" checked>
                 <label i18n:translate="Produits_du_terroir" for="terroir">Produits du terroir</label><br />
             </tal:if>
 
             <tal:if condition="python: 'evenement' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/evenement.png"
+                <img alt="&Eacute;v&eacute;nements"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/evenement.png"
                      i18n:attributes="alt Evenements" />
                 <input type="checkbox" name="map_category_box" id="evenement" value="evenement" checked>
                 <label i18n:translate="Evenements" for="evenement">&Eacute;v&eacute;nements</label><br />
@@ -87,14 +92,16 @@
             </tal:if>
 
             <tal:if condition="python: 'library' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/library.png"
+                <img alt="Biblioth&egrave;ques"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/library.png"
                      i18n:attributes="alt Bibliotheques" />
                 <input type="checkbox" name="map_category_box" id="library" value="library">
                 <label i18n:translate="Bibliotheques" for="library" class="disable_legend_label">Biblioth&egrave;ques</label><br />
             </tal:if>
 
             <tal:if condition="python: 'park' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/park.png"
+                <img alt="Parcs"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/park.png"
                      i18n:attributes="alt parcs" />
                 <input type="checkbox" name="map_category_box" id="park" value="park">
                 <label i18n:translate="parcs" for="park" class="disable_legend_label">Parcs</label><br />
@@ -115,7 +122,8 @@
             </tal:if>
 
             <tal:if condition="python: 'night' in checkboxes">
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/night.png"
+                <img alt="Night life"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/night.png"
                      i18n:attributes="alt Night_life" />
                 <input type="checkbox" name="map_category_box" id="night" value="night">
                 <label i18n:translate="Night_life" for="night" class="disable_legend_label">Night life</label><br />
