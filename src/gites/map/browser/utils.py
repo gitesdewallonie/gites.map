@@ -236,11 +236,14 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
 
         link = '<a href="%s" title="%s" class="map_infowindow_title">%s</a>' % (
             hebUrl, hebName, hebName)
+        image = """<a href="%(url)s" title="%(name)s" class="map_infowindow_title">
+                     <img class="map_infowindow_img" alt="%(name)s" src="%(photoUrl)s">
+                   </a>""" % {'url': hebUrl, 'name': hebName, 'photoUrl': photoUrl}
         bodyText = """<div class="map_infowindow_%s">
                         %s
                         <br />
                         <p class="map_infowindow_description">%s</p>
-                        <img class="map_infowindow_img" alt="%s" src="%s">
+                        %s
                         <br />
                         <div class="info_box">
                             <span class="map_infowindow_nombre"> %s/%s</span>
@@ -259,8 +262,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                     % (type_heb,
                        link,
                        hebergement.heb_localite,
-                       hebName,
-                       photoUrl,
+                       image,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max,
                        personnesTrans,
