@@ -1,7 +1,7 @@
 var giteMapHandlers = {
     initHandlers : function()
     {
-        this._initExternalDigitMarkerHandlers();
+        this.initExternalDigitMarkerHandlers();
         jQuery('input[name="map_category_box"]').bind({'change':this.categoryCheckboxHandler});
         jQuery('input#bound_button').bind({'click':this.boundHandler});
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
@@ -12,7 +12,7 @@ var giteMapHandlers = {
     },
 
     // When we click on pictos outside of the map it show that one on the map
-    _initExternalDigitMarkerHandlers: function()
+    initExternalDigitMarkerHandlers: function()
     {
         var primaryMarkers = googleMapAPI.markers.primary;
         var lgite = primaryMarkers.gite.length;
