@@ -107,6 +107,7 @@ var googleMapAPI ={
         this.overlay.setMap(this.map);
 
         services.getPrimaryMarkers();
+
         if ( mapInfos.boundToAll == true)
         {
             googleMapAPI.boundToAllMarkers();
@@ -160,7 +161,28 @@ var googleMapAPI ={
         }
 
         // window.portal_url added by plone
-        var icon = new google.maps.MarkerImage(window.portal_url + '/' + '++resource++gites.map.images/'+image+'.png');
+
+        var anchor = null;
+        if (place.anchor !== undefined)
+        {
+            // Permet de pointer la location sur le dessous milieu de l'image
+            imageWidth = 32;
+            imageHeight = 37;
+            // X par defaut fait aller l'image vers la gauche (par rapport à la location)
+            // Y par defaut fait aller l'image vers le haut (par rapport à la location)
+            anchor = new google.maps.Point(imageWidth/2 - place.anchor.x, imageHeight + place.anchor.y);
+        }
+        var icon = new google.maps.MarkerImage(
+                window.portal_url + '/' + '++resource++gites.map.images/'+image+'.png',
+                // size
+                null,
+                // origin
+                null,
+                // anchor
+                anchor,
+                // scaledsize
+                null);
+
         var html;
 
         var location;

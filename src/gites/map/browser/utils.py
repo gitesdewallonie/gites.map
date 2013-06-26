@@ -6,6 +6,8 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
+import math
+
 from sqlalchemy import select, and_
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter, getMultiAdapter
@@ -271,6 +273,12 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                        epis,
                        isCle and clesTrans or episTrans)
 
+    # XXX seuls les gites groupés doivent etre influencés ainsi
+    # XXX faire une petite ligne qui pointe vers le vrai endroit!
+    anchor = None
+    if digit:
+        anchor = calculateAnchorCoords(digit)
+
     datas = {'types': [type_heb],
              'name': '',
              'vicinity': bodyText,
@@ -278,7 +286,8 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
              'longitude': hebergement.heb_gps_long,
              'digit': digit,
              'heb_pk': hebergement.heb_pk,
-             'heb_type': heb_type}
+             'heb_type': heb_type,
+             'anchor': anchor}
     return datas
 
 
@@ -347,3 +356,26 @@ def extDataToMapObject(extData, extDataType):
             'vicinity': bodyText,
             'latitude': extData.ext_data_latitude,
             'longitude': extData.ext_data_longitude}
+
+
+def calculateAnchorCoords(digit):
+    """
+    Calculate coords of offset depending on digit
+    """
+    # Size of smallest angle
+    SMALLEST_ANGLE = 36
+    # Rayon in pixels
+    RAYON = 65
+
+    # So we start at the right top coord(0, 1)
+    digit = digit - 1
+
+    angle = SMALLEST_ANGLE * digit
+    radian = math.radians(angle)
+    # Here we start the angle at the point (0, 1)
+    #  if we want to start at (1, 0), just invert sin/cos
+    x = math.sin(radian) * RAYON
+    y = math.cos(radian) * RAYON
+
+    # I round here cause we work on pixels
+    return {'x': round(x), 'y': round(y)}
