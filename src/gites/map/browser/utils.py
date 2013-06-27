@@ -273,10 +273,8 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                        epis,
                        isCle and clesTrans or episTrans)
 
-    # XXX seuls les gites groupés doivent etre influencés ainsi
-    # XXX faire une petite ligne qui pointe vers le vrai endroit!
     offset = None
-    if digit:
+    if digit and hebergement.heb_groupement_pk:
         offset = calculateOffsetCoords(digit)
 
     datas = {'types': [type_heb],

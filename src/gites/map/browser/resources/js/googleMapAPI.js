@@ -221,7 +221,7 @@ var googleMapAPI ={
         // Offset image for grouped gites on map
         var anchor = null;
         var offset = null;
-        if (place.offset !== undefined)
+        if (place.offset !== null && place.offset !== undefined)
         {
             offset = new google.maps.Point(place.offset.x, place.offset.y);
 
@@ -250,7 +250,7 @@ var googleMapAPI ={
             icon:icon
         });
 
-        marker.offset = new google.maps.Point(place.offset.x, place.offset.y);
+        marker.offset = offset;
         marker.checked = true;
 
         // Add heb_pk on markers that need it
@@ -269,9 +269,9 @@ var googleMapAPI ={
         // Initialize lines
         var line = new google.maps.Polyline({
                 path: [],
-                strokeColor: "#FF0000",
+                strokeColor: "rgb(0, 0, 0)",
                 strokeOpacity: 1.0,
-                strokeWeight: 2
+                strokeWeight: 1
             });
         marker.line = line;
         marker.line.setMap(googleMapAPI.map);
