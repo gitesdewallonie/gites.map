@@ -275,9 +275,9 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
 
     # XXX seuls les gites groupés doivent etre influencés ainsi
     # XXX faire une petite ligne qui pointe vers le vrai endroit!
-    anchor = None
+    offset = None
     if digit:
-        anchor = calculateAnchorCoords(digit)
+        offset = calculateOffsetCoords(digit)
 
     datas = {'types': [type_heb],
              'name': '',
@@ -287,7 +287,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
              'digit': digit,
              'heb_pk': hebergement.heb_pk,
              'heb_type': heb_type,
-             'anchor': anchor}
+             'offset': offset}
     return datas
 
 
@@ -358,7 +358,7 @@ def extDataToMapObject(extData, extDataType):
             'longitude': extData.ext_data_longitude}
 
 
-def calculateAnchorCoords(digit):
+def calculateOffsetCoords(digit):
     """
     Calculate coords of offset depending on digit
     """
