@@ -87,7 +87,7 @@ var googleMapAPI ={
         });
 
         this.overlayView = new google.maps.OverlayView();
-        this.overlayView.draw = function() { };
+        this.overlayView.draw = googleMapAPI.updateLines;
         this.overlayView.setMap(this.map);
 
         this.placeService = new google.maps.places.PlacesService(this.map);
@@ -125,27 +125,30 @@ var googleMapAPI ={
 
     updateLines : function()
     {
-        for (var category in googleMapAPI.markers) {
-            for (var type in googleMapAPI.markers[category]) {
-                var l = googleMapAPI.markers[category][type].length;
-                for (var i=0; i < l; i++) {
-                    var marker = googleMapAPI.markers[category][type][i];
-                    if (marker.offset)
-                    {
-                        // Add line to point offset images to real location
-                        var AlatLong = marker.position;
-                        var BrelativePoint = marker.offset;
-                        var Apoint = googleMapAPI.projection.fromLatLngToContainerPixel(AlatLong);
-                        var Bpoint = new google.maps.Point(Apoint.x + BrelativePoint.x, Apoint.y - BrelativePoint.y);
-                        var BlatLong = googleMapAPI.projection.fromContainerPixelToLatLng(Bpoint);
+        if (googleMapAPI.projection !== undefined && googleMapAPI.projection !== null)
+        {
+            for (var category in googleMapAPI.markers) {
+                for (var type in googleMapAPI.markers[category]) {
+                    var l = googleMapAPI.markers[category][type].length;
+                    for (var i=0; i < l; i++) {
+                        var marker = googleMapAPI.markers[category][type][i];
+                        if (marker.offset)
+                        {
+                            // Add line to point offset images to real location
+                            var AlatLong = marker.position;
+                            var BrelativePoint = marker.offset;
+                            var Apoint = googleMapAPI.projection.fromLatLngToContainerPixel(AlatLong);
+                            var Bpoint = new google.maps.Point(Apoint.x + BrelativePoint.x, Apoint.y - BrelativePoint.y);
+                            var BlatLong = googleMapAPI.projection.fromContainerPixelToLatLng(Bpoint);
 
-                        var lineCoordinates = [
-                            AlatLong,
-                            BlatLong
-                        ];
-                        marker.line.setPath(lineCoordinates);
-                    }
-                };
+                            var lineCoordinates = [
+                                AlatLong,
+                                BlatLong
+                            ];
+                            marker.line.setPath(lineCoordinates);
+                        }
+                    };
+                }
             }
         }
     },
