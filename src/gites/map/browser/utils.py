@@ -191,7 +191,7 @@ def getHebergementsByGroup(groupement_pk):
     return query.all()
 
 
-def hebergementToMapObject(hebergement, context, request, digit=None):
+def hebergementToMapObject(hebergement, context, request, digit=None, groupedDigit=None):
     """
     Transform an hebergement into an object used on the map
     XXX clean cette fonction
@@ -274,8 +274,8 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                        isCle and clesTrans or episTrans)
 
     offset = None
-    if digit and hebergement.heb_groupement_pk:
-        offset = calculateOffsetCoords(digit)
+    if groupedDigit is not None:
+        offset = calculateOffsetCoords(groupedDigit)
 
     datas = {'types': [type_heb],
              'name': '',
@@ -364,9 +364,6 @@ def calculateOffsetCoords(digit):
     SMALLEST_ANGLE = 36
     # Rayon in pixels
     RAYON = 65
-
-    # So we start at the right top coord(0, 1)
-    digit = digit - 1
 
     angle = SMALLEST_ANGLE * digit
     radian = math.radians(angle)
