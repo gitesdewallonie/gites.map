@@ -199,8 +199,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
         epis = hebergement.epis[0].heb_nombre_epis
         type_heb = hebergement.type.type_heb_type
         isCle = hebergement.type.type_heb_code == 'MV'
-        # We dont need heb_type if not in listing
-        heb_type = ''
+        heb_type = hebergement.heb_type
     # On listing
     else:
         epis = hebergement.heb_nombre_epis
