@@ -53,10 +53,24 @@ class BaseMapFetcher:
 
     def fetch(self):
         digit = 0
+        groupedDigits = {}
         for heb in self():
             digit += 1
-            yield hebergementToMapObject(heb, self.context, self.request,
-                                         digit)
+            groupedDigit = None
+
+            group_pk = heb.heb_groupement_pk
+            if group_pk:
+                if group_pk in groupedDigits.keys():
+                    groupedDigit = groupedDigits[group_pk] + 1
+                else:
+                    groupedDigit = 0
+                groupedDigits[group_pk] = groupedDigit
+
+            yield hebergementToMapObject(heb,
+                                         self.context,
+                                         self.request,
+                                         digit,
+                                         groupedDigit)
 
 
 class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher):
@@ -66,13 +80,8 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
     fetch = PackageHebergementFetcher.__call__
 
     def fetch(self):
-        digit = 0
-        for heb in self():
-            digit += 1
-            yield hebergementToMapObject(hebergement=heb,
-                                         context=self.context,
-                                         request=self.request,
-                                         digit=digit)
+        for obj in BaseMapFetcher.fetch(self):
+            yield obj
         yield packageToMapObject(self.context)
 
     def mapInfos(self):

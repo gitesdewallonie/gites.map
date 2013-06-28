@@ -6,6 +6,8 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
+import math
+
 from sqlalchemy import select, and_
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter, getMultiAdapter
@@ -189,14 +191,14 @@ def getHebergementsByGroup(groupement_pk):
     return query.all()
 
 
-def hebergementToMapObject(hebergement, context, request, digit=None):
+def hebergementToMapObject(hebergement, context, request, digit=None, groupedDigit=None):
     """
     Transform an hebergement into an object used on the map
     XXX clean cette fonction
     """
     # On hebergement detail
     if isinstance(hebergement, Hebergement):  # XXX Adapter
-        epis = hebergement.epis[0].heb_nombre_epis
+        epis = hebergement.epis and hebergement.epis[0].heb_nombre_epis or '-'
         type_heb = hebergement.type.type_heb_type
         isCle = hebergement.type.type_heb_code == 'MV'
         heb_type = hebergement.heb_type
@@ -235,11 +237,14 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
 
         link = '<a href="%s" title="%s" class="map_infowindow_title">%s</a>' % (
             hebUrl, hebName, hebName)
+        image = """<a href="%(url)s" title="%(name)s" class="map_infowindow_title">
+                     <img class="map_infowindow_img" alt="%(name)s" src="%(photoUrl)s">
+                   </a>""" % {'url': hebUrl, 'name': hebName, 'photoUrl': photoUrl}
         bodyText = """<div class="map_infowindow_%s">
                         %s
                         <br />
                         <p class="map_infowindow_description">%s</p>
-                        <img class="map_infowindow_img" alt="%s" src="%s">
+                        %s
                         <br />
                         <div class="info_box">
                             <span class="map_infowindow_nombre"> %s/%s</span>
@@ -258,8 +263,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                     % (type_heb,
                        link,
                        hebergement.heb_localite,
-                       hebName,
-                       photoUrl,
+                       image,
                        hebergement.heb_cgt_cap_min,
                        hebergement.heb_cgt_cap_max,
                        personnesTrans,
@@ -268,6 +272,10 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
                        epis,
                        isCle and clesTrans or episTrans)
 
+    offset = None
+    if groupedDigit is not None:
+        offset = calculateOffsetCoords(groupedDigit)
+
     datas = {'types': [type_heb],
              'name': '',
              'vicinity': bodyText,
@@ -275,7 +283,8 @@ def hebergementToMapObject(hebergement, context, request, digit=None):
              'longitude': hebergement.heb_gps_long,
              'digit': digit,
              'heb_pk': hebergement.heb_pk,
-             'heb_type': heb_type}
+             'heb_type': heb_type,
+             'offset': offset}
     return datas
 
 
@@ -344,3 +353,23 @@ def extDataToMapObject(extData, extDataType):
             'vicinity': bodyText,
             'latitude': extData.ext_data_latitude,
             'longitude': extData.ext_data_longitude}
+
+
+def calculateOffsetCoords(digit):
+    """
+    Calculate coords of offset depending on digit
+    """
+    # Size of smallest angle
+    SMALLEST_ANGLE = 36
+    # Rayon in pixels
+    RAYON = 65
+
+    angle = SMALLEST_ANGLE * digit
+    radian = math.radians(angle)
+    # Here we start the angle at the point (0, 1)
+    #  if we want to start at (1, 0), just invert sin/cos
+    x = math.sin(radian) * RAYON
+    y = math.cos(radian) * RAYON
+
+    # I round here cause we work on pixels
+    return {'x': round(x), 'y': round(y)}

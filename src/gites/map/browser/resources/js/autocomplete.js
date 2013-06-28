@@ -9,10 +9,10 @@ jQuery(document).ready(function($) {
                   var ne = new google.maps.LatLng(51.110420, 6.256714);
                   var bounds = new google.maps.LatLngBounds(sw, ne);
                   var address = request.term;
-                  address += ', ' + obj.country;  // since bounds and region are not
-                                              // restrictive, we have to add country
-                                              // manually
-                  geocoder.geocode({address: address, bounds: bounds, region: 'be', language: obj.lang},
+                  address += ', ' + obj.data.country;  // since bounds and region are not
+                                                       // restrictive, we have to add country
+                                                       // manually
+                  geocoder.geocode({address: address, bounds: bounds, region: 'be', language: obj.data.lang},
                                    function(results, status) {
                     response($.map(results, function(item) {
                         value = item.address_components[0].long_name;

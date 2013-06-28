@@ -6,6 +6,7 @@ var googleMapAPI ={
     defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
     defaultZoom: 10,
     zoomLimit: 10,
+    lines: [],
     markers : {
         // From python
         primary : {
@@ -55,6 +56,8 @@ var googleMapAPI ={
         ],
 
     overlay : null,
+    overlayView : null,
+    projection : null,
 
     initialize : function()
     {
@@ -83,6 +86,10 @@ var googleMapAPI ={
             scrollwheel: false,
         });
 
+        this.overlayView = new google.maps.OverlayView();
+        this.overlayView.draw = googleMapAPI.updateLines;
+        this.overlayView.setMap(this.map);
+
         this.placeService = new google.maps.places.PlacesService(this.map);
 
         //initialize infowindow
@@ -107,17 +114,47 @@ var googleMapAPI ={
         this.overlay.setMap(this.map);
 
         services.getPrimaryMarkers();
-        if ( mapInfos.boundToAll == true)
-        {
-            googleMapAPI.boundToAllMarkers();
-        }
+
         giteMapHandlers.initHandlers();
+    },
+
+    updateProjection : function()
+    {
+        googleMapAPI.projection = googleMapAPI.overlayView.getProjection();
+    },
+
+    updateLines : function()
+    {
+        if (googleMapAPI.projection !== undefined && googleMapAPI.projection !== null)
+        {
+            for (var category in googleMapAPI.markers) {
+                for (var type in googleMapAPI.markers[category]) {
+                    var l = googleMapAPI.markers[category][type].length;
+                    for (var i=0; i < l; i++) {
+                        var marker = googleMapAPI.markers[category][type][i];
+                        if (marker.offset)
+                        {
+                            // Add line to point offset images to real location
+                            var AlatLong = marker.position;
+                            var BrelativePoint = marker.offset;
+                            var Apoint = googleMapAPI.projection.fromLatLngToContainerPixel(AlatLong);
+                            var Bpoint = new google.maps.Point(Apoint.x + BrelativePoint.x, Apoint.y - BrelativePoint.y);
+                            var BlatLong = googleMapAPI.projection.fromContainerPixelToLatLng(Bpoint);
+
+                            var lineCoordinates = [
+                                AlatLong,
+                                BlatLong
+                            ];
+                            marker.line.setPath(lineCoordinates);
+                        }
+                    };
+                }
+            }
+        }
     },
 
     createMarker : function(place, category)
     {
-        // XXX ne pas creer un marker s il existe déjà dans googleMapAPI.markers !
-
         // Get the right type we want the marker to be added in
         if (category === 'secondary')
         {
@@ -160,7 +197,7 @@ var googleMapAPI ={
         }
 
         // window.portal_url added by plone
-        var icon = new google.maps.MarkerImage(window.portal_url + '/' + '++resource++gites.map.images/'+image+'.png');
+
         var html;
 
         var location;
@@ -178,6 +215,32 @@ var googleMapAPI ={
             location = place.geometry.location;
         }
 
+
+        // Offset image for grouped gites on map
+        var anchor = null;
+        var offset = null;
+        if (place.offset !== null && place.offset !== undefined)
+        {
+            offset = new google.maps.Point(place.offset.x, place.offset.y);
+
+            // Permet de pointer la location sur le dessous milieu de l'image
+            imageWidth = 32;
+            imageHeight = 37;
+            // X par defaut fait aller l'image vers la gauche (par rapport à la location)
+            // Y par defaut fait aller l'image vers le haut (par rapport à la location)
+            anchor = new google.maps.Point(imageWidth/2 - place.offset.x, imageHeight + place.offset.y);
+        }
+        var icon = new google.maps.MarkerImage(
+                window.portal_url + '/' + '++resource++gites.map.images/'+image+'.png',
+                // size
+                null,
+                // origin
+                null,
+                // anchor
+                anchor,
+                // scaledsize
+                null);
+
         var marker = new google.maps.Marker(
         {
             map : this.map,
@@ -185,6 +248,7 @@ var googleMapAPI ={
             icon:icon
         });
 
+        marker.offset = offset;
         marker.checked = true;
 
         // Add heb_pk on markers that need it
@@ -200,7 +264,19 @@ var googleMapAPI ={
             googleMapAPI.infowindow.open(googleMapAPI.map,marker);
         });
 
+        // Initialize lines
+        var line = new google.maps.Polyline({
+                path: [],
+                strokeColor: "rgb(0, 0, 0)",
+                strokeOpacity: 1.0,
+                strokeWeight: 1
+            });
+        marker.line = line;
+        marker.line.setMap(googleMapAPI.map);
+
         googleMapAPI.markers[category][type].push(marker);
+
+        google.maps.event.trigger(googleMapAPI.map, 'idle');
     },
 
     manageMarkersVisibility : function()
