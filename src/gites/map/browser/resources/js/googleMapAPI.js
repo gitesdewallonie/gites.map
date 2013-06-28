@@ -115,6 +115,14 @@ var googleMapAPI ={
 
         services.getPrimaryMarkers();
 
+        // XXX need getPrimaryMarkers to be finished
+        googleMapAPI.updateLines();
+        setTimeout('googleMapAPI.updateLines()', 1000);
+        setTimeout('googleMapAPI.updateLines()', 2000);
+        setTimeout('googleMapAPI.updateLines()', 3000);
+        setTimeout('googleMapAPI.updateLines()', 4000);
+        setTimeout('googleMapAPI.updateLines()', 5000);
+
         giteMapHandlers.initHandlers();
     },
 
@@ -276,7 +284,6 @@ var googleMapAPI ={
 
         googleMapAPI.markers[category][type].push(marker);
 
-        google.maps.event.trigger(googleMapAPI.map, 'idle');
     },
 
     manageMarkersVisibility : function()
@@ -360,6 +367,7 @@ var googleMapAPI ={
             jQuery('.disable_legend_label').css('font-weight', 'normal');
         }
     },
+
     boundToAllMarkers : function()
     {
         var bounds = new google.maps.LatLngBounds();
