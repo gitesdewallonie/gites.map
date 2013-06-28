@@ -292,7 +292,7 @@ def packageToMapObject(context):
     """
     Transform a package into an object user on the map
     """
-    if context.geolocation is None:
+    if context.is_geolocalized is None:
         return
     imageUrl = getVignetteURL(context)
     rangeOfDate = ""
