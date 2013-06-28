@@ -51,13 +51,11 @@ class BaseMapFetcher:
     def allMapDatas(self):
         return []
 
-    def fetch(self):
-        digit = 0
+    def _calculateGroupedDigits(self, hebergements):
         groupedDigits = {}
-        for heb in self():
-            digit += 1
-            groupedDigit = None
 
+        for heb in hebergements:
+            groupedDigit = None
             group_pk = heb.heb_groupement_pk
             if group_pk:
                 if group_pk in groupedDigits.keys():
@@ -65,12 +63,38 @@ class BaseMapFetcher:
                 else:
                     groupedDigit = 0
                 groupedDigits[group_pk] = groupedDigit
+        return groupedDigits
 
-            yield hebergementToMapObject(heb,
-                                         self.context,
-                                         self.request,
-                                         digit,
-                                         groupedDigit)
+    def fetch(self):
+        hebergements = []
+        for heb in self():
+            hebergements.append(heb)
+
+        groupedDigits = self._calculateGroupedDigits(hebergements)
+
+        groupedDigitsTmp = {}
+        digit = 0
+        mapObjects = []
+        for heb in hebergements:
+            groupedDigitTmp = None
+            group_pk = heb.heb_groupement_pk
+            # Allow to deactivate lines if only one heb in this group
+            if group_pk in groupedDigits.keys() and groupedDigits[group_pk] != 0:
+                if group_pk in groupedDigitsTmp.keys():
+                    groupedDigitTmp = groupedDigitsTmp[group_pk] + 1
+                else:
+                    groupedDigitTmp = 0
+                groupedDigitsTmp[group_pk] = groupedDigitTmp
+
+            digit += 1
+            mapObjects.append(
+                hebergementToMapObject(
+                    heb,
+                    self.context,
+                    self.request,
+                    digit,
+                    groupedDigitTmp))
+        return mapObjects
 
 
 class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher):
