@@ -201,7 +201,7 @@ def hebergementToMapObject(hebergement, context, request, digit=None, groupedDig
         epis = hebergement.epis and hebergement.epis[0].heb_nombre_epis or '-'
         type_heb = hebergement.type.type_heb_type
         isCle = hebergement.type.type_heb_code == 'MV'
-        heb_type = hebergement.heb_type
+        heb_type = hebergement.type.type_heb_id
     # On listing
     else:
         epis = hebergement.heb_nombre_epis
