@@ -131,7 +131,7 @@
 
             <div id="disable_legend_sentence" i18n:translate="Pour_selectionner_zoomer"
                  tal:condition="checkboxes">
-                Pour s&eacute;lectionner les autres points d’int&eacute;r&ecirc;t, merci de zoomer sur la carte.
+                Pour s&eacute;lectionner les autres points d'int&eacute;r&ecirc;t, merci de zoomer sur la carte.
             </div>
 
         </div>
