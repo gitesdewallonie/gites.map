@@ -155,8 +155,6 @@ var googleMapAPI ={
 
     createMarker : function(place, category)
     {
-        // XXX ne pas creer un marker s il existe déjà dans googleMapAPI.markers !
-
         // Get the right type we want the marker to be added in
         if (category === 'secondary')
         {
@@ -278,6 +276,7 @@ var googleMapAPI ={
 
         googleMapAPI.markers[category][type].push(marker);
 
+        google.maps.event.trigger(googleMapAPI.map, 'idle');
     },
 
     manageMarkersVisibility : function()
