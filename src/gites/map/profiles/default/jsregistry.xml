@@ -6,7 +6,7 @@
         compression="none"
         cookable="False"
         enabled="True"
-        expression="python:request.get('LANGUAGE', 'en') == 'fr'"
+        expression="python:request.get('LANGUAGE', 'en') == 'fr' and here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=fr&amp;region=be"
         inline="False"/>
 
@@ -15,7 +15,7 @@
         compression="none"
         cookable="False"
         enabled="True"
-        expression="python:request.get('LANGUAGE', 'en') == 'en'"
+        expression="python:request.get('LANGUAGE', 'en') == 'en' and here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=en&amp;region=be"
         inline="False"/>
 
@@ -24,7 +24,7 @@
         compression="none"
         cookable="False"
         enabled="True"
-        expression="python:request.get('LANGUAGE', 'en') == 'de'"
+        expression="python:request.get('LANGUAGE', 'en') == 'de' and here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=de&amp;region=be"
         inline="False"/>
 
@@ -33,7 +33,7 @@
         compression="none"
         cookable="False"
         enabled="True"
-        expression="python:request.get('LANGUAGE', 'en') == 'it'"
+        expression="python:request.get('LANGUAGE', 'en') == 'it' and here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=it&amp;region=be"
         inline="False"/>
 
@@ -42,7 +42,7 @@
         compression="none"
         cookable="False"
         enabled="True"
-        expression="python:request.get('LANGUAGE', 'en') == 'nl'"
+        expression="python:request.get('LANGUAGE', 'en') == 'nl' and here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="http://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=nl&amp;region=be"
         inline="False"/>
 
@@ -51,7 +51,7 @@
         compression="safe"
         cookable="True"
         enabled="True"
-        expression=""
+        expression="python:here.restrictedTraverse('@@shouldShowMapViewlet')()"
         id="++resource++gites.map.js/autocomplete.js"
         inline="False"/>
 
