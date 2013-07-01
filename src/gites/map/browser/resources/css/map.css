@@ -15,6 +15,7 @@ div.map_infowindow_chambre div.info_box{
 div.map_infowindow_gite,
 div.map_infowindow_chambre,
 div.map_infowindow_package,
+div.map_infowindow_search_content,
 div.map_infowindow_extdata{
     margin-top: -10px;
     margin-bottom: 5px;
@@ -25,7 +26,8 @@ div.map_infowindow_chambre{
     width: 216px;
 }
 
-div.map_infowindow_package{
+div.map_infowindow_package,
+div.map_infowindow_search_content{
     width: 259px;
 }
 

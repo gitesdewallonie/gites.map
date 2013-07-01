@@ -292,8 +292,6 @@ def packageToMapObject(context):
     """
     Transform a package into an object user on the map
     """
-    if context.is_geolocalized() is None:
-        return
     imageUrl = getVignetteURL(context)
     rangeOfDate = ""
     if context.endDate is not None:
@@ -353,6 +351,24 @@ def extDataToMapObject(extData, extDataType):
             'vicinity': bodyText,
             'latitude': extData.ext_data_latitude,
             'longitude': extData.ext_data_longitude}
+
+
+def searchContentToMapObject(searchContent):
+    """
+    """
+    data = searchContent.geocodedLocation.current_data
+    location = data.get('geometry').get('location')
+    adress = data.get('formatted_address')
+
+    bodyText = """<div class="map_infowindow_search_content">
+                    %s
+                  </div>
+                  """ % adress
+    return {'types': ['map_package'],
+            'name': '',
+            'vicinity': bodyText,
+            'latitude': float(location.get('lat')),
+            'longitude': float(location.get('lng'))}
 
 
 def calculateOffsetCoords(digit):

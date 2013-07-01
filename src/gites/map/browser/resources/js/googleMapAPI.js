@@ -11,6 +11,7 @@ var googleMapAPI ={
         // From python
         primary : {
             map_package: [],
+            search_content: [],
             gite: [],
             chambre: [],
             sport_loisir: [],
