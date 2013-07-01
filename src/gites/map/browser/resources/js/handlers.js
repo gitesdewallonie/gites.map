@@ -7,6 +7,7 @@ var giteMapHandlers = {
         google.maps.event.addListener(googleMapAPI.map,'zoom_changed',this.zoomHandler);
         google.maps.event.addListener(googleMapAPI.map,'dragend',this.dragHandler);
         google.maps.event.addListener(googleMapAPI.map, 'idle', googleMapAPI.updateProjection);
+        google.maps.event.addListener(googleMapAPI.map, 'projection_changed', googleMapAPI.updateLines);
 
         googleMapAPI.manageMarkersVisibility();
         googleMapAPI.manageCheckboxDisabling();

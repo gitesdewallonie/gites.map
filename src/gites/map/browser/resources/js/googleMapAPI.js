@@ -116,20 +116,13 @@ var googleMapAPI ={
 
         services.getPrimaryMarkers();
 
-        // XXX need getPrimaryMarkers to be finished
-        googleMapAPI.updateLines();
-        setTimeout('googleMapAPI.updateLines()', 1000);
-        setTimeout('googleMapAPI.updateLines()', 2000);
-        setTimeout('googleMapAPI.updateLines()', 3000);
-        setTimeout('googleMapAPI.updateLines()', 4000);
-        setTimeout('googleMapAPI.updateLines()', 5000);
-
         giteMapHandlers.initHandlers();
     },
 
     updateProjection : function()
     {
         googleMapAPI.projection = googleMapAPI.overlayView.getProjection();
+        google.maps.event.trigger(googleMapAPI.map, 'projection_changed');
     },
 
     updateLines : function()
@@ -329,6 +322,7 @@ var googleMapAPI ={
         var l = googleMapAPI.markers[category][type].length;
         for (var i=0; i < l; i++) {
             googleMapAPI.markers[category][type][i].setVisible(false);
+            googleMapAPI.markers[category][type][i].line.setPath([]);
         }
         // Remove marker
         googleMapAPI.markers[category][type] = [];
