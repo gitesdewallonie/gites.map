@@ -15,7 +15,7 @@ from zope.i18n import translate
 from plone.memoize import instance
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
-
+from affinitic.db.cache import FromCache
 from gites.core.browser.package import getVignetteURL
 from gites.core.interfaces import IMapRequest
 from gites.locales import GitesMessageFactory as _
