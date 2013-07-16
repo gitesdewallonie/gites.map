@@ -185,6 +185,7 @@ def getHebergementsByGroup(groupement_pk):
     proprioTable = wrapper.getMapper('proprio')
     session = wrapper.session
     query = session.query(hebergementTable)
+    query = query.options(FromCache('gdw'))
     query = query.filter(hebergementTable.heb_groupement_pk == groupement_pk)
     query = query.filter(and_(hebergementTable.heb_site_public == '1',
                               proprioTable.pro_etat == True))
