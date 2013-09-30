@@ -4,10 +4,12 @@ from zope.component import queryMultiAdapter
 from zope.interface import Interface
 from Products.CMFPlone.Portal import PloneSite
 from gites.db.content.commune import Commune
-from gites.db.content.hebergement.hebergement import Hebergement
+from gites.db.content.hebergement.hebergement import (Hebergement,
+                                                      TypeHebergement)
 from gites.core.adapters.hebergementsfetcher import (BaseHebergementsFetcher,
                                                      PackageHebergementFetcher,
                                                      SearchHebFetcher,
+                                                     TypeHebFetcher,
                                                      CommuneHebFetcher)
 from gites.core.interfaces import IMapRequest
 from gites.core.content.interfaces import IPackage
@@ -120,6 +122,10 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
 
     def allMapDatas(self):
         return []
+
+
+class HebergementTypeContentFetcher(BaseMapFetcher, TypeHebFetcher):
+    grok.adapts(TypeHebergement, Interface, IMapRequest)
 
 
 class HebergementsInCommuneContentFetcher(BaseMapFetcher, CommuneHebFetcher):
