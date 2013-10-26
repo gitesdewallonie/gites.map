@@ -25,6 +25,15 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        name="map-search"
+        for="*"
+        class=".map.MapSearch"
+        layer=".interfaces.IGitesMap"
+        permission="zope2.View"
+        template="templates/map_search.pt"
+        />
+
     <browser:resourceDirectory
         directory="resources/js/"
         layer=".interfaces.IGitesMap"

@@ -10,7 +10,8 @@ import math
 
 from sqlalchemy import select, and_
 from z3c.sqlalchemy import getSAWrapper
-from zope.component import queryMultiAdapter, getMultiAdapter
+from z3c.json.interfaces import IJSONWriter
+from zope.component import queryMultiAdapter, getMultiAdapter, getUtility
 from zope.i18n import translate
 from plone.memoize import instance
 from Products.Five import BrowserView
@@ -173,6 +174,11 @@ class UtilsView(BrowserView):
             results.append(extDataToMapObject(extData=extData,
                                               extDataType=extDataType))
         return results
+
+
+def makeJSON(obj):
+    writer = getUtility(IJSONWriter)
+    return writer.write(obj)
 
 
 def getHebergementsByGroup(groupement_pk):

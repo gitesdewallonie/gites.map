@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="gites.map.various"
+               version="20131026-01"
+               handler="gites.map.setuphandlers.setupMap"
+               title="gites.map: miscellaneous import steps">
+  </import-step>
+</import-steps>

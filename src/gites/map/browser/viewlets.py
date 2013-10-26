@@ -10,33 +10,14 @@ $Id: viewlets.py 4587 2012-12-04 schminitz
 
 import zope.interface
 from five import grok
-from sqlalchemy import select
-from z3c.json.interfaces import IJSONWriter
-from z3c.sqlalchemy import getSAWrapper
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getMultiAdapter
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from gites.core.viewlets.map import MapViewletManager
-from gites.map.interfaces import IHebergementsMapFetcher
+from gites.map.browser.map import GitesMapBase, GitesMapCommon
 
 
-class GitesMapBase(object):
-
-    def _makeJSON(self, obj):
-        writer = getUtility(IJSONWriter)
-        return writer.write(obj)
-
-    @property
-    def _fetcher(self):
-        return getMultiAdapter((self.context, self.view, self.request),
-                               IHebergementsMapFetcher)
-
-    def getHebergements(self):
-        localHebergements = list(self._fetcher.fetch())
-        return self._makeJSON(localHebergements)
-
-
-class GitesMapViewlet(GitesMapBase, grok.Viewlet):
+class GitesMapViewlet(GitesMapBase, GitesMapCommon, grok.Viewlet):
     render = ViewPageTemplateFile('templates/hebergements_map.pt')
     grok.viewletmanager(MapViewletManager)
     grok.context(zope.interface.Interface)
@@ -46,44 +27,3 @@ class GitesMapViewlet(GitesMapBase, grok.Viewlet):
         requestView = getMultiAdapter((self.context, self.request),
                                       name="utilsView")
         return requestView.shouldShowMapViewlet(view=self.view)
-
-    def getCheckboxes(self):
-        """
-        get list of checkbox id that have to be showned here
-        """
-        checkBoxes = self._fetcher.checkBoxes()
-        return checkBoxes
-
-    def getGoogleBlacklist(self):
-        """
-        get list of google blacklisted items so javascript can check on it
-        """
-        wrapper = getSAWrapper('gites_wallons')
-        MapBlacklist = wrapper.getMapper('map_blacklist')
-        query = select([MapBlacklist.blacklist_id],
-                       MapBlacklist.blacklist_provider_pk == 'google')
-        googleBlacklist = [result.blacklist_id for result in query.execute().fetchall()]
-        return self._makeJSON(googleBlacklist)
-
-    def getMapInfos(self):
-        """
-        get info of default zoom and map center depending on context
-        """
-        mapInfos = self._fetcher.mapInfos()
-        return self._makeJSON(mapInfos)
-
-    def getAllHebergements(self):
-        """
-        Returns all hebs that can be shown on map
-        """
-        requestView = getMultiAdapter((self.context, self.request),
-                                      name="utilsView")
-        results = requestView.getAllHebergements()
-        return self._makeJSON(results)
-
-    def getAllMapData(self):
-        """
-        Returns all "other" map data for the map
-        """
-        allMapDatas = self._fetcher.allMapDatas()
-        return self._makeJSON(allMapDatas)

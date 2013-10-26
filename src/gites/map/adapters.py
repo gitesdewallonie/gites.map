@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import grokcore.component as grok
-from zope.component import queryMultiAdapter
+from zope.component import queryMultiAdapter, getMultiAdapter
 from zope.interface import Interface
 from Products.CMFPlone.Portal import PloneSite
 from gites.db.content.commune import Commune
@@ -14,6 +14,7 @@ from gites.core.adapters.hebergementsfetcher import (BaseHebergementsFetcher,
 from gites.core.interfaces import IMapRequest
 from gites.core.content.interfaces import IPackage
 from gites.map.interfaces import IHebergementsMapFetcher
+from gites.map.browser.interfaces import ISearchMapRequest
 from gites.map.browser.utils import (hebergementToMapObject,
                                      packageToMapObject,
                                      searchContentToMapObject)
@@ -143,6 +144,16 @@ class SearchContentFetcherWithMap(BaseMapFetcher, SearchHebFetcher):
 
     def checkBoxes(self):
         return []
+
+
+class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher):
+    grok.adapts(PloneSite, Interface, ISearchMapRequest)
+
+    def fetch(self):
+        requestView = getMultiAdapter((self.context, self.request),
+                                      name="utilsView")
+        results = requestView.getAllHebergements()
+        return results
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
