@@ -2,6 +2,7 @@ var googleMapAPI ={
     map : null,
     placeService : null,
     infowindow: null,
+    mapSearch: false,
     //Wallonie center
     defaultCenter: new google.maps.LatLng(50.21546, 4.830938),
     defaultZoom: 10,
@@ -64,6 +65,28 @@ var googleMapAPI ={
     {
         var mapInfos = services.getMapInfos();
         var zoom = (mapInfos.zoom !== null)?mapInfos.zoom:googleMapAPI.defaultZoom;
+        googleMapAPI.mapSearch = mapInfos.mapSearch;
+
+        if (googleMapAPI.mapSearch) {
+            this.categoriesToHide = [
+                    'gare',
+                    'information_touristique',
+                    'evenementquefaire',
+                    'transport',
+                    'magasin',
+                    'night',
+                    'entertainment',
+                    'casino',
+                    'library',
+                    'park',
+                    'wellness',
+                    'attraction_musee',
+                    'sport_loisir',
+                    'terroir',
+                    'evenement',
+                    'restaurant'
+                ];
+        }
 
         if (mapInfos.center !== null)
         {
@@ -283,6 +306,7 @@ var googleMapAPI ={
     manageMarkersVisibility : function()
     {
         // Update visibility of all markers
+        var zoomLimit = (this.mapSearch)?12:this.zoomLimit;
         for (var category in this.markers){
             for (var type in this.markers[category]) {
                 var l = this.markers[category][type].length;
@@ -293,11 +317,26 @@ var googleMapAPI ={
                     //   or if dezoom to the limit
                     if (googleMapAPI.categoriesToHide.indexOf(type) != -1)
                     {
-                        if (marker.checked && this.map.zoom > this.zoomLimit)
+                        if (marker.checked && this.map.zoom > zoomLimit)
                         {
                             marker.setVisible(true);
                         }
-                        else if (marker.checked && this.map.zoom <= this.zoomLimit)
+                        else if (marker.checked && this.map.zoom <= zoomLimit)
+                        {
+                            marker.setVisible(false);
+                        }
+                        else
+                        {
+                            marker.setVisible(false);
+                        }
+                    }
+                    else if (this.mapSearch && (type === 'gite' || type === 'chambre'))
+                    {
+                        if (marker.checked && this.map.zoom > 9)
+                        {
+                            marker.setVisible(true);
+                        }
+                        else if (marker.checked && this.map.zoom <= 9)
                         {
                             marker.setVisible(false);
                         }
@@ -314,6 +353,7 @@ var googleMapAPI ={
                 };
             }
         }
+    
     },
 
     deleteMarkersByType : function(type, category)
@@ -330,7 +370,8 @@ var googleMapAPI ={
 
     manageCheckboxDisabling : function()
     {
-        if (this.map.zoom > this.zoomLimit)
+        var zoomLimit = (this.mapSearch)?12:this.zoomLimit;
+        if (this.map.zoom > zoomLimit)
         // dégriser les checkbox qui doivent l etre
         {
             jQuery('input[name="map_category_box"]').each(function(index, checkBox)
@@ -360,6 +401,25 @@ var googleMapAPI ={
                 });
             jQuery('#disable_legend_sentence').show();
             jQuery('.disable_legend_label').css('font-weight', 'normal');
+        }
+        if (this.mapSearch)
+        {
+            if (this.map.zoom > 9)
+            {
+                jQuery('#gite')[0].disabled = false;
+                jQuery("label[for='gite']").removeClass("unzoomed_legend_label");
+                jQuery('#chambre')[0].disabled = false;
+                jQuery("label[for='chambre']").removeClass("unzoomed_legend_label");
+                jQuery('#gite_chambre_zoom_needed').hide();
+            }
+            else
+            {
+                jQuery('#gite')[0].disabled = true;
+                jQuery("label[for='gite']").addClass("unzoomed_legend_label");
+                jQuery('#chambre')[0].disabled = true;
+                jQuery("label[for='chambre']").addClass("unzoomed_legend_label");
+                jQuery('#gite_chambre_zoom_needed').show();
+            }
         }
     },
 

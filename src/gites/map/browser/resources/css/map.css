@@ -96,3 +96,18 @@ div.map_infowindow_chambre div.info_box{
 	-webkit-column-count:3;
 	column-count:3;
 }
+
+#gite_chambre_zoom_needed {
+	background: -moz-linear-gradient(center top , #D87777 1%, #D95757 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #B72224;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(50, 50, 50, 0.7);
+	min-height: 40px;
+	width: 370px;
+    padding: 6px 24px;
+	position: absolute;
+	color: #FFFFFF;
+	font-weight: bold;
+ 	z-index: 1000;
+	margin: 25px 0px 0px 315px;
+}

@@ -8,6 +8,9 @@
 
     <h1 tal:content="context/Title"></h1>
 
+    <div id="gite_chambre_zoom_needed" i18n:translate="Pour_afficher_gites_zoomer">
+        Pour afficher les g&icirc;tes et les chambres d'h&ocirc;tes, zoomez sur une r&eacute;gion de la Wallonie.
+    </div>
     <div id="description-map" class="map-search"
          tal:content="structure provider:gites.mapviewlet" />
 

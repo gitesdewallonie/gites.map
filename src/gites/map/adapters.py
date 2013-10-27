@@ -51,7 +51,8 @@ class BaseMapFetcher:
 
     def mapInfos(self):
         return {'zoom': None,
-                'center': None}
+                'center': None,
+                'mapSearch': False}
 
     def allMapDatas(self):
         return []
@@ -116,7 +117,8 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
 
     def mapInfos(self):
         return {'zoom': None,
-                'center': None}
+                'center': None,
+                'mapSearch': False}
 
 
 class HebergementTypeContentFetcher(BaseMapFetcher, TypeHebFetcher):
@@ -164,9 +166,14 @@ class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher,
         results = requestView.getAllHebergements()
         return results
 
+    def checkBoxes(self):
+        checkboxes = ALLCHECKBOXES[:]
+        return checkboxes
+
     def mapInfos(self):
         return {'zoom': 8,
-                'center': None}
+                'center': None,
+                'mapSearch': True}
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher,
@@ -188,4 +195,5 @@ class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher,
     def mapInfos(self):
         return {'zoom': 14,
                 'center': {'latitude': self.context.heb_gps_lat,
-                           'longitude': self.context.heb_gps_long}}
+                           'longitude': self.context.heb_gps_long},
+                'mapSearch': False}
