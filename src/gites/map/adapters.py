@@ -47,7 +47,7 @@ class BaseMapFetcher:
     grok.provides(IHebergementsMapFetcher)
 
     def checkBoxes(self):
-        return ALLCHECKBOXES
+        return []
 
     def mapInfos(self):
         return {'zoom': None,
@@ -119,12 +119,6 @@ class PackageHebergementFetcherWithMap(BaseMapFetcher, PackageHebergementFetcher
         return {'zoom': None,
                 'center': None}
 
-    def checkBoxes(self):
-        return []
-
-    def allMapDatas(self):
-        return []
-
 
 class HebergementTypeContentFetcher(BaseMapFetcher, TypeHebFetcher):
     grok.adapts(TypeHebergement, Interface, IMapRequest)
@@ -143,11 +137,26 @@ class SearchContentFetcherWithMap(BaseMapFetcher, SearchHebFetcher):
         if self.is_geolocalized:
             yield searchContentToMapObject(self)
 
-    def checkBoxes(self):
-        return []
+
+class AllCheckboxesMixinFetchter:
+
+    def allMapDatas(self):
+        requestView = queryMultiAdapter((self.context, self.request),
+                                        name="utilsView")
+        datas = []
+        datas.extend(requestView.getMaisonsDuTourisme())
+        datas.extend(requestView.getGares())
+        datas.extend(requestView.getInfosTouristiques('sport_loisir', 4))
+        datas.extend(requestView.getInfosTouristiques('attraction_musee', 5))
+        datas.extend(requestView.getInfosTouristiques('terroir', 6))
+        datas.extend(requestView.getInfosTouristiques('evenement', 7))
+        datas.extend(requestView.getQuefaireEvents())
+        datas.extend(requestView.getRestos())
+        return datas
 
 
-class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher):
+class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher,
+                       AllCheckboxesMixinFetchter):
     grok.adapts(ATFolder, Interface, ISearchMapRequest)
 
     def fetch(self):
@@ -156,8 +165,14 @@ class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher):
         results = requestView.getAllHebergements()
         return results
 
+    def mapInfos(self):
+        return {'zoom': 8,
+                'center': None,
+                'boundToAll': False}
 
-class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
+
+class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher,
+                              AllCheckboxesMixinFetchter):
     grok.adapts(Hebergement, Interface, IMapRequest)
 
     def fetch(self):
@@ -177,17 +192,3 @@ class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher):
                 'center': {'latitude': self.context.heb_gps_lat,
                            'longitude': self.context.heb_gps_long},
                 'boundToAll': False}
-
-    def allMapDatas(self):
-        requestView = queryMultiAdapter((self.context, self.request),
-                                        name="utilsView")
-        datas = []
-        datas.extend(requestView.getMaisonsDuTourisme())
-        datas.extend(requestView.getGares())
-        datas.extend(requestView.getInfosTouristiques('sport_loisir', 4))
-        datas.extend(requestView.getInfosTouristiques('attraction_musee', 5))
-        datas.extend(requestView.getInfosTouristiques('terroir', 6))
-        datas.extend(requestView.getInfosTouristiques('evenement', 7))
-        datas.extend(requestView.getQuefaireEvents())
-        datas.extend(requestView.getRestos())
-        return datas
