@@ -8,7 +8,8 @@
 
     <h1 tal:content="context/Title"></h1>
 
-    <div id="description-map" tal:content="structure provider:gites.mapviewlet" />
+    <div id="description-map" class="map-search"
+         tal:content="structure provider:gites.mapviewlet" />
 
 </div>
 
