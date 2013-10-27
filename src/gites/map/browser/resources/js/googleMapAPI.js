@@ -3,7 +3,7 @@ var googleMapAPI ={
     placeService : null,
     infowindow: null,
     //Wallonie center
-    defaultCenter: new google.maps.LatLng(50.401078, 5.133648),
+    defaultCenter: new google.maps.LatLng(50.21546, 4.830938),
     defaultZoom: 10,
     zoomLimit: 10,
     lines: [],
