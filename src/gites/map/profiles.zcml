@@ -5,7 +5,7 @@
 
     <genericsetup:registerProfile
         name="default"
-        title="GitesMap"
+        title="gites.map"
         directory="profiles/default"
         description='Extension profile for the "Gites Map" Product.'
         provides="Products.GenericSetup.interfaces.EXTENSION"

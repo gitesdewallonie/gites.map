@@ -129,7 +129,6 @@ class UtilsView(BrowserView):
         query = session.query(Hebergement)
         query = query.filter(TypeHebergement.type_heb_pk == Hebergement.heb_typeheb_fk)
         query = query.filter(Hebergement.heb_site_public == '1')
-        query = query.filter(Hebergement.heb_etat == '1')
         query = query.filter(Proprio.pro_pk == Hebergement.heb_pro_fk)
         query = query.filter(Proprio.pro_etat == True)
         hebergements = query.all()

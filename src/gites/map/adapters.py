@@ -3,6 +3,7 @@ import grokcore.component as grok
 from zope.component import queryMultiAdapter, getMultiAdapter
 from zope.interface import Interface
 from Products.CMFPlone.Portal import PloneSite
+from Products.ATContentTypes.content.folder import ATFolder
 from gites.db.content.commune import Commune
 from gites.db.content.hebergement.hebergement import (Hebergement,
                                                       TypeHebergement)
@@ -147,7 +148,7 @@ class SearchContentFetcherWithMap(BaseMapFetcher, SearchHebFetcher):
 
 
 class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher):
-    grok.adapts(PloneSite, Interface, ISearchMapRequest)
+    grok.adapts(ATFolder, Interface, ISearchMapRequest)
 
     def fetch(self):
         requestView = getMultiAdapter((self.context, self.request),

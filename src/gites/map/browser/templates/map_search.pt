@@ -6,6 +6,8 @@
 
 <div metal:fill-slot="main">
 
+    <h1 tal:content="context/Title"></h1>
+
     <div id="description-map" tal:content="structure provider:gites.mapviewlet" />
 
 </div>

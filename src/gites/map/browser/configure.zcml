@@ -26,7 +26,7 @@
         />
 
     <browser:page
-        name="map-search"
+        name="mapSearchView"
         for="*"
         class=".map.MapSearch"
         layer=".interfaces.IGitesMap"
