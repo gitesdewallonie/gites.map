@@ -51,8 +51,7 @@ class BaseMapFetcher:
 
     def mapInfos(self):
         return {'zoom': None,
-                'center': None,
-                'boundToAll': False}
+                'center': None}
 
     def allMapDatas(self):
         return []
@@ -167,8 +166,7 @@ class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher,
 
     def mapInfos(self):
         return {'zoom': 8,
-                'center': None,
-                'boundToAll': False}
+                'center': None}
 
 
 class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher,
@@ -190,5 +188,4 @@ class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher,
     def mapInfos(self):
         return {'zoom': 14,
                 'center': {'latitude': self.context.heb_gps_lat,
-                           'longitude': self.context.heb_gps_long},
-                'boundToAll': False}
+                           'longitude': self.context.heb_gps_long}}
