@@ -157,7 +157,7 @@ var googleMapAPI ={
                     var l = googleMapAPI.markers[category][type].length;
                     for (var i=0; i < l; i++) {
                         var marker = googleMapAPI.markers[category][type][i];
-                        if (marker.offset)
+                        if (marker.offset && marker.getVisible() === true)
                         {
                             // Add line to point offset images to real location
                             var AlatLong = marker.position;
@@ -339,10 +339,12 @@ var googleMapAPI ={
                         else if (marker.checked && this.map.zoom <= 9)
                         {
                             marker.setVisible(false);
+                            marker.line.setPath([]);
                         }
                         else
                         {
                             marker.setVisible(false);
+                            marker.line.setPath([]);
                         }
                     }
                     // Hide or show markers if checkbox checked/unchecked

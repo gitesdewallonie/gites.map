@@ -134,12 +134,31 @@ class UtilsView(BrowserView):
         hebergements = query.all()
         hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements]
 
-        results = []
-        for hebergement in hebergements:
-            results.append(hebergementToMapObject(hebergement=hebergement,
-                                                  context=self.context,
-                                                  request=self.request))
-        return results
+        groupedDigits = calculateGroupedDigits(hebergements)
+
+        groupedDigitsTmp = {}
+        mapObjects = []
+
+        for heb in hebergements:
+            groupedDigitTmp = None
+            group_pk = heb.heb_groupement_pk
+            # Allow to deactivate lines if only one heb in this group
+            if group_pk in groupedDigits.keys() and groupedDigits[group_pk] != 0:
+                if group_pk in groupedDigitsTmp.keys():
+                    groupedDigitTmp = groupedDigitsTmp[group_pk] + 1
+                else:
+                    groupedDigitTmp = 0
+                groupedDigitsTmp[group_pk] = groupedDigitTmp
+
+            mapObjects.append(
+                hebergementToMapObject(
+                    hebergement=heb,
+                    context=self.context,
+                    request=self.request,
+                    digit=None,
+                    groupedDigit=groupedDigitTmp
+                ))
+        return mapObjects
 
     def getQuefaireEvents(self, location=None):
         """
@@ -395,3 +414,18 @@ def calculateOffsetCoords(digit):
 
     # I round here cause we work on pixels
     return {'x': round(x), 'y': round(y)}
+
+
+def calculateGroupedDigits(hebergements):
+    groupedDigits = {}
+
+    for heb in hebergements:
+        groupedDigit = None
+        group_pk = heb.heb_groupement_pk
+        if group_pk:
+            if group_pk in groupedDigits.keys():
+                groupedDigit = groupedDigits[group_pk] + 1
+            else:
+                groupedDigit = 0
+            groupedDigits[group_pk] = groupedDigit
+    return groupedDigits

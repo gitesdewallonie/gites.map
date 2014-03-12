@@ -18,7 +18,8 @@ from gites.map.interfaces import IHebergementsMapFetcher
 from gites.map.browser.interfaces import ISearchMapRequest
 from gites.map.browser.utils import (hebergementToMapObject,
                                      packageToMapObject,
-                                     searchContentToMapObject)
+                                     searchContentToMapObject,
+                                     calculateGroupedDigits)
 
 
 ALLCHECKBOXES = ['gite',
@@ -57,26 +58,12 @@ class BaseMapFetcher:
     def allMapDatas(self):
         return []
 
-    def _calculateGroupedDigits(self, hebergements):
-        groupedDigits = {}
-
-        for heb in hebergements:
-            groupedDigit = None
-            group_pk = heb.heb_groupement_pk
-            if group_pk:
-                if group_pk in groupedDigits.keys():
-                    groupedDigit = groupedDigits[group_pk] + 1
-                else:
-                    groupedDigit = 0
-                groupedDigits[group_pk] = groupedDigit
-        return groupedDigits
-
     def fetch(self):
         hebergements = []
         for heb in self():
             hebergements.append(heb)
 
-        groupedDigits = self._calculateGroupedDigits(hebergements)
+        groupedDigits = calculateGroupedDigits(hebergements)
 
         groupedDigitsTmp = {}
         digit = 0
