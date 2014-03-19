@@ -332,11 +332,11 @@ var googleMapAPI ={
                     }
                     else if (this.mapSearch && (type === 'gite' || type === 'chambre'))
                     {
-                        if (marker.checked && this.map.zoom > 9)
+                        if (marker.checked && this.map.zoom > 10)
                         {
                             marker.setVisible(true);
                         }
-                        else if (marker.checked && this.map.zoom <= 9)
+                        else if (marker.checked && this.map.zoom <= 10)
                         {
                             marker.setVisible(false);
                             marker.line.setPath([]);
@@ -406,7 +406,7 @@ var googleMapAPI ={
         }
         if (this.mapSearch)
         {
-            if (this.map.zoom > 9)
+            if (this.map.zoom > 10)
             {
                 jQuery('#gite')[0].disabled = false;
                 jQuery("label[for='gite']").removeClass("unzoomed_legend_label");
