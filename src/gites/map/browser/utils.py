@@ -24,6 +24,11 @@ from gites.db.content.hebergement.hebergement import Hebergement
 
 DISTANCE_METERS = 10000
 
+# Size of smallest angle
+GROUPEMENT_SMALLEST_ANGLE = 36
+# Rayon in pixels
+GROUPEMENT_RAYON = 65
+
 
 class UtilsView(BrowserView):
     """
@@ -126,7 +131,7 @@ class UtilsView(BrowserView):
         session = wrapper.session
         TypeHebergement = wrapper.getMapper('type_heb')
         Proprio = wrapper.getMapper('proprio')
-        query = session.query(Hebergement)
+        query = session.query(Hebergement).join('app')
         query = query.filter(TypeHebergement.type_heb_pk == Hebergement.heb_typeheb_fk)
         query = query.filter(Hebergement.heb_site_public == '1')
         query = query.filter(Proprio.pro_pk == Hebergement.heb_pro_fk)
@@ -227,12 +232,16 @@ def hebergementToMapObject(hebergement, context, request, digit=None, groupedDig
         type_heb = hebergement.type.type_heb_type
         isCle = hebergement.type.type_heb_code == 'MV'
         heb_type = hebergement.type.type_heb_id
+        heb_app_groupement_line_length = hebergement.app.heb_app_groupement_line_length
+        heb_app_groupement_angle_start = hebergement.app.heb_app_groupement_angle_start
     # On listing
     else:
         epis = hebergement.heb_nombre_epis
         type_heb = hebergement.heb_type_type
         isCle = hebergement.heb_type_code == 'MV'
         heb_type = hebergement.heb_type
+        heb_app_groupement_line_length = hebergement.heb_app_groupement_line_length
+        heb_app_groupement_angle_start = hebergement.heb_app_groupement_angle_start
 
     personnesTrans = translate(_(u"x_personnes", u"personnes"), context=request)
     chambresTrans = translate(_(u"x_chambres", u"chambres"), context=request)
@@ -299,7 +308,9 @@ def hebergementToMapObject(hebergement, context, request, digit=None, groupedDig
 
     offset = None
     if groupedDigit is not None:
-        offset = calculateOffsetCoords(groupedDigit)
+        offset = calculateOffsetCoords(groupedDigit,
+                                       heb_app_groupement_line_length,
+                                       heb_app_groupement_angle_start)
 
     datas = {'types': [type_heb],
              'name': '',
@@ -396,21 +407,19 @@ def searchContentToMapObject(searchContent):
             'longitude': float(location.get('lng'))}
 
 
-def calculateOffsetCoords(digit):
+def calculateOffsetCoords(digit, heb_app_groupement_line_length, heb_app_groupement_angle_start):
     """
     Calculate coords of offset depending on digit
     """
-    # Size of smallest angle
-    SMALLEST_ANGLE = 36
-    # Rayon in pixels
-    RAYON = 65
+    rayon = heb_app_groupement_line_length or GROUPEMENT_RAYON
+    angle_start = heb_app_groupement_angle_start or 0
 
-    angle = SMALLEST_ANGLE * digit
+    angle = GROUPEMENT_SMALLEST_ANGLE * (digit + angle_start)
     radian = math.radians(angle)
     # Here we start the angle at the point (0, 1)
     #  if we want to start at (1, 0), just invert sin/cos
-    x = math.sin(radian) * RAYON
-    y = math.cos(radian) * RAYON
+    x = math.sin(radian) * rayon
+    y = math.cos(radian) * rayon
 
     # I round here cause we work on pixels
     return {'x': round(x), 'y': round(y)}
