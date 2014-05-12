@@ -245,8 +245,8 @@ def hebergementToMapObject(hebergement, context, request, digit=None, groupedDig
 
     personnesTrans = translate(_(u"x_personnes", u"personnes"), context=request)
     chambresTrans = translate(_(u"x_chambres", u"chambres"), context=request)
-    episTrans = translate(_(u"x_cles", u"cl&eacute;s"), context=request)
-    clesTrans = translate(_(u"x_epis", u"&eacute;pis"), context=request)
+    clesTrans = translate(_(u"x_cles", u"cl&eacute;s"), context=request)
+    episTrans = translate(_(u"x_epis", u"&eacute;pis"), context=request)
 
     if heb_type == 'gite-groupes':
         #XXXnext aller chercher le nom des gites groupés à celui ci (faire une requete pour recupérer tous les gites ghroupés)
