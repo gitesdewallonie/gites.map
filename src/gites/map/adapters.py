@@ -143,8 +143,8 @@ class AllCheckboxesMixinFetchter:
         return datas
 
 
-class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher,
-                       AllCheckboxesMixinFetchter):
+class SearchMapFetcher(AllCheckboxesMixinFetchter, BaseHebergementsFetcher,
+                       BaseMapFetcher):
     grok.adapts(ATFolder, Interface, ISearchMapRequest)
 
     def fetch(self):
@@ -163,8 +163,8 @@ class SearchMapFetcher(BaseMapFetcher, BaseHebergementsFetcher,
                 'mapSearch': True}
 
 
-class HebergementsViewFetcher(BaseMapFetcher, BaseHebergementsFetcher,
-                              AllCheckboxesMixinFetchter):
+class HebergementsViewFetcher(AllCheckboxesMixinFetchter, BaseHebergementsFetcher,
+                              BaseMapFetcher):
     grok.adapts(Hebergement, Interface, IMapRequest)
 
     def fetch(self):
