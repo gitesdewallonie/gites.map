@@ -140,6 +140,9 @@ var googleMapAPI ={
         services.getPrimaryMarkers();
 
         giteMapHandlers.initHandlers();
+        
+        return {map: this.map,
+                center: center};
     },
 
     updateProjection : function()
