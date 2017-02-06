@@ -7,7 +7,7 @@
         cookable="False"
         enabled="True"
         expression="python:request.get('LANGUAGE', 'en') == 'fr'"
-        id="https://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=fr&amp;region=be"
+        id="https://maps.google.com/maps/api/js?key=AIzaSyDIYp9YQ-6Xa00wM_rcmwlhmJNTN1BhhBk&amp;v=3&amp;libraries=places&amp;sensor=false&amp;language=fr&amp;region=be"
         inline="False"/>
 
     <javascript
@@ -16,7 +16,7 @@
         cookable="False"
         enabled="True"
         expression="python:request.get('LANGUAGE', 'en') == 'en'"
-        id="https://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=en&amp;region=be"
+        id="https://maps.google.com/maps/api/js?key=AIzaSyDIYp9YQ-6Xa00wM_rcmwlhmJNTN1BhhBk&amp;v=3&amp;libraries=places&amp;sensor=false&amp;language=en&amp;region=be"
         inline="False"/>
 
     <javascript
@@ -25,7 +25,7 @@
         cookable="False"
         enabled="True"
         expression="python:request.get('LANGUAGE', 'en') == 'de'"
-        id="https://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=de&amp;region=be"
+        id="https://maps.google.com/maps/api/js?key=AIzaSyDIYp9YQ-6Xa00wM_rcmwlhmJNTN1BhhBk&amp;v=3&amp;libraries=places&amp;sensor=false&amp;language=de&amp;region=be"
         inline="False"/>
 
     <javascript
@@ -34,7 +34,7 @@
         cookable="False"
         enabled="True"
         expression="python:request.get('LANGUAGE', 'en') == 'it'"
-        id="https://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=it&amp;region=be"
+        id="https://maps.google.com/maps/api/js?key=AIzaSyDIYp9YQ-6Xa00wM_rcmwlhmJNTN1BhhBk&amp;v=3&amp;libraries=places&amp;sensor=false&amp;language=it&amp;region=be"
         inline="False"/>
 
     <javascript
@@ -43,7 +43,7 @@
         cookable="False"
         enabled="True"
         expression="python:request.get('LANGUAGE', 'en') == 'nl'"
-        id="https://maps.google.com/maps/api/js?v=3&amp;libraries=places&amp;sensor=false&amp;language=nl&amp;region=be"
+        id="https://maps.google.com/maps/api/js?key=AIzaSyDIYp9YQ-6Xa00wM_rcmwlhmJNTN1BhhBk&amp;v=3&amp;libraries=places&amp;sensor=false&amp;language=nl&amp;region=be"
         inline="False"/>
 
     <javascript
